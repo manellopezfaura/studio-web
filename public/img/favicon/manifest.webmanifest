@@ -1,0 +1,11 @@
+{
+  "name": "107 Studio - Digital Agency & Personal Portfolio Website",
+  "short_name": "107 Studio",
+  "icons": [
+    { "src": "/img/favicon/android-icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/img/favicon/android-icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "theme_color": "#efefef",
+  "background_color": "#efefef",
+  "display": "standalone"
+}

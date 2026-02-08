@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "number": 50,
+    "suffix": "+",
+    "description": "Proyectos entregados\ncon éxito",
+    "image": "/img/icons/h70_stats-01.webp",
+    "imageWidth": 311,
+    "imageHeight": 280,
+    "counterId": "stats-counter-1"
+  },
+  {
+    "id": 2,
+    "number": 85,
+    "suffix": "%",
+    "description": "Clientes repiten\ncon nosotros",
+    "image": "/img/icons/h70_stats-02.webp",
+    "imageWidth": 280,
+    "imageHeight": 280,
+    "counterId": "stats-counter-2"
+  },
+  {
+    "id": 3,
+    "number": 3,
+    "suffix": "",
+    "description": "Fundadores con\nexperiencia complementaria",
+    "image": "/img/icons/h70_stats-03.webp",
+    "imageWidth": 280,
+    "imageHeight": 280,
+    "counterId": "stats-counter-3"
+  },
+  {
+    "id": 4,
+    "number": 48,
+    "suffix": "h",
+    "description": "Tiempo medio de\nrespuesta inicial",
+    "image": "/img/icons/h70_stats-04.webp",
+    "imageWidth": 274,
+    "imageHeight": 280,
+    "counterId": "stats-counter-4"
+  }
+]

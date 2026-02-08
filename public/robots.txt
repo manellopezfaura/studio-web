@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Block Next.js internal files
+Disallow: /_next/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://107studio.com/sitemap.xml

@@ -1,0 +1,154 @@
+/*! ------------------------------------------------
+ * Project Name: 107 Studio - Digital Agency & Personal Portfolio Website
+ * Project Description: Elevate your digital presence with 107 Studio - dynamic and stylish Next.Js website designed for creative agencies and personal brands. With modern layouts, smooth interactions and a polished aesthetic, 107 Studio website helps showcase projects, services and expertise with clarity and impact.
+ * Tags: 107-studio, resume, portfolio, personal page, cv, website, one page, responsive, Next.js, css3, creative, clean, agency, studio 
+ * Version: 1.0.0
+ * Build Date: October 2025
+ * Last Update: November 06 2025
+ * Custom stylesheet package
+ * Author: 107-studio
+ * Author URI: https://107studio.com  /*! File name: plugins.css
+ * ------------------------------------------------
+ *
+ * ------------------------------------------------
+ * Table of Contents
+ * ------------------------------------------------
+ *  01. custom css for Nextjs
+ * ------------------------------------------------
+ * Table of Contents End
+ * ------------------------------------------------ */
+
+@import url("./plugins.min.css");
+@import url("./main.min.css");
+html {
+  scroll-behavior: smooth;
+}
+.mxd-nav__wrap {
+  display: block;
+  pointer-events: none;
+}
+.mxd-nav__wrap.active_menu {
+  pointer-events: all;
+}
+.mxd-menu__wrapper {
+  display: block;
+  pointer-events: none;
+}
+.mxd-menu__wrapper.active_menu {
+  pointer-events: all;
+}
+
+.mxd-menu__wrapper .fade-in-elm {
+  transition: all 0.6s ease;
+  visibility: hidden;
+  opacity: 0;
+}
+.mxd-menu__wrapper.active_menu .fade-in-elm {
+  visibility: visible;
+  opacity: 1;
+}
+.mxd-menu__wrapper .fade-in-up-elm {
+  transition: all 0.6s ease;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(25px);
+}
+.mxd-menu__wrapper.active_menu .fade-in-up-elm {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0px);
+}
+.submenu {
+  display: block;
+  height: 0px;
+  overflow: hidden;
+  padding-top: 0px;
+}
+
+/* Locks page scroll while modal is open */
+.videoModal__bodyOpen {
+  overflow: hidden;
+}
+
+/* Fullscreen overlay, centered content, no overlay scrolling */
+.videoModal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: grid;
+  place-items: center;
+  overflow: hidden; /* prevent overlay scrollbar */
+  z-index: 111;
+}
+
+/* Transparent content, no internal scroll */
+.videoModal__content {
+  background: transparent;
+  border: none;
+  outline: none;
+  overflow: hidden; /* prevent content scrollbar */
+}
+
+/* Responsive 16:9 player that never exceeds viewport */
+.videoModal__playerWrap {
+  max-width: 1200px;
+  width: min(90vw, 1600px);
+  aspect-ratio: 16 / 9; /* modern browsers */
+  position: relative;
+}
+.swiper-navigation-icon {
+  display: none;
+}
+.hamburger__line {
+  transition: all 0.3s ease;
+}
+.nav-open .hamburger__line:first-child {
+  translate: none;
+  rotate: none;
+  scale: none;
+  transform: translate(0px, 5px) rotate(45deg);
+}
+.nav-open .hamburger__line:last-child {
+  translate: none;
+  rotate: none;
+  scale: none;
+  transform: translate(0px, -5px) rotate(-45deg);
+}
+.loading__item,
+.loading__fade {
+  opacity: 0;
+}
+
+.footer-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.footer-contact-form textarea {
+  min-height: 14rem;
+}
+
+.footer-contact-form__submit {
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
+.footer-contact-form__error {
+  margin: -0.4rem 0 0.2rem;
+  font: normal var(--fw-regular) 1.4rem/1.4 var(--_font-accent);
+  color: #c74d4d;
+}
+
+.footer-contact-form__status {
+  margin-top: 1.2rem;
+  font: normal var(--fw-regular) 1.6rem/1.4 var(--_font-accent);
+}
+
+.footer-contact-form__status--ok {
+  color: #3f8f57;
+}
+
+.footer-contact-form__status--error {
+  color: #c74d4d;
+}

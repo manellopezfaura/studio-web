@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Home",
+    "href": "/"
+  },
+  {
+    "title": "About Us",
+    "href": "/about-us"
+  },
+  {
+    "title": "Services",
+    "href": "/services"
+  },
+  {
+    "title": "Work",
+    "href": "/works-simple"
+  },
+  {
+    "title": "Contact",
+    "href": "/contact"
+  }
+]

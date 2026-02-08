@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Manel López",
+    "position": "Co-founder & Developer",
+    "image": {
+      "src": "/img/team/800x920_team-01.webp",
+      "alt": "Manel López",
+      "width": 800,
+      "height": 920
+    },
+    "socials": [
+      {
+        "name": "Linkedin",
+        "url": "https://www.linkedin.com/"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Bernat Garriga",
+    "position": "Co-founder & Designer",
+    "image": {
+      "src": "/img/team/800x920_team-02.webp",
+      "alt": "Bernat Garriga",
+      "width": 800,
+      "height": 920
+    },
+    "socials": [
+      {
+        "name": "Linkedin",
+        "url": "https://www.linkedin.com/"
+      },
+      {
+        "name": "Behance",
+        "url": "https://www.behance.net/"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Paula Abarca",
+    "position": "Marketing Director",
+    "image": {
+      "src": "/img/team/800x920_team-03.webp",
+      "alt": "Paula Abarca",
+      "width": 800,
+      "height": 920
+    },
+    "socials": [
+      {
+        "name": "Linkedin",
+        "url": "https://www.linkedin.com/"
+      }
+    ]
+  }
+]
