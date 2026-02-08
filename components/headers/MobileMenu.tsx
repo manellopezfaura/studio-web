@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import menuItems from "@/data/menu.json"; // adjust path accordingly
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -8,16 +8,20 @@ import gsap from "gsap";
 import Flip from "gsap/Flip";
 import { usePathname } from "next/navigation";
 import AnimatedButton from "../animation/AnimatedButton";
+import LanguageSwitcher from "../common/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 gsap.registerPlugin(Flip);
 
 type MenuItem = {
   title: string;
   href?: string;
-  submenu?: { label: string; href: string }[];
+  translationKey?: string;
+  submenu?: { label: string; href: string; translationKey?: string }[];
 };
 
 export default function MobileMenu() {
+  const t = useTranslations("Navigation");
   const normalizedMenuItems = menuItems as MenuItem[];
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -156,7 +160,7 @@ export default function MobileMenu() {
                               }
                             >
                               <AnimatedButton
-                                text={item.title}
+                                text={item.translationKey ? t(item.translationKey) : item.title}
                                 as="span"
                                 className="main-menu__link btn btn-anim"
                               ></AnimatedButton>
@@ -187,9 +191,8 @@ export default function MobileMenu() {
                               {item.submenu.map((sub, i) => (
                                 <li
                                   key={i}
-                                  className={`submenu__item ${
-                                    isMenuActive(sub.href) ? "active" : ""
-                                  }`}
+                                  className={`submenu__item ${isMenuActive(sub.href) ? "active" : ""
+                                    }`}
                                 >
                                   <Link href={sub.href}>{sub.label}</Link>
                                 </li>
@@ -200,7 +203,7 @@ export default function MobileMenu() {
                           <>
                             {item.href ? (
                               <AnimatedButton
-                                text={item.title}
+                                text={item.translationKey ? t(item.translationKey) : item.title}
                                 className="main-menu__link btn btn-anim"
                                 href={item.href}
                               ></AnimatedButton>
@@ -227,6 +230,9 @@ export default function MobileMenu() {
                     <br />
                     Showcase your projects, services and expertise with impact.
                   </p>
+                  <div className="fade-in-elm" style={{ transitionDelay: "0.5s", marginBottom: "20px" }}>
+                    <LanguageSwitcher />
+                  </div>
                   <div
                     className="menu-promo__video fade-in-up-elm"
                     style={{ transitionDelay: "0.3s" }}

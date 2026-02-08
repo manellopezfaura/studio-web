@@ -1,6 +1,16 @@
 import TypedText from "@/components/common/TypedText";
+import { useTranslations } from "next-intl";
 
 export default function Hero() {
+  const t = useTranslations("AboutPage.Hero");
+  const roles = [
+    t("roles.0"),
+    t("roles.1"),
+    t("roles.2"),
+    t("roles.3"),
+    t("roles.4"),
+  ];
+
   return (
     <div className="mxd-section mxd-section-inner-headline padding-text-pre-block">
       <div className="mxd-container grid-container">
@@ -33,7 +43,7 @@ export default function Hero() {
                     c0,0,1.3-0.1,1.8-0.2c1,0,4,0,4,0c0.2,0,0.4-0.2,0.4-0.4C20,9.8,19.8,9.6,19.6,9.6L19.6,9.6z"
                       />
                     </svg>
-                    <span>We are</span>
+                    <span>{t("subtitle")}</span>
                   </p>
                 </div>
               </div>
@@ -43,14 +53,10 @@ export default function Hero() {
                 <div className="mxd-block__content">
                   <div className="mxd-block__inner-headline">
                     <h1 className="inner-headline__title animated-type loading__item">
-                      <TypedText />
+                      <TypedText strings={roles} />
                     </h1>
                     <p className="inner-headline__text t-large t-bright loading__item">
-                      👋 Hey! We are 107 Studio. We&apos;re passionate about
-                      crafting designs that tell stories, spark emotions, and
-                      make an impact. Whether we&apos;re crafting digital
-                      experiences or creating illustrations, we pour creativity
-                      and precision into every detail.
+                      {t("intro")}
                     </p>
                   </div>
                 </div>

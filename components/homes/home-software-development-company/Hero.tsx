@@ -1,8 +1,10 @@
 import VelocityMarquee from "@/components/animation/VelocityMarquee";
 import VideoParallax from "@/components/animation/VideoParallax";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function Hero() {
+  const t = useTranslations("HomePage.Hero");
   return (
     <div className="mxd-section mxd-hero-section padding-grid-pre-mtext">
       <div className="mxd-hero-03">
@@ -13,6 +15,7 @@ export default function Hero() {
             <div className="mxd-hero-03__marquee loading__item">
               {/* Marquee Start */}
               <VelocityMarquee className="marquee marquee-right--gsap">
+                {/* ... existing marquee content ... */}
                 {/* item */}
                 <div className="marquee__item one-line">
                   <div className="hero-03-marquee__video">
@@ -116,13 +119,10 @@ export default function Hero() {
             </div>
             {/* headline */}
             <div className="mxd-hero-03__headline">
-              <p className="hero-03-headline__caption loading__item">
-                Cutting-edge
-                <br />
-                software development
-                <br />
-                company
-              </p>
+              <p
+                className="hero-03-headline__caption loading__item"
+                dangerouslySetInnerHTML={{ __html: t.raw("caption") }}
+              />
               <h1 className="hero-03-headline__title loading__item">
                 <span className="hero-03-headline__hidden">107STUDIO.</span>
                 <span

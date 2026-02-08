@@ -1,0 +1,32 @@
+{
+    "HomePage": {
+        "title": "Home",
+        "Hero": {
+            "caption": "Cutting-edge<br />software development<br />company"
+        }
+    },
+    "AboutPage": {
+        "Hero": {
+            "subtitle": "We are",
+            "intro": "👋 Hey! We are 107 Studio. We're passionate about crafting designs that tell stories, spark emotions, and make an impact. Whether we're crafting digital experiences or creating illustrations, we pour creativity and precision into every detail.",
+            "roles": {
+                "0": "UI/UX Designers",
+                "1": "3D Artists",
+                "2": "Illustrators",
+                "3": "Web Developers",
+                "4": "Brand Strategists"
+            }
+        }
+    },
+    "Navigation": {
+        "home": "Home",
+        "about": "About Us",
+        "services": "Services",
+        "work": "Work",
+        "contact": "Contact"
+    },
+    "Metadata": {
+        "title": "107 Studio | Creative Digital Agency",
+        "description": "Software development and digital design studio. We build high-impact websites and custom applications."
+    }
+}

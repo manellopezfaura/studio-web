@@ -24,7 +24,7 @@ export default function TypedText({
         typedInstance.current.destroy();
       }
     };
-  }, []);
+  }, [strings]);
 
   return (
     <>

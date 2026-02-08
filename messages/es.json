@@ -1,0 +1,32 @@
+{
+    "HomePage": {
+        "title": "Inicio",
+        "Hero": {
+            "caption": "Estudio digital<br />creativo y desarrollo<br />de software"
+        }
+    },
+    "AboutPage": {
+        "Hero": {
+            "subtitle": "Somos",
+            "intro": "👋 ¡Hola! Somos 107 Studio. Nos apasiona crear diseños que cuenten historias, despierten emociones y generen impacto. Ya sea creando experiencias digitales o ilustraciones, ponemos creatividad y precisión en cada detalle.",
+            "roles": {
+                "0": "Diseñadores UI/UX",
+                "1": "Artistas 3D",
+                "2": "Ilustradores",
+                "3": "Desarrolladores Web",
+                "4": "Estrategas de Marca"
+            }
+        }
+    },
+    "Navigation": {
+        "home": "Inicio",
+        "about": "Nosotros",
+        "services": "Servicios",
+        "work": "Proyectos",
+        "contact": "Contacto"
+    },
+    "Metadata": {
+        "title": "107 Studio | Agencia Digital Creativa",
+        "description": "Estudio de desarrollo de software y diseño digital. Creamos webs de alto impacto y aplicaciones a medida."
+    }
+}

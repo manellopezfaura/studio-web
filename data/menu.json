@@ -1,22 +1,27 @@
 [
   {
     "title": "Home",
-    "href": "/"
+    "href": "/",
+    "translationKey": "home"
   },
   {
     "title": "About Us",
-    "href": "/about-us"
+    "href": "/about-us",
+    "translationKey": "about"
   },
   {
     "title": "Services",
-    "href": "/services"
+    "href": "/services",
+    "translationKey": "services"
   },
   {
     "title": "Work",
-    "href": "/works-simple"
+    "href": "/works-simple",
+    "translationKey": "work"
   },
   {
     "title": "Contact",
-    "href": "/contact"
+    "href": "/contact",
+    "translationKey": "contact"
   }
 ]

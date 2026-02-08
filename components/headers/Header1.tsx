@@ -1,11 +1,15 @@
 "use client";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useEffect, useState } from "react";
 import AnimatedButton from "../animation/AnimatedButton";
 import ThemeSwitcherButton from "./ColorSwitcher";
+import LanguageSwitcher from "../common/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 export default function Header1() {
+  const t = useTranslations("Navigation");
   const [isHidden, setIsHidden] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -91,8 +95,9 @@ export default function Header1() {
       {/* header controls */}
       <div className="mxd-header__controls loading__fade">
         <ThemeSwitcherButton />
+        <LanguageSwitcher />
         <AnimatedButton
-          text="Contacto"
+          text={t("contact")}
           className="btn btn-anim btn-default btn-mobile-icon btn-outline slide-right"
           href="/contact"
         >
