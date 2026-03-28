@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 
 import VelocityMarquee from "@/components/animation/VelocityMarquee";
@@ -48,7 +48,8 @@ export default function ProjectsMarqueeSlider() {
             {/* image */}
             <Image
               className="btn-rotating__image"
-              alt="Object"
+              alt=""
+              role="presentation"
               src="/img/icons/300x300_obj-btn-03.webp"
               width={300}
               height={300}
@@ -70,7 +71,7 @@ export default function ProjectsMarqueeSlider() {
                 >
                   <Link className="marquee__link" href={href}>
                     <Image
-                      alt={item.title || "Image"}
+                      alt={item.title || "Featured project"}
                       src={src}
                       width={1400}
                       height={1080}

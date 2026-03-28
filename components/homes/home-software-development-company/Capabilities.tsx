@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
 import capabilities from "@/data/capabilities.json";
@@ -101,21 +101,21 @@ export default function Capabilities() {
                                 : "scale(1,1.4)",
                             transition: "transform 0.3s ease",
                           }}
-                          alt="Project Preview"
+                          alt="Service capability showcase by 107 Studio"
                           src={item.hoverImage}
                           width={600}
                           height={730}
                         />
                       </div>
                       <div className="mxd-cpb-list__content anim-uni-in-up">
-                        <h6 className="mxd-cpb-list__title">{item.title}</h6>
+                        <h3 className="mxd-cpb-list__title">{item.title}</h3>
                         <div className="mxd-cpb-list__num">
                           <span>{item.num}</span>
                         </div>
                       </div>
                       <div className="mxd-cpb-list__image anim-uni-in-up">
                         <Image
-                          alt="Project Preview"
+                          alt="Service capability showcase by 107 Studio"
                           src={item.mainImage}
                           width={1200}
                           height={800}

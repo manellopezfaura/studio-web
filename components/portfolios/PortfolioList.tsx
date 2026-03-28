@@ -1,15 +1,20 @@
 "use client";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
 import RevealText from "../animation/RevealText";
 import AnimatedButton from "../animation/AnimatedButton";
 import { projects8 } from "@/data/projects.json";
+import { useTranslations } from "next-intl";
+
 type HoverState = {
   activeIndex: number | null;
   x: number;
 };
 export default function PortfolioList() {
+  const t = useTranslations("WorksPage.List");
+  const tProjects = useTranslations("Projects");
+
   const [hoverState, setHoverState] = useState<HoverState>({
     activeIndex: null,
     x: 0,
@@ -41,7 +46,7 @@ export default function PortfolioList() {
                 <div className="col-12 col-xl-6 mxd-grid-item no-margin">
                   <div className="mxd-section-title__hrtitle">
                     <RevealText as="h2" className="reveal-type anim-uni-in-up">
-                      Portfolio archive
+                      {t("title")}
                     </RevealText>
                   </div>
                 </div>
@@ -49,7 +54,7 @@ export default function PortfolioList() {
                 <div className="col-12 col-xl-4 mxd-grid-item no-margin">
                   <div className="mxd-section-title__hrcontrols pre-title anim-uni-in-up">
                     <AnimatedButton
-                      text="Clients Approve"
+                      text={t("clientsApprove")}
                       as={"a"}
                       className="btn btn-anim btn-default btn-outline slide-right-down"
                       href="#testimonials"
@@ -66,82 +71,86 @@ export default function PortfolioList() {
         {/* Block - Projects List #01 Start */}
         <div className="mxd-block">
           <div className="mxd-projects-list hover-reveal">
-            {projects8.map((item, idx) => (
-              <Link
-                key={item.id}
-                className="mxd-projects-list__item hover-reveal__item"
-                href={`/project-details`}
-                onMouseMove={(e) => handleMouseMove(e, idx)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <div className="mxd-projects-list__border anim-uni-in-up" />
-                <div
-                  className="hover-reveal__content hover-reveal-280x340"
-                  style={{
-                    opacity: hoverState.activeIndex === idx ? 1 : 0,
-                    transform: "translate(-80%, -50%)",
-                    left: hoverState.x,
-
-                    pointerEvents: "none",
-                    transition: "opacity 0.3s ease",
-                  }}
+            {projects8.map((item, idx) => {
+              const title = tProjects(`${item.id}.title`);
+              const tags = tProjects.raw(`${item.id}.tags`) as string[];
+              return (
+                <Link
+                  key={item.id}
+                  className="mxd-projects-list__item hover-reveal__item"
+                  href={`/project-details`}
+                  onMouseMove={(e) => handleMouseMove(e, idx)}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  <Image
+                  <div className="mxd-projects-list__border anim-uni-in-up" />
+                  <div
+                    className="hover-reveal__content hover-reveal-280x340"
                     style={{
-                      transform:
-                        hoverState.activeIndex === idx
-                          ? "scale(1,1)"
-                          : "scale(1,1.4)",
-                      transition: "transform 0.3s ease",
+                      opacity: hoverState.activeIndex === idx ? 1 : 0,
+                      transform: "translate(-80%, -50%)",
+                      left: hoverState.x,
+
+                      pointerEvents: "none",
+                      transition: "opacity 0.3s ease",
                     }}
-                    className="hover-reveal__image"
-                    alt="Project Preview"
-                    src={item.thumb}
-                    width={600}
-                    height={730}
-                  />
-                </div>
-                <div className="mxd-projects-list__inner">
-                  <div className="container-fluid px-0">
-                    <div className="row gx-0">
-                      <div className="col-12 col-xl-8 mxd-grid-item no-margin">
-                        <div className="mxd-projects-list__title anim-uni-in-up">
-                          <div className="mxd-projects-list__icon">
-                            <i className="ph ph-arrow-right" />
+                  >
+                    <Image
+                      style={{
+                        transform:
+                          hoverState.activeIndex === idx
+                            ? "scale(1,1)"
+                            : "scale(1,1.4)",
+                        transition: "transform 0.3s ease",
+                      }}
+                      className="hover-reveal__image"
+                      alt="Portfolio project thumbnail by 107 Studio"
+                      src={item.thumb}
+                      width={600}
+                      height={730}
+                    />
+                  </div>
+                  <div className="mxd-projects-list__inner">
+                    <div className="container-fluid px-0">
+                      <div className="row gx-0">
+                        <div className="col-12 col-xl-8 mxd-grid-item no-margin">
+                          <div className="mxd-projects-list__title anim-uni-in-up">
+                            <div className="mxd-projects-list__icon">
+                              <i className="ph ph-arrow-right" />
+                            </div>
+                            <p>{title}</p>
                           </div>
-                          <p>{item.title}</p>
+                          <div className="mxd-projects-list__image anim-uni-in-up">
+                            <Image
+                              alt="Portfolio project thumbnail by 107 Studio"
+                              src={item.image}
+                              width={1200}
+                              height={800}
+                            />
+                          </div>
                         </div>
-                        <div className="mxd-projects-list__image anim-uni-in-up">
-                          <Image
-                            alt="Project Preview"
-                            src={item.image}
-                            width={1200}
-                            height={800}
-                          />
+                        <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
+                          <div className="mxd-projects-list__tagslist">
+                            <ul>
+                              {tags.map((t, i) => (
+                                <li key={i} className="anim-uni-in-up">
+                                  <p className="t-small">{t}</p>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
-                      </div>
-                      <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
-                        <div className="mxd-projects-list__tagslist">
-                          <ul>
-                            {item.tags.map((t, i) => (
-                              <li key={i} className="anim-uni-in-up">
-                                <p className="t-small">{t}</p>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
-                        <div className="mxd-projects-list__date anim-uni-in-up">
-                          <p className="t-small">{item.date}</p>
+                        <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
+                          <div className="mxd-projects-list__date anim-uni-in-up">
+                            <p className="t-small">{item.date}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="mxd-projects-list__border anim-uni-in-up" />
-              </Link>
-            ))}
+                  <div className="mxd-projects-list__border anim-uni-in-up" />
+                </Link>
+              );
+            })}
           </div>
         </div>
         {/* Block - Projects List #01 End */}

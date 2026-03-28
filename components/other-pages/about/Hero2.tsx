@@ -142,11 +142,9 @@ export default function Hero2() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-xl-4 mxd-values__item order-1 order-xl-2 mxd-grid-item no-margin animate-card-2">
-                    <BackgroundParallax className="mxd-values__image image-large-desktop image-values-1 parallax-img-small" />
-                  </div>
+                  {/* Image removed */}
                   <div className="col-12 col-xl-6 mxd-values__item order-3 order-xl-3 mobile-reverse mxd-grid-item no-margin animate-card-2">
-                    <BackgroundParallax className="mxd-values__image image-small-desktop image-values-2 parallax-img-small" />
+                    {/* Image removed */}
                     <div className="mxd-values__descr has-top-list anim-uni-in-up">
                       <RevealText
                         as="p"
@@ -164,7 +162,7 @@ export default function Hero2() {
           </div>
           {/* Block - Culture & Values Start */}
         </div>
-      </div>
+      </div >
       {/* Section - Culture & Values End */}
     </>
   );

@@ -7,6 +7,7 @@ export default function Services() {
         {/* Block - Services Cards #02 Start */}
         <div className="mxd-block">
           <div className="mxd-services-cards-s">
+            <h2 className="sr-only">Services</h2>
             <div className="container-fluid px-0">
               <div className="row gx-0">
                 {/* Brand Identity */}

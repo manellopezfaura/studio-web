@@ -79,7 +79,8 @@ export default function LenisSmoothScroll() {
   // return null for ios
   if (
     typeof window !== "undefined" &&
-    /iPad|iPhone|iPod/.test(navigator.userAgent)
+    (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   ) {
     return null;
   }

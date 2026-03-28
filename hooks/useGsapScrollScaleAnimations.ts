@@ -10,6 +10,17 @@ gsap.registerPlugin(ScrollTrigger);
 export default function useGsapScrollScaleAnimations() {
   const pathname = usePathname();
   useEffect(() => {
+    // Respect prefers-reduced-motion: show all content immediately, skip animations
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      document.querySelectorAll(".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5")
+        .forEach((el) => {
+          (el as HTMLElement).style.opacity = "1";
+          (el as HTMLElement).style.transform = "none";
+        });
+      return;
+    }
+
     const initAnim = () => {
       const docStyle = getComputedStyle(document.documentElement);
 

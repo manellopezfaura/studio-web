@@ -113,7 +113,7 @@ export default function Facts() {
                       ) : null}
                       <div className={item.imageClass}>
                         <Image
-                          alt="Illustration"
+                          alt="Decorative 3D illustration"
                           src={item.image}
                           width={item.imageWidth}
                           height={item.imageHeight}

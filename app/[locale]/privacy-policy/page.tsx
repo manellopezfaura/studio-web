@@ -10,7 +10,15 @@ export const metadata: Metadata = {
     },
 };
 
-export default function PrivacyPolicyPage() {
+import { setRequestLocale } from "next-intl/server";
+
+export default async function PrivacyPolicyPage({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    setRequestLocale(locale);
     return (
         <>
             <main id="mxd-page-content" className="mxd-page-content inner-page-content">

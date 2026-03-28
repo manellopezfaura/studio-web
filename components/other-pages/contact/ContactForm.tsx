@@ -6,8 +6,11 @@ import { useForm } from "@formspree/react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AnimatedButton from "@/components/animation/AnimatedButton";
+import { useTranslations } from "next-intl";
 
 export default function ContactForm() {
+  const t = useTranslations("ContactPage.Form");
+
   const {
     register,
     handleSubmit,
@@ -24,9 +27,9 @@ export default function ContactForm() {
     try {
       await fsSubmit(data); // submit to Formspree
       reset(); // reset form fields
-      toast.success("Message sent — thanks!");
+      toast.success(t("toastSuccess"));
     } catch {
-      toast.error("Submission failed — please try again later.");
+      toast.error(t("toastError"));
     }
   };
 
@@ -45,10 +48,9 @@ export default function ContactForm() {
                         {/* Reply Messages */}
                         <div className="form__reply centered text-center">
                           <i className="ph-fill ph-smiley-wink reply__icon" />
-                          <p className="reply__title">Done!</p>
+                          <p className="reply__title">{t("successTitle")}</p>
                           <span className="reply__text">
-                            Thanks for your message. We&apos;ll get back as soon
-                            as possible.
+                            {t("successText")}
                           </span>
                         </div>
                         {/* Contact Form */}
@@ -79,11 +81,12 @@ export default function ContactForm() {
                               <div className="col-12 col-md-6 mxd-grid-item anim-uni-in-up">
                                 <input
                                   type="text"
-                                  placeholder="Your name*"
+                                  placeholder={t("namePlaceholder")}
+                                  aria-label={t("namePlaceholder")}
                                   {...register("Name")}
                                 />
                                 {errors.Name && (
-                                  <p className="error-message">
+                                  <p className="error-message" role="alert">
                                     {errors.Name.message}
                                   </p>
                                 )}
@@ -91,18 +94,20 @@ export default function ContactForm() {
                               <div className="col-12 col-md-6 mxd-grid-item anim-uni-in-up">
                                 <input
                                   type="text"
-                                  placeholder="Company name"
+                                  placeholder={t("companyPlaceholder")}
+                                  aria-label={t("companyPlaceholder")}
                                   {...register("Company")}
                                 />
                               </div>
                               <div className="col-12 col-md-6 mxd-grid-item anim-uni-in-up">
                                 <input
                                   type="email"
-                                  placeholder="Email*"
+                                  placeholder={t("emailPlaceholder")}
+                                  aria-label={t("emailPlaceholder")}
                                   {...register("E-mail")}
                                 />
                                 {errors["E-mail"] && (
-                                  <p className="error-message">
+                                  <p className="error-message" role="alert">
                                     {errors["E-mail"].message}
                                   </p>
                                 )}
@@ -110,24 +115,26 @@ export default function ContactForm() {
                               <div className="col-12 col-md-6 mxd-grid-item anim-uni-in-up">
                                 <input
                                   type="tel"
-                                  placeholder="Phone"
+                                  placeholder={t("phonePlaceholder")}
+                                  aria-label={t("phonePlaceholder")}
                                   {...register("Phone")}
                                 />
                               </div>
                               <div className="col-12 mxd-grid-item anim-uni-in-up">
                                 <textarea
-                                  placeholder="A few words about your project*"
+                                  placeholder={t("messagePlaceholder")}
+                                  aria-label={t("messagePlaceholder")}
                                   {...register("Message")}
                                 />
                                 {errors.Message && (
-                                  <p className="error-message">
+                                  <p className="error-message" role="alert">
                                     {errors.Message.message}
                                   </p>
                                 )}
                               </div>
                               <div className="col-12 mxd-grid-item anim-uni-in-up">
                                 <AnimatedButton
-                                  text="Submit"
+                                  text={t("submitButton")}
                                   position={"next"}
                                   as={"button"}
                                   className="btn btn-anim btn-default btn-large btn-opposite slide-right-up"

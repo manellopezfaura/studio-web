@@ -31,7 +31,7 @@ export function OrganizationSchema({
         logo,
         description: seoConfig.defaultDescription,
         email: seoConfig.contact.email,
-        telephone: seoConfig.contact.phone,
+        ...(seoConfig.contact.phone ? { telephone: seoConfig.contact.phone } : {}),
         address: {
             "@type": "PostalAddress",
             streetAddress: seoConfig.contact.address.street,
@@ -60,7 +60,7 @@ export function LocalBusinessSchema() {
         image: `${seoConfig.siteUrl}/img/logo.png`,
         description: seoConfig.defaultDescription,
         email: seoConfig.contact.email,
-        telephone: seoConfig.contact.phone,
+        ...(seoConfig.contact.phone ? { telephone: seoConfig.contact.phone } : {}),
         address: {
             "@type": "PostalAddress",
             streetAddress: seoConfig.contact.address.street,

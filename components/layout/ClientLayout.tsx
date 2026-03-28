@@ -1,10 +1,24 @@
 "use client";
 
-import MobileMenu from "@/components/headers/MobileMenu";
+import dynamic from "next/dynamic";
 import Header1 from "@/components/headers/Header1";
-import InitScroll from "@/components/scroll/InitScroll";
-import LenisSmoothScroll from "@/components/scroll/LenisSmoothScroll";
-import ScrollTop from "@/components/scroll/ScrollTop";
+
+const MobileMenu = dynamic(
+  () => import("@/components/headers/MobileMenu"),
+  { ssr: false }
+);
+const InitScroll = dynamic(
+  () => import("@/components/scroll/InitScroll"),
+  { ssr: false }
+);
+const LenisSmoothScroll = dynamic(
+  () => import("@/components/scroll/LenisSmoothScroll"),
+  { ssr: false }
+);
+const ScrollTop = dynamic(
+  () => import("@/components/scroll/ScrollTop"),
+  { ssr: false }
+);
 
 interface ClientLayoutProps {
   children: React.ReactNode;

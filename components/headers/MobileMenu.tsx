@@ -153,11 +153,22 @@ export default function MobileMenu() {
                           <>
                             <div
                               className="main-menu__toggle"
+                              role="button"
+                              tabIndex={0}
+                              aria-expanded={activeSubmenu === index}
                               onClick={() =>
                                 setActiveSubmenu((pre) =>
                                   pre == index ? -1 : index
                                 )
                               }
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  setActiveSubmenu((pre) =>
+                                    pre === index ? -1 : index
+                                  );
+                                }
+                              }}
                             >
                               <AnimatedButton
                                 text={item.translationKey ? t(item.translationKey) : item.title}
@@ -237,28 +248,27 @@ export default function MobileMenu() {
                     className="menu-promo__video fade-in-up-elm"
                     style={{ transitionDelay: "0.3s" }}
                   >
-                    <video
-                      className="menu-video"
-                      id="inner-video"
-                      preload="auto"
-                      autoPlay
-                      loop
-                      muted
-                      poster="video/540x310_video-01.webp"
-                    >
-                      <source
-                        type="video/mp4"
-                        src="video/540x310_video-01.mp4"
-                      />
-                      <source
-                        type="video/webm"
-                        src="video/540x310_video-01.webm"
-                      />
-                      <source
-                        type="video/ogv"
-                        src="video/540x310_video-01.ogv"
-                      />
-                    </video>
+                    {isMenuOpen && (
+                      <video
+                        className="menu-video"
+                        id="inner-video"
+                        preload="metadata"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster="/video/540x310_video-01.webp"
+                      >
+                        <source
+                          type="video/mp4"
+                          src="/video/540x310_video-01.mp4"
+                        />
+                        <source
+                          type="video/webm"
+                          src="/video/540x310_video-01.webm"
+                        />
+                      </video>
+                    )}
                   </div>
                 </div>
               </div>

@@ -1,8 +1,13 @@
+"use client";
 import footerNav from "@/data/footer-nav.json";
 import AnimatedButton from "../animation/AnimatedButton";
 import FooterContactForm from "./FooterContactForm";
+import { useTranslations } from "next-intl";
 
 export default function Footer2({ text = "107 studio" }: { text?: string }) {
+  const tFooter = useTranslations("Footer");
+  const tNav = useTranslations("Navigation");
+
   return (
     <footer id="mxd-footer" className="mxd-footer">
       {/* Footer Block - Fullwidth Text Start */}
@@ -44,7 +49,8 @@ export default function Footer2({ text = "107 studio" }: { text?: string }) {
                     <li className="footer-nav__item anim-uni-in-up" key={idx}>
                       <AnimatedButton
                         href={item.href}
-                        text={item.label}
+                        // Use item.label as key for tNav mapping
+                        text={tNav(item.label)}
                         className="footer-nav__link btn-anim"
                       />
 
@@ -82,7 +88,7 @@ export default function Footer2({ text = "107 studio" }: { text?: string }) {
             {/* links */}
             <div className="footer-blocks__links anim-uni-in-up">
               <AnimatedButton
-                text="Privacy Policy"
+                text={tFooter("privacy")}
                 as={"a"}
                 className="btn btn-line-xsmall btn-muted slide-right anim-no-delay"
                 href="/privacy-policy"
@@ -90,7 +96,7 @@ export default function Footer2({ text = "107 studio" }: { text?: string }) {
                 <i className="ph ph-arrow-right" />
               </AnimatedButton>
               <AnimatedButton
-                text="Terms &amp; conditions"
+                text={tFooter("terms")}
                 as={"a"}
                 className="btn btn-line-xsmall btn-muted slide-right anim-no-delay"
                 href="/terms"
@@ -104,10 +110,10 @@ export default function Footer2({ text = "107 studio" }: { text?: string }) {
           <div className="footer-blocks__card fullheight-card">
             <div className="footer-blocks__block">
               <div className="footer-blocks__title anim-uni-in-up">
-                <p className="footer-blocks__title-l">Contact</p>
+                <p className="footer-blocks__title-l">{tFooter("contactTitle")}</p>
               </div>
               <p className="t-small t-muted anim-uni-in-up">
-                Share your project and we&apos;ll reply soon.
+                {tFooter("contactText")}
               </p>
             </div>
             <FooterContactForm />

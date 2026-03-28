@@ -1,7 +1,11 @@
+import { useTranslations } from "next-intl";
+
 import RevealText from "../animation/RevealText";
 import BackgroundParallax from "../animation/BackgroundParallax";
 
 export default function Solutions() {
+  const t = useTranslations("ProjectDetails.solution");
+
   return (
     <>
       {/* Project Block - Solution Description with H2 Title and Paragraph Start */}
@@ -11,7 +15,7 @@ export default function Solutions() {
             <div className="col-12 col-xl-5 mxd-grid-item no-margin">
               <div className="mxd-project__subtitle">
                 <RevealText as="h2" className="reveal-type anim-uni-in-up">
-                  Solution
+                  {t("title")}
                 </RevealText>
               </div>
             </div>
@@ -19,16 +23,10 @@ export default function Solutions() {
               <div className="mxd-project__content">
                 <div className="mxd-project__paragraph medium-text">
                   <p className="anim-uni-in-up">
-                    Orci varius natoque penatibus et magnis dis parturient
-                    montes, nascetur ridiculus mus. Quisque ut arcu pulvinar,
-                    rhoncus libero id, lobortis metus. Morbi tristique dolor sit
-                    amet turpis faucibus malesuada.
+                    {t("intro")}
                   </p>
                   <p className="anim-uni-in-up">
-                    Morbi non ipsum vel risus scelerisque sagittis nec a ipsum.
-                    Nulla odio neque, feugiat a arcu et, tristique cursus diam.
-                    Duis consectetur massa nibh, ut rhoncus nibh vestibulum in.
-                    Sed imperdiet metus sed arcu efficitur posuere.
+                    {t("body")}
                   </p>
                 </div>
               </div>

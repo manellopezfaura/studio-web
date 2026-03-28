@@ -65,15 +65,7 @@ export default function Hero() {
             <div className="mxd-hero-08__center">
               <div className="mxd-hero-08__headline">
                 <div className="mxd-container">
-                  <div className="hero-08-headline__image">
-                    <Image
-                      className="mxd-rotate-slow"
-                      alt="Hero Image"
-                      src="/img/hero/16_hero-img.webp"
-                      width={800}
-                      height={781}
-                    />
-                  </div>
+                  {/* Image removed */}
                   <div
                     className="hero-08-headline__title hero-08-slide-out-scroll loading__item"
                     ref={(el) => {

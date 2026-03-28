@@ -1,0 +1,13 @@
+
+
+# Redirect root to default locale
+/                  /es/                  301
+/about-us          /es/about-us          301
+/services          /es/services          301
+/contact           /es/contact           301
+/works-simple      /es/works-simple      301
+/privacy-policy    /es/privacy-policy    301
+/terms             /es/terms             301
+
+# Fallback for SPA (optional, usually not needed if paths are correct)
+# /  /es/index.html  200

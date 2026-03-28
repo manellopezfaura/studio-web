@@ -13,14 +13,7 @@ export default function About() {
           <div className="container-fluid px-0">
             <div className="row gx-0">
               <div className="col-12 col-xl-6 mxd-grid-item-l no-margin anim-uni-in-up">
-                <div className="mxd-block__image">
-                  <Image
-                    alt="Photo"
-                    src="/img/avatars/1400x1400_ava-01.webp"
-                    width={1400}
-                    height={1400}
-                  />
-                </div>
+                {/* Photo removed */}
               </div>
               <div className="col-12 col-xl-6 mxd-grid-item-l no-margin">
                 <div className="mxd-block__content content-flex">
@@ -50,76 +43,7 @@ export default function About() {
                       height={96}
                     />
                   </div>
-                  <div className="mxd-links-lines">
-                    {/* item */}
-                    <div className="mxd-links-lines__item">
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                      <a
-                        className="mxd-links-lines__link anim-uni-in-up"
-                        href="https://medium.com/"
-                        target="_blank"
-                      >
-                        <h6 className="mxd-links-lines__title">
-                          Some article on Medium
-                        </h6>
-                        <div className="mxd-links-lines__icon">
-                          <i className="ph ph-arrow-up-right" />
-                        </div>
-                      </a>
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                    </div>
-                    {/* item */}
-                    <div className="mxd-links-lines__item">
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                      <a
-                        className="mxd-links-lines__link anim-uni-in-up"
-                        href="https://www.awwwards.com/"
-                        target="_blank"
-                      >
-                        <h6 className="mxd-links-lines__title">
-                          Awwwards nomination
-                        </h6>
-                        <div className="mxd-links-lines__icon">
-                          <i className="ph ph-arrow-up-right" />
-                        </div>
-                      </a>
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                    </div>
-                    {/* item */}
-                    <div className="mxd-links-lines__item">
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                      <a
-                        className="mxd-links-lines__link anim-uni-in-up"
-                        href="https://www.behance.net/"
-                        target="_blank"
-                      >
-                        <h6 className="mxd-links-lines__title">
-                          Behance curated work
-                        </h6>
-                        <div className="mxd-links-lines__icon">
-                          <i className="ph ph-arrow-up-right" />
-                        </div>
-                      </a>
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                    </div>
-                    {/* item */}
-                    <div className="mxd-links-lines__item">
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                      <a
-                        className="mxd-links-lines__link anim-uni-in-up"
-                        href="https://medium.com/"
-                        target="_blank"
-                      >
-                        <h6 className="mxd-links-lines__title">
-                          Article on Medium
-                        </h6>
-                        <div className="mxd-links-lines__icon">
-                          <i className="ph ph-arrow-up-right" />
-                        </div>
-                      </a>
-                      <div className="mxd-links-lines__divider anim-uni-in-up" />
-                    </div>
-                  </div>
+                  {/* Awards section removed */}
                 </div>
               </div>
             </div>

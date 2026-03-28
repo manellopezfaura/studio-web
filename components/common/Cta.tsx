@@ -1,10 +1,13 @@
-import Link from "next/link";
+"use client";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 
 import RevealText from "../animation/RevealText";
 import AnimatedButton from "../animation/AnimatedButton";
+import { useTranslations } from "next-intl";
 
 export default function Cta() {
+  const t = useTranslations("Shared");
   return (
     <div className="mxd-section overflow-hidden">
       <div className="mxd-container">
@@ -16,10 +19,11 @@ export default function Cta() {
               <div className="mxd-promo__bg" />
               {/* caption */}
               <div className="mxd-promo__content">
-                <p className="mxd-promo__title anim-uni-in-up">
+                <h2 className="mxd-promo__title anim-uni-in-up">
                   <span className="mxd-promo__icon">
                     <Image
-                      alt="Icon"
+                      alt=""
+                      role="presentation"
                       src="/img/icons/300x300_obj-cta-01.webp"
                       width={300}
                       height={300}
@@ -29,12 +33,12 @@ export default function Cta() {
                     as="span"
                     className="mxd-promo__caption reveal-type"
                   >
-                    ¿Tienes un proyecto en mente?
+                    {t("CtaTitle")}
                   </RevealText>
-                </p>
+                </h2>
                 <div className="mxd-promo__controls anim-uni-in-up">
                   <AnimatedButton
-                    text="Hablémoslo"
+                    text={t("CtaButton")}
                     className="btn btn-anim btn-default btn-large btn-additional slide-right-up"
                     href={`/contact`}
                   >

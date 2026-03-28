@@ -5,9 +5,13 @@ import testimonialsPortfolioData from "@/data/testimonials-portfolio.json";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Parallax } from "swiper/modules";
 import AnimatedButton from "../animation/AnimatedButton";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export default function Testimonials() {
+  const t = useTranslations("Testimonials");
+  const tWorks = useTranslations("WorksPage.List");
+
   return (
     <div
       id="testimonials"
@@ -16,6 +20,7 @@ export default function Testimonials() {
       <div className="mxd-container grid-container">
         {/* Block - Testimonials Slider #02 with Section Title Start */}
         <div className="mxd-block">
+          <h2 className="sr-only">Testimonials</h2>
           <div className="testimonials-slider no-padding">
             {/* slider main container */}
             <Swiper
@@ -59,18 +64,19 @@ export default function Testimonials() {
                           >
                             <div className="mxd-testimonials-photo__avatar">
                               <Image
-                                alt="Review Author"
+                                alt={`Photo of ${item.authorName}`}
                                 src={item.authorPhoto}
                                 width={item.authorPhotoWidth}
                                 height={item.authorPhotoHeight}
                               />
                             </div>
                             <div className="mxd-testimonials-photo__info">
-                              <h5 className="mxd-testimonials-photo__name">
+                              <p className="mxd-testimonials-photo__name">
                                 {item.authorName}{" "}
-                              </h5>{" "}
+                              </p>{" "}
                               <p className="mxd-testimonials-photo__position t-small">
-                                {item.authorPosition}{" "}
+                                {/* Try to translate position if key exists, else fallback */}
+                                {t(`${item.id}.position`)}{" "}
                                 <a
                                   className="link-small-underline"
                                   href={item.authorCompanyUrl}
@@ -92,9 +98,9 @@ export default function Testimonials() {
                             data-swiper-parallax-x={-300}
                             data-swiper-parallax-opacity={0}
                           >
-                            <p className="t-large">{item.text}</p>
+                            <p className="t-large">{t(`${item.id}.text`)}</p>
                             <AnimatedButton
-                              text="Project Page"
+                              text={tWorks("projectPage")}
                               className="btn btn-anim btn-default btn-small btn-opposite slide-right-up"
                               href={item.projectPage}
                             >
@@ -109,7 +115,7 @@ export default function Testimonials() {
                         >
                           <div className="mxd-testimonials-photo__image-inner radius-l fullheight-l">
                             <Image
-                              alt="Testimonials Image"
+                              alt={`Project showcase for ${item.authorCompany}`}
                               src={item.testimonialImage}
                               width={item.testimonialImageWidth}
                               height={item.testimonialImageHeight}

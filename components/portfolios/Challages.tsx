@@ -1,8 +1,10 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import RevealText from "../animation/RevealText";
 
 export default function Challages() {
+  const t = useTranslations("ProjectDetails.challenge");
 
   return (
     <>
@@ -13,7 +15,7 @@ export default function Challages() {
             <div className="col-12 col-xl-5 mxd-grid-item no-margin">
               <div className="mxd-project__subtitle">
                 <RevealText as="h2" className="reveal-type anim-uni-in-up">
-                  Challenge
+                  {t("title")}
                 </RevealText>
               </div>
             </div>
@@ -21,15 +23,10 @@ export default function Challages() {
               <div className="mxd-project__content">
                 <div className="mxd-project__paragraph">
                   <p className="t-large t-bright anim-uni-in-up">
-                    Donec maximus lorem quam, a aliquam erat aliquam quis. Sed
-                    accumsan sagittis condimentum. Proin eu nulla.
+                    {t("intro")}
                   </p>
                   <p className="anim-uni-in-up">
-                    Nunc vel ligula tincidunt, fermentum velit ac, sodales eros.
-                    Vivamus ac leo in arcu accumsan condimentum. Nullam ac est
-                    quis dolor scelerisque interdum in at risus. Pellentesque
-                    mattis est vel maximus posuere. Integer tristique ipsum
-                    velit, vitae gravida purus laoreet.
+                    {t("body")}
                   </p>
                 </div>
               </div>
@@ -47,7 +44,7 @@ export default function Challages() {
               <div className="col-12 col-xl-5 mxd-project-cards__item mxd-grid-item anim-uni-scale-in-right">
                 <div className="mxd-project-cards__inner align-end bg-accent radius-m">
                   <Image
-                    alt="Project Preview"
+                    alt="Project detail — design and development by 107 Studio"
                     src="/img/works/1200x1200_prj-details-01.webp"
                     width={1200}
                     height={1200}
@@ -58,7 +55,7 @@ export default function Challages() {
               <div className="col-12 col-xl-7 mxd-project-cards__item mxd-grid-item anim-uni-scale-in-left">
                 <div className="mxd-project-cards__inner align-end bg-base-tint radius-m">
                   <Image
-                    alt="Project Preview"
+                    alt="Project detail — design and development by 107 Studio"
                     src="/img/works/1400x1000_prj-details-01.webp"
                     width={1400}
                     height={1000}
@@ -69,7 +66,7 @@ export default function Challages() {
               <div className="col-12 col-xl-7 mxd-project-cards__item mxd-grid-item anim-uni-scale-in-right">
                 <div className="mxd-project-cards__inner bg-base-tint radius-m">
                   <Image
-                    alt="Project Preview"
+                    alt="Project detail — design and development by 107 Studio"
                     src="/img/works/1400x1000_prj-details-02.webp"
                     width={1400}
                     height={1000}
@@ -80,7 +77,7 @@ export default function Challages() {
               <div className="col-12 col-xl-5 mxd-project-cards__item mxd-grid-item anim-uni-scale-in-left">
                 <div className="mxd-project-cards__inner bg-base-tint radius-m">
                   <Image
-                    alt="Project Preview"
+                    alt="Project detail — design and development by 107 Studio"
                     src="/img/works/1200x1200_prj-details-02.webp"
                     width={1200}
                     height={1200}

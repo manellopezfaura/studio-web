@@ -2,7 +2,7 @@
     "HomePage": {
         "title": "Home",
         "Hero": {
-            "caption": "Cutting-edge<br />software development<br />company"
+            "caption": "Design-driven<br />digital studio<br />& development"
         }
     },
     "AboutPage": {
@@ -18,15 +18,310 @@
             }
         }
     },
+    "ServicesPage": {
+        "Hero": {
+            "subtitle": "Services",
+            "title": "We Make<br />it Happen",
+            "text": "We combine strategic thinking and visual craftsmanship to create digital experiences that captivate and convert.",
+            "stats": {
+                "0": {
+                    "value": "90",
+                    "label": "Projects done"
+                },
+                "1": {
+                    "value": "150",
+                    "label": "Happy clients"
+                },
+                "2": {
+                    "value": "15",
+                    "label": "Awards winning"
+                }
+            },
+            "cta": "Start Project"
+        },
+        "Showcase": {
+            "sectionTitle": "Our Services",
+            "brandIdentity": {
+                "title": "Brand Identity",
+                "desc": "We build visual identities that go beyond aesthetics — coherent brand systems that communicate essence, build trust, and stay in memory.",
+                "tags": [
+                    "Brand Strategy",
+                    "Logo & Symbol",
+                    "Visual System",
+                    "Style Guide",
+                    "Naming"
+                ],
+                "bullets": [
+                    "Market research and strategic positioning",
+                    "Logo, symbol, and icon system design",
+                    "Color palette, typography, and visual language",
+                    "Brand manual and application guidelines",
+                    "Corporate stationery and digital assets"
+                ]
+            },
+            "productDesign": {
+                "title": "Product Design",
+                "desc": "We design people-centered digital products — intuitive interfaces that solve real problems and turn complexity into seamless experiences.",
+                "tags": [
+                    "UI/UX",
+                    "Design System",
+                    "Prototyping",
+                    "User Research",
+                    "Mobile Apps"
+                ],
+                "bullets": [
+                    "User research and journey mapping",
+                    "Low and high fidelity wireframes",
+                    "Scalable design system with reusable components",
+                    "Interactive prototyping and usability testing",
+                    "Responsive design for web and native applications"
+                ]
+            },
+            "webDesign": {
+                "title": "Web Design & Development",
+                "desc": "We create high-performance websites that merge intentional design with modern engineering — every pixel and every line of code with purpose.",
+                "tags": [
+                    "Frontend",
+                    "Next.js",
+                    "Animations",
+                    "E-Commerce",
+                    "CMS"
+                ],
+                "bullets": [
+                    "Custom web design with unique visual identity",
+                    "Frontend development with React and Next.js",
+                    "Animations and micro-interactions with GSAP",
+                    "Headless CMS and e-commerce integration",
+                    "Technical SEO and Core Web Vitals optimization"
+                ]
+            },
+            "aiAutomation": {
+                "title": "AI & Automation",
+                "desc": "We integrate artificial intelligence and automation into real business workflows — not as a buzzword, but as a tangible tool that multiplies capabilities.",
+                "tags": [
+                    "AI Chatbots",
+                    "Workflows",
+                    "API Integration",
+                    "Prompt Engineering",
+                    "Data"
+                ],
+                "bullets": [
+                    "AI-powered chatbots and conversational assistants",
+                    "Workflow automation with n8n and Zapier",
+                    "AI API integration (OpenAI, Claude, custom)",
+                    "Analytical dashboards with real-time data",
+                    "AI implementation consulting for teams"
+                ]
+            },
+            "marketingPerformance": {
+                "title": "Marketing & Performance",
+                "desc": "We design and execute results-driven marketing strategies — where every campaign has clear metrics and every dollar invested has measurable return.",
+                "tags": [
+                    "SEO",
+                    "Paid Media",
+                    "Social Media",
+                    "Email Marketing",
+                    "Analytics"
+                ],
+                "bullets": [
+                    "On-page, technical, and content SEO strategy",
+                    "Paid Media campaigns (Google Ads, Meta, LinkedIn)",
+                    "Social media management and strategy",
+                    "Email marketing automation and nurturing",
+                    "Advanced analytics and KPI reporting"
+                ]
+            }
+        },
+        "Marquee": {
+            "items": [
+                "Brand Identity",
+                "Product Design",
+                "Web Design",
+                "AI & Automation",
+                "Marketing & Performance"
+            ]
+        },
+        "Process": {
+            "subtitle": "Process",
+            "title": "How We Work",
+            "steps": {
+                "0": {
+                    "number": "01",
+                    "title": "Discovery",
+                    "desc": "We research, listen, and analyze. We understand your business, audience, and goals to define a solid strategy before designing a single pixel."
+                },
+                "1": {
+                    "number": "02",
+                    "title": "Design & Development",
+                    "desc": "We transform strategy into visual design and functional code. We iterate with you at every phase to ensure the result exceeds expectations."
+                },
+                "2": {
+                    "number": "03",
+                    "title": "Launch & Growth",
+                    "desc": "We launch, measure, and optimize. We don't stop at deploy — we support growth with data, continuous iteration, and dedicated support."
+                }
+            }
+        },
+        "ParallaxDivider": {
+            "button": "Play showreel * Play showreel * Play showreel *"
+        }
+    },
+    "WorksPage": {
+        "Hero": {
+            "subtitle": "Works",
+            "title": "Where bold ideas take shape"
+        },
+        "List": {
+            "title": "Portfolio archive",
+            "clientsApprove": "Clients Approve",
+            "projectPage": "Project Page"
+        }
+    },
+    "Projects": {
+        "34": {
+            "title": "E-commerce website",
+            "tags": [
+                "UI/UX design",
+                "Development"
+            ]
+        },
+        "35": {
+            "title": "NFT project branding",
+            "tags": [
+                "Brand identity",
+                "Style guides"
+            ]
+        },
+        "36": {
+            "title": "VR vision project",
+            "tags": [
+                "Midjourney",
+                "AI model"
+            ]
+        },
+        "37": {
+            "title": "Illustrations set",
+            "tags": [
+                "Illustrations",
+                "Design"
+            ]
+        },
+        "38": {
+            "title": "Blockchain app design",
+            "tags": [
+                "UI/UX Design",
+                "Development"
+            ]
+        },
+        "39": {
+            "title": "107 Studio portfolio",
+            "tags": [
+                "UI/UX Design",
+                "Development"
+            ]
+        },
+        "48": {
+            "title": "107 Studio",
+            "tags": [
+                "Brand",
+                "Illustrations",
+                "Web"
+            ]
+        },
+        "49": {
+            "title": "AI Experiments",
+            "tags": [
+                "Sora",
+                "AI",
+                "Editorial"
+            ]
+        },
+        "50": {
+            "title": "Mobile app design",
+            "tags": [
+                "Design",
+                "UI/UX",
+                "Android"
+            ]
+        }
+    },
+    "Testimonials": {
+        "testimonial_1": {
+            "text": "Working with 107 Studio team was an absolute pleasure! They took the time to understand our business needs and translated them into a beautifully designed, user-friendly website.",
+            "position": "Brand Manager at Nexora Health"
+        },
+        "testimonial_2": {
+            "text": "The team's attention to detail, creativity, and technical expertise exceeded our expectations. We've received so much positive feedback from our customers already.",
+            "position": "SEO Lead at Kova Digital"
+        }
+    },
+    "ProjectDetails": {
+        "challenge": {
+            "title": "Challenge",
+            "intro": "Every project starts with a unique set of constraints — tight timelines, evolving requirements, or the need to stand out in a saturated market.",
+            "body": "Our role was to distill complexity into clarity: understand the core problem, align stakeholders around a shared vision, and define a path that balances ambition with feasibility."
+        },
+        "solution": {
+            "title": "Solution",
+            "intro": "We approached the project with a research-first mindset — mapping user needs, auditing the competitive landscape, and identifying the highest-impact opportunities.",
+            "body": "From there, we moved into iterative design and development sprints, validating decisions early and shipping with precision. The result: a product that feels intentional in every detail."
+        }
+    },
     "Navigation": {
         "home": "Home",
-        "about": "About Us",
+        "about": "About",
         "services": "Services",
-        "work": "Work",
+        "work": "Works",
         "contact": "Contact"
     },
     "Metadata": {
         "title": "107 Studio | Creative Digital Agency",
         "description": "Software development and digital design studio. We build high-impact websites and custom applications."
+    },
+    "Footer": {
+        "privacy": "Privacy Policy",
+        "terms": "Terms & Conditions",
+        "contactTitle": "Contact",
+        "contactText": "Share your project and we'll reply soon."
+    },
+    "Shared": {
+        "CtaTitle": "Have a project in mind?",
+        "CtaButton": "Let's talk"
+    },
+    "ContactPage": {
+        "Header": {
+            "subtitle": "Contact",
+            "title": "Let's talk<br />about your project!",
+            "text": "Have questions? We've got the answers! Here, you'll find clear and concise information about our services, process, and what to expect when working with us. If you need more details, feel free to reach out!"
+        },
+        "Form": {
+            "successTitle": "Done!",
+            "successText": "Thanks for your message. We'll get back as soon as possible.",
+            "namePlaceholder": "Your name*",
+            "companyPlaceholder": "Company name",
+            "emailPlaceholder": "Email*",
+            "phonePlaceholder": "Phone",
+            "messagePlaceholder": "A few words about your project*",
+            "submitButton": "Submit",
+            "toastSuccess": "Message sent — thanks!",
+            "toastError": "Submission failed — please try again later."
+        },
+        "Locations": {
+            "title": "Welcome to our office",
+            "text": "Inspiring ideas, creative insights, and the latest in design and tech. Fueling innovation for your digital journey.",
+            "ny": "New York",
+            "oakland": "Oakland"
+        }
+    },
+    "NotFound": {
+        "title": "Page not found",
+        "description": "What you're looking for doesn't exist or was moved.",
+        "cta": "Back to home"
+    },
+    "ErrorPage": {
+        "title": "Something went wrong",
+        "description": "An unexpected error occurred. Please try again.",
+        "retry": "Try again",
+        "cta": "Back to home"
     }
 }

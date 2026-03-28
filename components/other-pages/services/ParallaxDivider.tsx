@@ -4,8 +4,10 @@ import VideoParallax from "@/components/animation/VideoParallax";
 import VideoModal from "@/components/common/VideoModal";
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ParallaxDivider() {
+  const t = useTranslations("ServicesPage.ParallaxDivider");
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -56,7 +58,7 @@ export default function ParallaxDivider() {
                     <text>
                       {/* button text here!!! */}
                       <textPath xlinkHref="#textPath">
-                        Play showreel * Play showreel * Play showreel *
+                        {t("button")}
                       </textPath>
                     </text>
                   </g>
@@ -64,7 +66,7 @@ export default function ParallaxDivider() {
                 {/* image */}
                 <Image
                   className="btn-rotating__image"
-                  alt="Object"
+                  alt="Creative 3D visual element"
                   src="/img/icons/300x300_obj-btn-02.webp"
                   width={300}
                   height={300}

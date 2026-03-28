@@ -1,8 +1,10 @@
 import Counter from "@/components/common/Counter";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function Hero() {
+  const t = useTranslations("ServicesPage.Hero");
   return (
     <>
       {/* Section - Inner Page Headline Start */}
@@ -37,7 +39,7 @@ export default function Hero() {
                     c0,0,1.3-0.1,1.8-0.2c1,0,4,0,4,0c0.2,0,0.4-0.2,0.4-0.4C20,9.8,19.8,9.6,19.6,9.6L19.6,9.6z"
                         />
                       </svg>
-                      <span>Services</span>
+                      <span>{t("subtitle")}</span>
                     </p>
                   </div>
                 </div>
@@ -47,7 +49,7 @@ export default function Hero() {
                   <div className="mxd-block__content">
                     <div className="mxd-block__inner-headline">
                       <h1 className="inner-headline__title headline-img-before headline-img-04 loading__item">
-                        New standards in digital excellence
+                        {t("title")}
                       </h1>
                       {/* <p class="inner-headline__text t-large t-bright"></p> */}
                     </div>
@@ -89,8 +91,7 @@ export default function Hero() {
                                     <Counter max={5} />+
                                   </p>
                                   <p className="mxd-counter__descr t-140 t-bright">
-                                    Years of professional experience in
-                                    designing digital products
+                                    {t("xp")}
                                   </p>
                                 </div>
                                 <div className="mxd-stats-cards__btngroup">
@@ -99,14 +100,14 @@ export default function Hero() {
                                     href={`/contact`}
                                   >
                                     <span className="btn-caption">
-                                      Start New Project
+                                      {t("startProject")}
                                     </span>
                                     <i className="ph-bold ph-arrow-up-right" />
                                   </Link>
                                 </div>
                                 <div className="mxd-stats-cards__image mxd-stats-cards-image-3">
                                   <Image
-                                    alt="Illustration"
+                                    alt="Years of expertise in digital design"
                                     src="/img/illustrations/800x800_card-image-03.webp"
                                     width={800}
                                     height={800}
@@ -125,9 +126,7 @@ export default function Hero() {
                                     <Counter max={70} />+
                                   </p>
                                   <p className="mxd-counter__descr t-140 t-bright">
-                                    Successfully
-                                    <br />
-                                    completed projects
+                                    {t("completed")}
                                   </p>
                                 </div>
                                 <div className="mxd-stats-cards__btngroup">
@@ -135,13 +134,13 @@ export default function Hero() {
                                     className="btn btn-anim btn-default btn-outline slide-right-up"
                                     href={`/works-simple`}
                                   >
-                                    <span className="btn-caption">Works</span>
+                                    <span className="btn-caption">{t("works")}</span>
                                     <i className="ph-bold ph-arrow-up-right" />
                                   </Link>
                                 </div>
                                 <div className="mxd-stats-cards__image mxd-stats-cards-image-4">
                                   <Image
-                                    alt="Illustration"
+                                    alt="Completed projects showcase"
                                     src="/img/illustrations/800x800_card-image-04.webp"
                                     width={800}
                                     height={800}

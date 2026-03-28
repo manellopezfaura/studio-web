@@ -30,7 +30,8 @@ export default function Facts() {
                       {/* image */}
                       <Image
                         className="mxd-stats-simple__image"
-                        alt="Icon"
+                        alt=""
+                        role="presentation"
                         src={fact.image}
                         width={fact.imageWidth}
                         height={fact.imageHeight}

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 import { projects1 } from "@/data/projects.json";
 import RevealText from "@/components/animation/RevealText";

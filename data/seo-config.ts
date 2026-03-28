@@ -16,9 +16,9 @@ export const seoConfig = {
   // Contact info for Schema.org
   contact: {
     email: "hello@107studio.com",
-    phone: "+34 XXX XXX XXX", // Update with real phone
+    phone: undefined as string | undefined, // TODO: Add real phone number
     address: {
-      street: "Barcelona", // Update with real address
+      street: "Barcelona", // TODO: Update with real address
       city: "Barcelona",
       region: "Catalunya",
       postalCode: "08000",

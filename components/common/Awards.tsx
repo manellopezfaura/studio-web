@@ -98,7 +98,7 @@ export default function Awards() {
                           : "scale(1,1.4)",
                       transition: "transform 0.3s ease",
                     }}
-                    alt="Project Preview"
+                    alt="Award-winning project by 107 Studio"
                     src={item.image}
                     width={item.imageWidth}
                     height={item.imageHeight}

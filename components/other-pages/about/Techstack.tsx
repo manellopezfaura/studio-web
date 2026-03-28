@@ -18,7 +18,7 @@ export default function Techstack() {
                     <div className="mxd-tech-stack-cards__inner-v3">
                       <div className="mxd-tech-stack-cards__icon">
                         <Image
-                          alt="Tech Stack Icon"
+                          alt={`${t.name} logo`}
                           src={t.icon}
                           width={120}
                           height={90}

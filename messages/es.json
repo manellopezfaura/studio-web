@@ -2,7 +2,7 @@
     "HomePage": {
         "title": "Inicio",
         "Hero": {
-            "caption": "Estudio digital<br />creativo y desarrollo<br />de software"
+            "caption": "Estudio digital<br />de diseño y<br />desarrollo"
         }
     },
     "AboutPage": {
@@ -18,6 +18,255 @@
             }
         }
     },
+    "ServicesPage": {
+        "Hero": {
+            "subtitle": "Servicios",
+            "title": "Hacemos<br />Que Suceda",
+            "text": "Combinamos pensamiento estratégico y artesanía visual para crear experiencias digitales que cautivan y convierten.",
+            "stats": {
+                "0": {
+                    "value": "90",
+                    "label": "Proyectos terminados"
+                },
+                "1": {
+                    "value": "150",
+                    "label": "Clientes felices"
+                },
+                "2": {
+                    "value": "15",
+                    "label": "Premios ganados"
+                }
+            },
+            "cta": "Empezar Proyecto"
+        },
+        "Showcase": {
+            "sectionTitle": "Nuestros Servicios",
+            "brandIdentity": {
+                "title": "Identidad de Marca",
+                "desc": "Construimos identidades visuales que trascienden lo estético — sistemas de marca coherentes que comunican esencia, generan confianza y permanecen en la memoria.",
+                "tags": [
+                    "Estrategia de Marca",
+                    "Logo & Símbolo",
+                    "Sistema Visual",
+                    "Guía de Estilo",
+                    "Naming"
+                ],
+                "bullets": [
+                    "Investigación de mercado y posicionamiento estratégico",
+                    "Diseño de logotipo, símbolo y sistema iconográfico",
+                    "Paleta cromática, tipografía y lenguaje visual",
+                    "Manual de marca y guías de aplicación",
+                    "Papelería corporativa y activos digitales"
+                ]
+            },
+            "productDesign": {
+                "title": "Diseño de Producto",
+                "desc": "Diseñamos productos digitales centrados en las personas — interfaces intuitivas que resuelven problemas reales y convierten complejidad en experiencias fluidas.",
+                "tags": [
+                    "UI/UX",
+                    "Design System",
+                    "Prototipado",
+                    "User Research",
+                    "Apps Móviles"
+                ],
+                "bullets": [
+                    "Research de usuarios y mapeo de journeys",
+                    "Wireframes de baja y alta fidelidad",
+                    "Design system escalable con componentes reutilizables",
+                    "Prototipado interactivo y testing de usabilidad",
+                    "Diseño responsive para web y aplicaciones nativas"
+                ]
+            },
+            "webDesign": {
+                "title": "Diseño & Desarrollo Web",
+                "desc": "Creamos sitios web de alto rendimiento que fusionan diseño intencional con ingeniería moderna — cada píxel y cada línea de código con propósito.",
+                "tags": [
+                    "Frontend",
+                    "Next.js",
+                    "Animaciones",
+                    "E-Commerce",
+                    "CMS"
+                ],
+                "bullets": [
+                    "Diseño web a medida con identidad visual única",
+                    "Desarrollo frontend con React y Next.js",
+                    "Animaciones y micro-interacciones con GSAP",
+                    "Integración de CMS headless y e-commerce",
+                    "Optimización SEO técnico y Core Web Vitals"
+                ]
+            },
+            "aiAutomation": {
+                "title": "IA & Automatización",
+                "desc": "Integramos inteligencia artificial y automatización en flujos reales de negocio — no como buzzword, sino como herramienta tangible que multiplica capacidades.",
+                "tags": [
+                    "Chatbots IA",
+                    "Workflows",
+                    "Integración API",
+                    "Prompt Engineering",
+                    "Datos"
+                ],
+                "bullets": [
+                    "Chatbots y asistentes conversacionales con IA",
+                    "Automatización de workflows con n8n y Zapier",
+                    "Integración de APIs de IA (OpenAI, Claude, custom)",
+                    "Dashboards analíticos con datos en tiempo real",
+                    "Consultoría de implementación IA para equipos"
+                ]
+            },
+            "marketingPerformance": {
+                "title": "Marketing & Performance",
+                "desc": "Diseñamos y ejecutamos estrategias de marketing orientadas a resultados — donde cada campaña tiene métricas claras y cada euro invertido tiene retorno medible.",
+                "tags": [
+                    "SEO",
+                    "Paid Media",
+                    "Social Media",
+                    "Email Marketing",
+                    "Analytics"
+                ],
+                "bullets": [
+                    "Estrategia SEO on-page, técnico y de contenidos",
+                    "Campañas de Paid Media (Google Ads, Meta, LinkedIn)",
+                    "Gestión y estrategia de redes sociales",
+                    "Automatización de email marketing y nurturing",
+                    "Analítica avanzada y reporting de KPIs"
+                ]
+            }
+        },
+        "Marquee": {
+            "items": [
+                "Brand Identity",
+                "Product Design",
+                "Web Design",
+                "AI & Automation",
+                "Marketing & Performance"
+            ]
+        },
+        "Process": {
+            "subtitle": "Proceso",
+            "title": "Cómo Trabajamos",
+            "steps": {
+                "0": {
+                    "number": "01",
+                    "title": "Descubrimiento",
+                    "desc": "Investigamos, escuchamos y analizamos. Entendemos tu negocio, tu audiencia y tus objetivos para definir una estrategia sólida antes de diseñar un solo píxel."
+                },
+                "1": {
+                    "number": "02",
+                    "title": "Diseño & Desarrollo",
+                    "desc": "Transformamos la estrategia en diseño visual y código funcional. Iteramos contigo en cada fase para asegurar que el resultado supera expectativas."
+                },
+                "2": {
+                    "number": "03",
+                    "title": "Lanzamiento & Crecimiento",
+                    "desc": "Lanzamos, medimos y optimizamos. No terminamos en el deploy — acompañamos el crecimiento con datos, iteración continua y soporte dedicado."
+                }
+            }
+        },
+        "ParallaxDivider": {
+            "button": "Reproducir showreel * Reproducir showreel * Reproducir showreel *"
+        }
+    },
+    "WorksPage": {
+        "Hero": {
+            "subtitle": "Proyectos",
+            "title": "Donde las ideas valientes toman forma"
+        },
+        "List": {
+            "title": "Archivo de Portafolio",
+            "clientsApprove": "Clientes Aprueban",
+            "projectPage": "Ver Proyecto"
+        }
+    },
+    "Projects": {
+        "34": {
+            "title": "Sitio E-commerce",
+            "tags": [
+                "Diseño UI/UX",
+                "Desarrollo"
+            ]
+        },
+        "35": {
+            "title": "Branding Proyecto NFT",
+            "tags": [
+                "Identidad de marca",
+                "Guías de estilo"
+            ]
+        },
+        "36": {
+            "title": "Proyecto Visión VR",
+            "tags": [
+                "Midjourney",
+                "Modelo IA"
+            ]
+        },
+        "37": {
+            "title": "Set Ilustraciones",
+            "tags": [
+                "Ilustraciones",
+                "Diseño"
+            ]
+        },
+        "38": {
+            "title": "Diseño App Blockchain",
+            "tags": [
+                "Diseño UI/UX",
+                "Desarrollo"
+            ]
+        },
+        "39": {
+            "title": "Portafolio 107 Studio",
+            "tags": [
+                "Diseño UI/UX",
+                "Desarrollo"
+            ]
+        },
+        "48": {
+            "title": "107 Studio",
+            "tags": [
+                "Marca",
+                "Ilustraciones",
+                "Web"
+            ]
+        },
+        "49": {
+            "title": "Experimentos IA",
+            "tags": [
+                "Sora",
+                "IA",
+                "Editorial"
+            ]
+        },
+        "50": {
+            "title": "Diseño App Móvil",
+            "tags": [
+                "Diseño",
+                "UI/UX",
+                "Android"
+            ]
+        }
+    },
+    "Testimonials": {
+        "testimonial_1": {
+            "text": "¡Trabajar con el equipo de 107 Studio fue un placer absoluto! Se tomaron el tiempo para entender nuestras necesidades comerciales y las tradujeron en un sitio web bellamente diseñado y fácil de usar.",
+            "position": "Brand Manager en Nexora Health"
+        },
+        "testimonial_2": {
+            "text": "La atención al detalle, la creatividad y la experiencia técnica del equipo superaron nuestras expectativas. Ya hemos recibido muchos comentarios positivos de nuestros clientes.",
+            "position": "SEO Lead en Kova Digital"
+        }
+    },
+    "ProjectDetails": {
+        "challenge": {
+            "title": "Reto",
+            "intro": "Cada proyecto arranca con un conjunto único de restricciones — plazos ajustados, requisitos cambiantes o la necesidad de destacar en un mercado saturado.",
+            "body": "Nuestro papel fue destilar complejidad en claridad: entender el problema central, alinear a las partes interesadas en torno a una visión compartida y definir un camino que equilibre ambición con viabilidad."
+        },
+        "solution": {
+            "title": "Solución",
+            "intro": "Abordamos el proyecto con una mentalidad research-first — mapeando necesidades del usuario, auditando el panorama competitivo e identificando las oportunidades de mayor impacto.",
+            "body": "Desde ahí, avanzamos con sprints iterativos de diseño y desarrollo, validando decisiones temprano y entregando con precisión. El resultado: un producto que se siente intencional en cada detalle."
+        }
+    },
     "Navigation": {
         "home": "Inicio",
         "about": "Nosotros",
@@ -28,5 +277,51 @@
     "Metadata": {
         "title": "107 Studio | Agencia Digital Creativa",
         "description": "Estudio de desarrollo de software y diseño digital. Creamos webs de alto impacto y aplicaciones a medida."
+    },
+    "Footer": {
+        "privacy": "Política de Privacidad",
+        "terms": "Términos y Condiciones",
+        "contactTitle": "Contacto",
+        "contactText": "Compártenos tu proyecto y te responderemos pronto."
+    },
+    "Shared": {
+        "CtaTitle": "¿Tienes un proyecto en mente?",
+        "CtaButton": "Hablémoslo"
+    },
+    "ContactPage": {
+        "Header": {
+            "subtitle": "Contacto",
+            "title": "Hablemos<br />de tu proyecto!",
+            "text": "¿Tienes preguntas? ¡Tenemos respuestas! Aquí encontrarás información clara sobre nuestros servicios. Si necesitas más detalles, ¡contáctanos!"
+        },
+        "Form": {
+            "successTitle": "¡Listo!",
+            "successText": "Gracias por tu mensaje. Te responderemos lo antes posible.",
+            "namePlaceholder": "Tu nombre*",
+            "companyPlaceholder": "Nombre de empresa",
+            "emailPlaceholder": "Email*",
+            "phonePlaceholder": "Teléfono",
+            "messagePlaceholder": "Unas palabras sobre tu proyecto*",
+            "submitButton": "Enviar",
+            "toastSuccess": "Mensaje enviado — ¡gracias!",
+            "toastError": "Error al enviar — por favor intenta más tarde."
+        },
+        "Locations": {
+            "title": "Bienvenido a nuestra oficina",
+            "text": "Ideas inspiradoras, conocimientos creativos y lo último en diseño y tecnología.",
+            "ny": "Nueva York",
+            "oakland": "Oakland"
+        }
+    },
+    "NotFound": {
+        "title": "Página no encontrada",
+        "description": "Lo que buscas no existe o fue movido a otro lugar.",
+        "cta": "Volver al inicio"
+    },
+    "ErrorPage": {
+        "title": "Algo salió mal",
+        "description": "Se produjo un error inesperado. Inténtalo de nuevo.",
+        "retry": "Intentar de nuevo",
+        "cta": "Volver al inicio"
     }
 }

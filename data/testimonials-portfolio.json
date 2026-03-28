@@ -1,5 +1,6 @@
 [
   {
+    "id": "testimonial_1",
     "authorPhoto": "/img/avatars/300x300_ava-03.webp",
     "authorPhotoWidth": 300,
     "authorPhotoHeight": 300,
@@ -15,6 +16,7 @@
     "testimonialImageHeight": 1200
   },
   {
+    "id": "testimonial_2",
     "authorPhoto": "/img/avatars/300x300_ava-04.webp",
     "authorPhotoWidth": 300,
     "authorPhotoHeight": 300,

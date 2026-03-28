@@ -1,10 +1,15 @@
-import Link from "next/link";
+"use client";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 
 import StackCards from "../animation/StackCards";
 import { projects10 } from "@/data/projects.json";
+import { useTranslations } from "next-intl";
 
 export default function Portfolios1() {
+  const t = useTranslations("WorksPage.Hero");
+  const tProjects = useTranslations("Projects");
+
   return (
     <>
       {/* Section - Inner Page Headline Start */}
@@ -40,7 +45,7 @@ export default function Portfolios1() {
                         />
                       </svg>
 
-                      <span>Works</span>
+                      <span>{t("subtitle")}</span>
                     </p>
                   </div>
                 </div>
@@ -50,7 +55,7 @@ export default function Portfolios1() {
                   <div className="mxd-block__content">
                     <div className="mxd-block__inner-headline loading__item">
                       <h1 className="inner-headline__title headline-img-after headline-img-03">
-                        Where bold ideas take shape
+                        {t("title")}
                       </h1>
                       {/* <p class="inner-headline__text t-large t-bright">I wonder if I've been changed 
                   in the night? Let me think. Was I the same when I got up this morning? 
@@ -73,35 +78,39 @@ export default function Portfolios1() {
           <div className="mxd-block mxd-grid-item no-margin">
             <div className="content__block loading__fade">
               <StackCards stackName="projects-stack" className="stack-wrapper">
-                {projects10.map((s) => (
-                  <Link
-                    key={s.id}
-                    className="mxd-projects-stack__inner justify-between"
-                    href={`/project-details`}
-                  >
-                    <div className="mxd-projects-stack__image">
-                      <Image
-                        alt="Project Preview"
-                        src={s.image}
-                        width={1920}
-                        height={1080}
-                      />
-                    </div>
-                    <div className="mxd-projects-stack__tags">
-                      {s.tags.map((t, i) => (
-                        <span
-                          key={i}
-                          className="tag tag-default tag-outline-permanent"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mxd-projects-stack__title no-margin">
-                      <h2 className="permanent-light">{s.title}</h2>
-                    </div>
-                  </Link>
-                ))}
+                {projects10.map((s) => {
+                  const title = tProjects(`${s.id}.title`);
+                  const tags = tProjects.raw(`${s.id}.tags`) as string[];
+                  return (
+                    <Link
+                      key={s.id}
+                      className="mxd-projects-stack__inner justify-between"
+                      href={`/project-details`}
+                    >
+                      <div className="mxd-projects-stack__image">
+                        <Image
+                          alt="Featured project by 107 Studio"
+                          src={s.image}
+                          width={1920}
+                          height={1080}
+                        />
+                      </div>
+                      <div className="mxd-projects-stack__tags">
+                        {tags.map((t, i) => (
+                          <span
+                            key={i}
+                            className="tag tag-default tag-outline-permanent"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mxd-projects-stack__title no-margin">
+                        <h2 className="permanent-light">{title}</h2>
+                      </div>
+                    </Link>
+                  );
+                })}
               </StackCards>
             </div>
           </div>
