@@ -7,4 +7,4 @@ Disallow: /_next/
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://107studio.com/sitemap.xml
+Sitemap: https://107studio.es/sitemap.xml

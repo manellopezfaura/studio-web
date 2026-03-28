@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs";
 
-const SITE_URL = "https://107studio.com";
+const SITE_URL = "https://107studio.es";
 const locales = ["es", "en"];
 const today = new Date().toISOString().split("T")[0];
 

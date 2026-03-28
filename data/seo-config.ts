@@ -1,7 +1,7 @@
 // SEO Configuration for 107 Studio
 // Update SITE_URL when deploying to production
 
-export const SITE_URL = "https://107studio.com";
+export const SITE_URL = "https://107studio.es";
 
 export const seoConfig = {
   siteName: "107 Studio",
@@ -15,7 +15,7 @@ export const seoConfig = {
 
   // Contact info for Schema.org
   contact: {
-    email: "hello@107studio.com",
+    email: "hello@107studio.es",
     phone: undefined as string | undefined, // TODO: Add real phone number
     address: {
       street: "Barcelona", // TODO: Update with real address

@@ -52,8 +52,8 @@ export default function Locations() {
                                 <a href="tel:+12127089400">+1 212-708-9400</a>
                               </li>
                               <li className="anim-uni-in-up">
-                                <a href="mailto:hello@107studio.com?subject=Message%20from%20your%20site">
-                                  hello@107studio.com
+                                <a href="mailto:hello@107studio.es?subject=Message%20from%20your%20site">
+                                  hello@107studio.es
                                 </a>
                               </li>
                             </ul>
@@ -83,8 +83,8 @@ export default function Locations() {
                                 <a href="tel:+15104570211">+1 510-457-0211</a>
                               </li>
                               <li className="anim-uni-in-up">
-                                <a href="mailto:hello@107studio.com?subject=Message%20from%20your%20site">
-                                  hello@107studio.com
+                                <a href="mailto:hello@107studio.es?subject=Message%20from%20your%20site">
+                                  hello@107studio.es
                                 </a>
                               </li>
                             </ul>
