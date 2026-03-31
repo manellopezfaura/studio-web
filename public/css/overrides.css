@@ -1,0 +1,15 @@
+/* ==========================================================
+   Mobile & responsive overrides
+   Loaded after main.min.css to ensure correct cascade order
+   ========================================================== */
+
+/* Hero — mobile */
+@media only screen and (max-width: 991px) {
+  .mxd-hero-03__top {
+    padding-top: 6rem;
+  }
+
+  .hero-03-headline__caption {
+    margin-bottom: 2rem;
+  }
+}

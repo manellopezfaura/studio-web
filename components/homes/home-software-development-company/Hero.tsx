@@ -127,7 +127,7 @@ export default function Hero() {
                     fontWeight: 700,
                     lineHeight: 0.8,
                     letterSpacing: "-0.03em",
-                    fontSize: "clamp(3.2rem, 11.5vw, 10rem)",
+                    fontSize: "clamp(4rem, 13vw, 10rem)",
                   }}
                 >
                   107STUDIO.
