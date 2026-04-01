@@ -2,7 +2,7 @@
 import { type ContactForm, contactSchema } from "@/schemas/contact";
 import { useForm as useHookForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "@formspree/react";
+// Web3Forms for contact form submissions
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AnimatedButton from "@/components/animation/AnimatedButton";
@@ -20,13 +20,20 @@ export default function ContactForm() {
     resolver: zodResolver(contactSchema),
   });
 
-  // Formspree submit hook
-  const [fsState, fsSubmit] = useForm<ContactForm>("meoljlry");
-
   const onSubmit = async (data: ContactForm) => {
     try {
-      await fsSubmit(data); // submit to Formspree
-      reset(); // reset form fields
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "a0cd5541-ff70-497d-b92d-88188530eb58",
+          subject: "Nuevo mensaje de contacto — 107studio.es",
+          from_name: data.Name,
+          ...data,
+        }),
+      });
+      if (!res.ok) throw new Error("Submit failed");
+      reset();
       toast.success(t("toastSuccess"));
     } catch {
       toast.error(t("toastError"));
@@ -59,22 +66,7 @@ export default function ContactForm() {
                           id="contact-form"
                           onSubmit={handleSubmit(onSubmit)}
                         >
-                          {/* Hidden Required Fields */}
-                          <input
-                            type="hidden"
-                            name="project_name"
-                            defaultValue="107 Studio"
-                          />
-                          <input
-                            type="hidden"
-                            name="admin_email"
-                            defaultValue="support@mixdesign.dev"
-                          />
-                          <input
-                            type="hidden"
-                            name="form_subject"
-                            defaultValue="Contact Form Message"
-                          />
+                          {/* Hidden Fields */}
                           {/* Visible Fields */}
                           <div className="container-fluid p-0">
                             <div className="row gx-0">
@@ -139,7 +131,7 @@ export default function ContactForm() {
                                   as={"button"}
                                   className="btn btn-anim btn-default btn-large btn-opposite slide-right-up"
                                   type="submit"
-                                  disabled={isSubmitting || fsState.submitting}
+                                  disabled={isSubmitting}
                                 >
                                   <i className="ph-bold ph-arrow-up-right" />
                                 </AnimatedButton>
