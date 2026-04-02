@@ -40,7 +40,14 @@ export function HeraChat() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages, scrollToBottom])
+    // Re-focus textarea after every message update (desktop only)
+    if (isOpen) {
+      const isMobile = window.matchMedia("(max-width: 640px)").matches
+      if (!isMobile && inputRef.current) {
+        inputRef.current.focus()
+      }
+    }
+  }, [messages, scrollToBottom, isOpen])
 
   useEffect(() => {
     if (isOpen) {
@@ -73,10 +80,6 @@ export function HeraChat() {
     if (!trimmed || isLoading) return
     sendMessage({ text: trimmed })
     setInput("")
-    // Re-focus textarea so user can keep typing without clicking again
-    requestAnimationFrame(() => {
-      inputRef.current?.focus()
-    })
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
