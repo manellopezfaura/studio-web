@@ -7,11 +7,15 @@
     "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.64",
+    "@ai-sdk/react": "^3.0.145",
     "@formspree/react": "^3.0.0",
     "@hookform/resolvers": "^5.2.2",
+    "ai": "^6.0.143",
     "gsap": "^3.13.0",
     "imagesloaded": "^5.0.0",
     "isotope-layout": "^3.0.6",
