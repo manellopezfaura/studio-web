@@ -1,0 +1,442 @@
+/* ==========================================================
+   Hera — Chat widget for 107 Studio
+   Uses project CSS custom properties for consistency
+   ========================================================== */
+
+/* ── Variables ── */
+.hera-panel,
+.hera-trigger {
+  --hera-bg: var(--base, #faf7f6);
+  --hera-bg-elevated: color-mix(in srgb, var(--base-opp, #161616) 4%, var(--base, #faf7f6));
+  --hera-text: var(--base-opp, #161616);
+  --hera-text-muted: color-mix(in srgb, var(--base-opp, #161616) 50%, transparent);
+  --hera-border: color-mix(in srgb, var(--base-opp, #161616) 8%, transparent);
+  --hera-accent: var(--additional, #ddf160);
+  --hera-accent-text: var(--base-opp, #161616);
+  --hera-bubble-user: var(--base-opp, #161616);
+  --hera-bubble-user-text: var(--base, #faf7f6);
+  --hera-bubble-assistant: var(--hera-bg-elevated);
+  --hera-bubble-assistant-text: var(--hera-text);
+  --hera-radius: var(--_radius-s, 1rem);
+  --hera-radius-lg: var(--_radius-m, 1.6rem);
+  --hera-speed: var(--_animspeed-slow, 0.6s);
+  --hera-speed-fast: var(--_animspeed-medium, 0.3s);
+  --hera-ease: cubic-bezier(0.23, 0.65, 0.74, 1.09);
+  --hera-font: var(--_font-default, "Funnel Sans", sans-serif);
+  --hera-font-accent: var(--_font-accent, "Funnel Display", sans-serif);
+
+  font-family: var(--hera-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Trigger button ── */
+.hera-trigger {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: var(--hera-bubble-user);
+  color: var(--hera-bubble-user-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform var(--hera-speed-fast) var(--hera-ease),
+    box-shadow var(--hera-speed-fast) ease;
+  box-shadow:
+    0 2px 12px color-mix(in srgb, var(--base-opp) 12%, transparent),
+    0 0 0 0 color-mix(in srgb, var(--base-opp) 0%, transparent);
+}
+
+.hera-trigger:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 4px 20px color-mix(in srgb, var(--base-opp) 18%, transparent),
+    0 0 0 0 color-mix(in srgb, var(--base-opp) 0%, transparent);
+}
+
+.hera-trigger:active {
+  transform: scale(0.96);
+}
+
+.hera-trigger__icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity var(--hera-speed-fast) ease,
+    transform var(--hera-speed-fast) ease;
+}
+
+.hera-trigger__icon--chat {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.hera-trigger__icon--close {
+  opacity: 0;
+  transform: scale(0.6) rotate(-90deg);
+}
+
+.hera-trigger--active .hera-trigger__icon--chat {
+  opacity: 0;
+  transform: scale(0.6) rotate(90deg);
+}
+
+.hera-trigger--active .hera-trigger__icon--close {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* ── Chat panel ── */
+.hera-panel {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1.5rem;
+  z-index: 9998;
+  width: min(400px, calc(100vw - 2rem));
+  height: min(560px, calc(100dvh - 8rem));
+  display: flex;
+  flex-direction: column;
+  background: var(--hera-bg);
+  border: 1px solid var(--hera-border);
+  border-radius: var(--hera-radius-lg);
+  box-shadow:
+    0 24px 48px -12px color-mix(in srgb, var(--base-opp) 16%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--base-opp) 4%, transparent);
+  overflow: hidden;
+
+  /* Closed by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.97);
+  transform-origin: bottom right;
+  transition:
+    opacity var(--hera-speed-fast) ease,
+    visibility var(--hera-speed-fast) ease,
+    transform var(--hera-speed) var(--hera-ease);
+  pointer-events: none;
+}
+
+.hera-panel--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.hera-panel--closed {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.97);
+  pointer-events: none;
+}
+
+/* ── Header ── */
+.hera-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--hera-border);
+  flex-shrink: 0;
+}
+
+.hera-header__info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hera-header__avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--hera-accent);
+  color: var(--hera-accent-text);
+  font-family: var(--hera-font-accent);
+  font-weight: 600;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hera-header__name {
+  font-family: var(--hera-font-accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--hera-text);
+  line-height: 1.2;
+}
+
+.hera-header__status {
+  font-size: 0.7rem;
+  color: var(--hera-text-muted);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.hera-header__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--hera-text-muted);
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--hera-speed-fast) ease, background var(--hera-speed-fast) ease;
+}
+
+.hera-header__close:hover {
+  color: var(--hera-text);
+  background: var(--hera-bg-elevated);
+}
+
+/* ── Messages area ── */
+.hera-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+/* Scrollbar */
+.hera-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hera-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hera-messages::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--base-opp) 12%, transparent);
+  border-radius: 4px;
+}
+
+/* ── Empty state ── */
+.hera-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  gap: 1rem;
+  padding: 2rem 1rem;
+}
+
+.hera-empty__icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--hera-accent);
+  color: var(--hera-accent-text);
+  font-family: var(--hera-font-accent);
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hera-empty__text {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--hera-text-muted);
+  margin: 0;
+}
+
+/* ── Message bubbles ── */
+.hera-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  animation: hera-fadeIn var(--hera-speed-fast) ease both;
+}
+
+.hera-msg--user {
+  justify-content: flex-end;
+}
+
+.hera-msg--assistant {
+  justify-content: flex-start;
+}
+
+.hera-msg__avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--hera-accent);
+  color: var(--hera-accent-text);
+  font-family: var(--hera-font-accent);
+  font-weight: 600;
+  font-size: 0.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hera-msg__bubble {
+  max-width: 80%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.835rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.hera-msg__bubble--user {
+  background: var(--hera-bubble-user);
+  color: var(--hera-bubble-user-text);
+  border-radius: var(--hera-radius) var(--hera-radius) 0.25rem var(--hera-radius);
+}
+
+.hera-msg__bubble--assistant {
+  background: var(--hera-bubble-assistant);
+  color: var(--hera-bubble-assistant-text);
+  border-radius: var(--hera-radius) var(--hera-radius) var(--hera-radius) 0.25rem;
+}
+
+/* ── Typing indicator ── */
+.hera-typing {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.125rem 0;
+}
+
+.hera-typing__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--hera-text-muted);
+  animation: hera-typing 1.4s ease-in-out infinite;
+}
+
+.hera-typing__dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.hera-typing__dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* ── Input area ── */
+.hera-input {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--hera-border);
+  flex-shrink: 0;
+  background: var(--hera-bg);
+}
+
+.hera-input__field {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--hera-font);
+  font-size: 0.835rem;
+  line-height: 1.5;
+  color: var(--hera-text);
+  padding: 0.375rem 0;
+  max-height: 5rem;
+  overflow-y: auto;
+}
+
+.hera-input__field::placeholder {
+  color: var(--hera-text-muted);
+}
+
+.hera-input__send {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--hera-text-muted);
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color var(--hera-speed-fast) ease,
+    background var(--hera-speed-fast) ease,
+    transform var(--hera-speed-fast) ease;
+  flex-shrink: 0;
+}
+
+.hera-input__send:not(:disabled):hover {
+  color: var(--hera-accent-text);
+  background: var(--hera-accent);
+}
+
+.hera-input__send:not(:disabled):active {
+  transform: scale(0.9);
+}
+
+.hera-input__send:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Animations ── */
+@keyframes hera-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hera-typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.85);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Mobile ── */
+@media only screen and (max-width: 640px) {
+  .hera-panel {
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100dvh;
+    border-radius: 0;
+    border: none;
+  }
+
+  .hera-trigger {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

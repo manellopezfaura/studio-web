@@ -19,6 +19,10 @@ const ScrollTop = dynamic(
   () => import("@/components/scroll/ScrollTop"),
   { ssr: false }
 );
+const HeraChat = dynamic(
+  () => import("@/components/hera/HeraChat").then((mod) => mod.HeraChat),
+  { ssr: false }
+);
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -33,6 +37,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       <InitScroll />
       <ScrollTop />
       <LenisSmoothScroll />
+      <HeraChat />
     </>
   );
 }

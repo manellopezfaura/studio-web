@@ -2,6 +2,7 @@ import "../../public/css/plugins.min.css";
 import "../../public/css/main.min.css";
 import "../../public/css/styles.css";
 import "../../public/css/overrides.css";
+import "../../public/css/hera.css";
 import React from "react";
 import { Funnel_Display, Funnel_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
