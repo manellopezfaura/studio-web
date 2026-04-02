@@ -15,6 +15,9 @@ import { buildHeraPrompt } from "@/lib/hera-prompt"
 const WEBHOOK_URL =
   "https://qqqrcarjphixlvskvpto.supabase.co/functions/v1/hera-webhook"
 
+const RESEND_API_URL = "https://api.resend.com/emails"
+const NOTIFICATION_EMAIL = "hola@107studio.es"
+
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
 const MAX_MESSAGES = 50
@@ -130,6 +133,57 @@ async function sendToWebhook(payload: {
 }
 
 // ─────────────────────────────────────────────
+// Email notification — notify team of new leads
+// ─────────────────────────────────────────────
+
+async function sendLeadNotification(
+  leadData: LeadData,
+  sessionId: string,
+  sourceUrl?: string,
+) {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) return
+
+  const fields = [
+    leadData.name && `<strong>Nombre:</strong> ${leadData.name}`,
+    leadData.email && `<strong>Email:</strong> ${leadData.email}`,
+    leadData.phone && `<strong>Teléfono:</strong> ${leadData.phone}`,
+    leadData.company && `<strong>Empresa:</strong> ${leadData.company}`,
+    leadData.interest && `<strong>Interés:</strong> ${leadData.interest}`,
+    leadData.budget && `<strong>Presupuesto:</strong> ${leadData.budget}`,
+    leadData.summary && `<strong>Resumen:</strong> ${leadData.summary}`,
+  ].filter(Boolean)
+
+  const html = `
+    <div style="font-family: sans-serif; max-width: 520px;">
+      <h2 style="margin: 0 0 16px; font-size: 18px;">Nuevo lead desde Hera</h2>
+      ${fields.map((f) => `<p style="margin: 4px 0;">${f}</p>`).join("")}
+      <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 16px 0;" />
+      <p style="margin: 4px 0; color: #888; font-size: 13px;">Sesión: ${sessionId}</p>
+      ${sourceUrl ? `<p style="margin: 4px 0; color: #888; font-size: 13px;">Página: ${sourceUrl}</p>` : ""}
+    </div>
+  `
+
+  try {
+    await fetch(RESEND_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        from: "Hera <hera@107studio.es>",
+        to: [NOTIFICATION_EMAIL],
+        subject: `Nuevo lead: ${leadData.name || leadData.email || "Sin identificar"}`,
+        html,
+      }),
+    })
+  } catch {
+    // Non-blocking — don't fail the chat if email fails
+  }
+}
+
+// ─────────────────────────────────────────────
 // Handler
 // ─────────────────────────────────────────────
 
@@ -195,9 +249,11 @@ export async function POST(req: Request) {
         // Extract lead data from all messages
         const leadData = extractLeadData(flatMessages)
 
+        const resolvedSessionId = sessionId ?? `anon-${ip}-${Date.now()}`
+
         // Send to Supabase webhook (non-blocking)
         sendToWebhook({
-          session_id: sessionId ?? `anon-${ip}-${Date.now()}`,
+          session_id: resolvedSessionId,
           messages: flatMessages,
           lead_data: leadData,
           source_url: sourceUrl,
@@ -205,6 +261,11 @@ export async function POST(req: Request) {
           user_agent: userAgent,
           status: leadData ? "new" : "new",
         })
+
+        // Email notification when lead data is captured
+        if (leadData) {
+          sendLeadNotification(leadData, resolvedSessionId, sourceUrl)
+        }
       },
     })
 
