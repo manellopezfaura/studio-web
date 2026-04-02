@@ -90,7 +90,7 @@ export function HeraChat() {
             onClick={handleToggle}
             aria-label="Cerrar chat"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
               <path
                 d="M12 4L4 12M4 4l8 8"
                 stroke="currentColor"
@@ -181,7 +181,7 @@ export function HeraChat() {
             disabled={!input.trim() || isLoading}
             aria-label="Enviar mensaje"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
               <path
                 d="M14 2L7 9M14 2l-4.5 12-2-5.5L2 6.5 14 2z"
                 stroke="currentColor"
