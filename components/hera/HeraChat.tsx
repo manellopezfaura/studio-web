@@ -28,8 +28,23 @@ export function HeraChat() {
   }, [messages, scrollToBottom])
 
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus()
+    if (isOpen) {
+      // Only auto-focus on desktop — on mobile, programmatic focus
+      // triggers iOS Safari zoom + keyboard, disrupting the UX
+      const isMobile = window.matchMedia("(max-width: 640px)").matches
+      if (!isMobile && inputRef.current) {
+        inputRef.current.focus()
+      }
+      // Lock body scroll on mobile when chat is fullscreen
+      if (isMobile) {
+        document.body.classList.add("hera-body-lock")
+      }
+    } else {
+      document.body.classList.remove("hera-body-lock")
+    }
+
+    return () => {
+      document.body.classList.remove("hera-body-lock")
     }
   }, [isOpen])
 
