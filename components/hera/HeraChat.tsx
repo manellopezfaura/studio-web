@@ -188,7 +188,6 @@ export function HeraChat() {
             onKeyDown={handleKeyDown}
             placeholder="Escribe tu mensaje..."
             rows={1}
-            disabled={isLoading}
             aria-label="Escribe tu mensaje"
           />
           <button
