@@ -77,7 +77,7 @@ export function HeraChat() {
 
   const handleSend = () => {
     const trimmed = input.trim()
-    if (!trimmed || isLoading) return
+    if (!trimmed) return
     sendMessage({ text: trimmed })
     setInput("")
   }
@@ -163,7 +163,7 @@ export function HeraChat() {
               </div>
             )
           })}
-          {isLoading && messages[messages.length - 1]?.role === "user" && (
+          {isLoading && (
             <div className="hera-msg hera-msg--assistant">
               <div className="hera-msg__avatar">H</div>
               <div className="hera-msg__bubble hera-msg__bubble--assistant">
@@ -194,7 +194,7 @@ export function HeraChat() {
             className="hera-input__send"
             type="button"
             onClick={handleSend}
-            disabled={!input.trim() || isLoading}
+            disabled={!input.trim()}
             aria-label="Enviar mensaje"
           >
             <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
