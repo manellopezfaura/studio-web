@@ -175,14 +175,8 @@ export function HeraChat() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input */}
-        <form
-          className="hera-input"
-          onSubmit={(e) => {
-            e.preventDefault()
-            handleSend()
-          }}
-        >
+        {/* Input — intentionally NOT a <form> to avoid global form textarea styles */}
+        <div className="hera-input" role="form">
           <textarea
             ref={inputRef}
             className="hera-input__field"
@@ -196,7 +190,8 @@ export function HeraChat() {
           />
           <button
             className="hera-input__send"
-            type="submit"
+            type="button"
+            onClick={handleSend}
             disabled={!input.trim() || isLoading}
             aria-label="Enviar mensaje"
           >
@@ -210,7 +205,7 @@ export function HeraChat() {
               />
             </svg>
           </button>
-        </form>
+        </div>
       </div>
 
       {/* Floating trigger */}
