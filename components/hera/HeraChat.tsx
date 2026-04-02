@@ -73,6 +73,10 @@ export function HeraChat() {
     if (!trimmed || isLoading) return
     sendMessage({ text: trimmed })
     setInput("")
+    // Re-focus textarea so user can keep typing without clicking again
+    requestAnimationFrame(() => {
+      inputRef.current?.focus()
+    })
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
