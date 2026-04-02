@@ -1,6 +1,9 @@
 // app/api/chat/route.ts
 // API route para Hera — agente IA de 107 Studio
+// Dev/Preview: Gemini 2.5 Flash (gratis)
+// Producción: Claude Sonnet (Anthropic)
 
+import { google } from "@ai-sdk/google"
 import { anthropic } from "@ai-sdk/anthropic"
 import { streamText, convertToModelMessages, type UIMessage } from "ai"
 import { buildHeraPrompt } from "@/lib/hera-prompt"
@@ -39,6 +42,22 @@ if (typeof globalThis !== "undefined") {
 }
 
 // ─────────────────────────────────────────────
+// Model selection
+// ─────────────────────────────────────────────
+
+function getModel() {
+  const isProduction = process.env.NODE_ENV === "production"
+    && process.env.VERCEL_ENV === "production"
+
+  if (isProduction && process.env.ANTHROPIC_API_KEY) {
+    return anthropic("claude-sonnet-4-20250514")
+  }
+
+  // Dev / Preview → Gemini 2.5 Flash (free tier)
+  return google("gemini-2.5-flash")
+}
+
+// ─────────────────────────────────────────────
 // Handler
 // ─────────────────────────────────────────────
 
@@ -72,14 +91,10 @@ export async function POST(req: Request) {
     const trimmedMessages = messages.slice(-MAX_MESSAGES)
 
     const result = streamText({
-      model: anthropic(
-        process.env.NODE_ENV === "production"
-          ? "claude-sonnet-4-20250514"
-          : "claude-haiku-3-5-20241022",
-      ),
+      model: getModel(),
       system: buildHeraPrompt(),
       messages: await convertToModelMessages(trimmedMessages),
-      maxOutputTokens: 500,
+      maxOutputTokens: 1024,
       temperature: 0.7,
     })
 

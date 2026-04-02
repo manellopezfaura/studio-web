@@ -25,6 +25,14 @@
   --hera-font: var(--_font-default, "Funnel Sans", sans-serif);
   --hera-font-accent: var(--_font-accent, "Funnel Display", sans-serif);
 
+  /* Glass — Apple-style recipe */
+  --hera-glass-bg: color-mix(in srgb, var(--base, #faf7f6) 72%, transparent);
+  --hera-glass-bg-dense: color-mix(in srgb, var(--base, #faf7f6) 82%, transparent);
+  --hera-glass-blur: saturate(180%) blur(20px);
+  --hera-glass-border: color-mix(in srgb, white 18%, transparent);
+  --hera-glass-border-subtle: color-mix(in srgb, white 10%, transparent);
+  --hera-glass-highlight: inset 0 0.5px 0 0 color-mix(in srgb, white 24%, transparent);
+
   font-family: var(--hera-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -39,26 +47,34 @@
   width: 3.25rem;
   height: 3.25rem;
   border-radius: 50%;
-  border: none;
   cursor: pointer;
-  background: var(--hera-bubble-user);
-  color: var(--hera-bubble-user-text);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* Glass trigger */
+  background: color-mix(in srgb, var(--base-opp, #161616) 70%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid color-mix(in srgb, white 12%, transparent);
+  color: var(--hera-bubble-user-text);
   transition:
     transform var(--hera-speed-fast) var(--hera-ease),
-    box-shadow var(--hera-speed-fast) ease;
+    box-shadow var(--hera-speed-fast) ease,
+    background var(--hera-speed-fast) ease;
   box-shadow:
-    0 2px 12px color-mix(in srgb, var(--base-opp) 12%, transparent),
-    0 0 0 0 color-mix(in srgb, var(--base-opp) 0%, transparent);
+    inset 0 0.5px 0 0 color-mix(in srgb, white 10%, transparent),
+    0 4px 16px -4px color-mix(in srgb, var(--base-opp) 20%, transparent),
+    0 2px 8px -2px color-mix(in srgb, var(--base-opp) 12%, transparent);
 }
 
 .hera-trigger:hover {
   transform: scale(1.06);
+  background: color-mix(in srgb, var(--base-opp, #161616) 78%, transparent);
   box-shadow:
-    0 4px 20px color-mix(in srgb, var(--base-opp) 18%, transparent),
-    0 0 0 0 color-mix(in srgb, var(--base-opp) 0%, transparent);
+    inset 0 0.5px 0 0 color-mix(in srgb, white 14%, transparent),
+    0 8px 32px -8px color-mix(in srgb, var(--base-opp) 28%, transparent),
+    0 4px 12px -4px color-mix(in srgb, var(--base-opp) 16%, transparent);
 }
 
 .hera-trigger:active {
@@ -101,17 +117,23 @@
   bottom: 5.5rem;
   right: 1.5rem;
   z-index: 9998;
-  width: min(400px, calc(100vw - 2rem));
-  height: min(560px, calc(100dvh - 8rem));
+  width: min(380px, calc(100vw - 2rem));
+  height: min(520px, calc(100dvh - 8rem));
   display: flex;
   flex-direction: column;
-  background: var(--hera-bg);
-  border: 1px solid var(--hera-border);
   border-radius: var(--hera-radius-lg);
-  box-shadow:
-    0 24px 48px -12px color-mix(in srgb, var(--base-opp) 16%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--base-opp) 4%, transparent);
   overflow: hidden;
+
+  /* Glass surface */
+  background: var(--hera-glass-bg);
+  -webkit-backdrop-filter: var(--hera-glass-blur);
+  backdrop-filter: var(--hera-glass-blur);
+  border: 1px solid var(--hera-glass-border);
+  box-shadow:
+    var(--hera-glass-highlight),
+    0 24px 80px -12px color-mix(in srgb, var(--base-opp) 20%, transparent),
+    0 8px 24px -8px color-mix(in srgb, var(--base-opp) 10%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--base-opp) 3%, transparent);
 
   /* Closed by default */
   opacity: 0;
@@ -144,9 +166,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--hera-border);
+  padding: 0.875rem 1.125rem;
+  border-bottom: 1px solid var(--hera-glass-border-subtle);
   flex-shrink: 0;
+  background: var(--hera-glass-bg-dense);
+  -webkit-backdrop-filter: var(--hera-glass-blur);
+  backdrop-filter: var(--hera-glass-blur);
 }
 
 .hera-header__info {
@@ -159,7 +184,10 @@
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--hera-accent);
+  background: color-mix(in srgb, var(--additional, #ddf160) 80%, transparent);
+  -webkit-backdrop-filter: saturate(160%) blur(8px);
+  backdrop-filter: saturate(160%) blur(8px);
+  border: 1px solid color-mix(in srgb, var(--additional, #ddf160) 40%, transparent);
   color: var(--hera-accent-text);
   font-family: var(--hera-font-accent);
   font-weight: 600;
@@ -200,7 +228,7 @@
 
 .hera-header__close:hover {
   color: var(--hera-text);
-  background: var(--hera-bg-elevated);
+  background: color-mix(in srgb, var(--base-opp, #161616) 6%, transparent);
 }
 
 /* ── Messages area ── */
@@ -213,6 +241,7 @@
   gap: 0.875rem;
   scroll-behavior: smooth;
   overscroll-behavior: contain;
+  background: transparent;
 }
 
 /* Scrollbar */
@@ -245,7 +274,11 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background: var(--hera-accent);
+  background: color-mix(in srgb, var(--additional, #ddf160) 70%, transparent);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+  border: 1px solid color-mix(in srgb, var(--additional, #ddf160) 35%, transparent);
+  box-shadow: inset 0 0.5px 0 0 color-mix(in srgb, white 20%, transparent);
   color: var(--hera-accent-text);
   font-family: var(--hera-font-accent);
   font-weight: 600;
@@ -282,7 +315,10 @@
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  background: var(--hera-accent);
+  background: color-mix(in srgb, var(--additional, #ddf160) 75%, transparent);
+  -webkit-backdrop-filter: saturate(160%) blur(8px);
+  backdrop-filter: saturate(160%) blur(8px);
+  border: 1px solid color-mix(in srgb, var(--additional, #ddf160) 30%, transparent);
   color: var(--hera-accent-text);
   font-family: var(--hera-font-accent);
   font-weight: 600;
@@ -303,13 +339,21 @@
 }
 
 .hera-msg__bubble--user {
-  background: var(--hera-bubble-user);
+  background: color-mix(in srgb, var(--base-opp, #161616) 85%, transparent);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  backdrop-filter: saturate(160%) blur(12px);
+  border: 1px solid color-mix(in srgb, white 8%, transparent);
+  box-shadow: inset 0 0.5px 0 0 color-mix(in srgb, white 6%, transparent);
   color: var(--hera-bubble-user-text);
   border-radius: var(--hera-radius) var(--hera-radius) 0.25rem var(--hera-radius);
 }
 
 .hera-msg__bubble--assistant {
-  background: var(--hera-bubble-assistant);
+  background: color-mix(in srgb, var(--base, #faf7f6) 55%, transparent);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  backdrop-filter: saturate(140%) blur(12px);
+  border: 1px solid var(--hera-glass-border-subtle);
+  box-shadow: var(--hera-glass-highlight);
   color: var(--hera-bubble-assistant-text);
   border-radius: var(--hera-radius) var(--hera-radius) var(--hera-radius) 0.25rem;
 }
@@ -343,17 +387,19 @@
   display: flex;
   align-items: flex-end;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  border-top: 1px solid var(--hera-border);
+  padding: 0.625rem 1rem;
+  border-top: 1px solid var(--hera-glass-border-subtle);
   flex-shrink: 0;
-  background: var(--hera-bg);
+  background: var(--hera-glass-bg-dense);
+  -webkit-backdrop-filter: var(--hera-glass-blur);
+  backdrop-filter: var(--hera-glass-blur);
 }
 
 .hera-input__field {
   flex: 1;
   resize: none;
   border: none;
-  outline: none;
+  outline: none !important;
   background: transparent;
   font-family: var(--hera-font);
   font-size: 0.835rem;
@@ -362,6 +408,13 @@
   padding: 0.375rem 0;
   max-height: 5rem;
   overflow-y: auto;
+  caret-color: var(--hera-text);
+}
+
+.hera-input__field:focus,
+.hera-input__field:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .hera-input__field::placeholder {
@@ -387,7 +440,9 @@
 
 .hera-input__send:not(:disabled):hover {
   color: var(--hera-accent-text);
-  background: var(--hera-accent);
+  background: color-mix(in srgb, var(--additional, #ddf160) 70%, transparent);
+  -webkit-backdrop-filter: saturate(160%) blur(8px);
+  backdrop-filter: saturate(160%) blur(8px);
 }
 
 .hera-input__send:not(:disabled):active {
@@ -397,6 +452,19 @@
 .hera-input__send:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+/* ── Focus overrides (neutralize global focus-visible from styles.css) ── */
+.hera-panel button:focus-visible,
+.hera-panel textarea:focus-visible,
+.hera-trigger:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--base-opp, #161616) 40%, transparent) !important;
+  outline-offset: 2px !important;
+}
+
+.hera-input__field:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
 }
 
 /* ── Animations ── */
