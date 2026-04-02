@@ -9,13 +9,21 @@ import { streamText, convertToModelMessages, type UIMessage } from "ai"
 import { buildHeraPrompt } from "@/lib/hera-prompt"
 
 // ─────────────────────────────────────────────
+// Constants
+// ─────────────────────────────────────────────
+
+const WEBHOOK_URL =
+  "https://qqqrcarjphixlvskvpto.supabase.co/functions/v1/hera-webhook"
+
+const RATE_LIMIT_WINDOW_MS = 60_000
+const RATE_LIMIT_MAX = 20
+const MAX_MESSAGES = 50
+
+// ─────────────────────────────────────────────
 // Rate limiting en memoria (básico, suficiente para widget)
 // ─────────────────────────────────────────────
 
 const rateLimit = new Map<string, { count: number; resetAt: number }>()
-
-const RATE_LIMIT_WINDOW_MS = 60_000 // 1 minuto
-const RATE_LIMIT_MAX = 20 // 20 mensajes por minuto por IP
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
@@ -30,7 +38,6 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT_MAX
 }
 
-// Limpieza periódica para no leakear memoria
 if (typeof globalThis !== "undefined") {
   const cleanup = () => {
     const now = Date.now()
@@ -53,8 +60,73 @@ function getModel() {
     return anthropic("claude-sonnet-4-20250514")
   }
 
-  // Dev / Preview → Gemini 2.5 Flash (free tier)
   return google("gemini-2.5-flash")
+}
+
+// ─────────────────────────────────────────────
+// Lead data extraction from messages
+// ─────────────────────────────────────────────
+
+interface LeadData {
+  name?: string
+  email?: string
+  phone?: string
+  company?: string
+  interest?: string
+  budget?: string
+  summary?: string
+}
+
+function extractLeadData(messages: Array<{ role: string; content: string }>): LeadData | null {
+  for (const msg of messages) {
+    const match = msg.content.match(/<LEAD_DATA>([\s\S]*?)<\/LEAD_DATA>/)
+    if (match) {
+      try {
+        const parsed = JSON.parse(match[1]) as LeadData
+        if (parsed && typeof parsed === "object") return parsed
+      } catch {
+        // Try key:value fallback parsing
+        const data: LeadData = {}
+        const lines = match[1].trim().split("\n")
+        for (const line of lines) {
+          const [key, ...rest] = line.split(":")
+          const value = rest.join(":").trim()
+          if (key && value) {
+            const k = key.trim().toLowerCase() as keyof LeadData
+            if (["name", "email", "phone", "company", "interest", "budget", "summary"].includes(k)) {
+              data[k] = value
+            }
+          }
+        }
+        if (Object.keys(data).length > 0) return data
+      }
+    }
+  }
+  return null
+}
+
+// ─────────────────────────────────────────────
+// Webhook — send conversation to Supabase
+// ─────────────────────────────────────────────
+
+async function sendToWebhook(payload: {
+  session_id: string
+  messages: Array<{ role: string; content: string }>
+  lead_data: LeadData | null
+  source_url?: string
+  source_lang?: string
+  user_agent?: string
+  status: string
+}) {
+  try {
+    await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+  } catch {
+    // Non-blocking — don't fail the chat if webhook is down
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -75,9 +147,15 @@ export async function POST(req: Request) {
       )
     }
 
-    const { messages } = (await req.json()) as {
+    const body = (await req.json()) as {
       messages: Array<UIMessage>
+      sessionId?: string
+      sourceUrl?: string
+      sourceLang?: string
+      userAgent?: string
     }
+
+    const { messages, sessionId, sourceUrl, sourceLang, userAgent } = body
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return new Response(
@@ -86,8 +164,6 @@ export async function POST(req: Request) {
       )
     }
 
-    // Limitar historial para no exceder context window
-    const MAX_MESSAGES = 50
     const trimmedMessages = messages.slice(-MAX_MESSAGES)
 
     const result = streamText({
@@ -96,6 +172,40 @@ export async function POST(req: Request) {
       messages: await convertToModelMessages(trimmedMessages),
       maxOutputTokens: 1024,
       temperature: 0.7,
+      async onFinish({ text }) {
+        // Build flat messages array for the webhook
+        const flatMessages: Array<{ role: string; content: string }> = []
+
+        for (const msg of trimmedMessages) {
+          const textContent = msg.parts
+            ?.filter((p): p is { type: "text"; text: string } => p.type === "text")
+            .map((p) => p.text)
+            .join("") ?? ""
+
+          if (textContent) {
+            flatMessages.push({ role: msg.role, content: textContent })
+          }
+        }
+
+        // Add the assistant response that just finished
+        if (text) {
+          flatMessages.push({ role: "assistant", content: text })
+        }
+
+        // Extract lead data from all messages
+        const leadData = extractLeadData(flatMessages)
+
+        // Send to Supabase webhook (non-blocking)
+        sendToWebhook({
+          session_id: sessionId ?? `anon-${ip}-${Date.now()}`,
+          messages: flatMessages,
+          lead_data: leadData,
+          source_url: sourceUrl,
+          source_lang: sourceLang ?? "es",
+          user_agent: userAgent,
+          status: leadData ? "new" : "new",
+        })
+      },
     })
 
     return result.toUIMessageStreamResponse()

@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 
-const transport = new DefaultChatTransport({
-  api: "/api/chat",
-})
+function generateSessionId(): string {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+}
 
 export function HeraChat() {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,6 +14,21 @@ export function HeraChat() {
   const [input, setInput] = useState("")
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const sessionId = useMemo(() => generateSessionId(), [])
+
+  const transport = useMemo(
+    () =>
+      new DefaultChatTransport({
+        api: "/api/chat",
+        body: {
+          sessionId,
+          sourceUrl: typeof window !== "undefined" ? window.location.href : "",
+          sourceLang: typeof document !== "undefined" ? document.documentElement.lang || "es" : "es",
+          userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
+        },
+      }),
+    [sessionId],
+  )
 
   const { messages, sendMessage, status } = useChat({ transport })
 
