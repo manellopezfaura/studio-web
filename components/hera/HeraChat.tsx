@@ -83,8 +83,13 @@ export function HeraChat({
   }, [isOpen])
 
   const handleToggle = () => {
-    setIsOpen((prev) => !prev)
+    const next = !isOpen
+    setIsOpen(next)
     if (!hasInteracted) setHasInteracted(true)
+    // Notify parent frame (for Framer iframe resize)
+    if (typeof window !== "undefined" && window.parent !== window) {
+      window.parent.postMessage({ type: "hera-chat-toggle", open: next }, "*")
+    }
   }
 
   const handleSend = () => {
