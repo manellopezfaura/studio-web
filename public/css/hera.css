@@ -482,6 +482,47 @@
   outline-offset: 0 !important;
 }
 
+/* ── Error state ── */
+.hera-error {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 18px 18px 18px 4px;
+  background: color-mix(in srgb, var(--base, #faf7f6) 55%, transparent);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  backdrop-filter: saturate(140%) blur(12px);
+  border: 1px solid color-mix(in srgb, #e25 12%, transparent);
+  animation: hera-fadeIn var(--hera-speed-fast) ease both;
+}
+
+.hera-error__text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--hera-text-muted);
+  margin: 0;
+}
+
+.hera-error__retry {
+  align-self: flex-start;
+  background: none;
+  border: 1px solid var(--hera-border);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-family: var(--hera-font);
+  font-size: 13px;
+  color: var(--hera-text);
+  cursor: pointer;
+  transition:
+    background var(--hera-speed-fast) ease,
+    border-color var(--hera-speed-fast) ease;
+}
+
+.hera-error__retry:hover {
+  background: color-mix(in srgb, var(--base-opp, #161616) 6%, transparent);
+  border-color: color-mix(in srgb, var(--base-opp, #161616) 20%, transparent);
+}
+
 /* ── Animations ── */
 @keyframes hera-fadeIn {
   from {

@@ -30,7 +30,7 @@ export function HeraChat() {
     [sessionId],
   )
 
-  const { messages, sendMessage, status } = useChat({ transport })
+  const { messages, sendMessage, status, error, regenerate } = useChat({ transport })
 
   const isLoading = status === "streaming" || status === "submitted"
 
@@ -172,6 +172,22 @@ export function HeraChat() {
                   <span className="hera-typing__dot" />
                   <span className="hera-typing__dot" />
                 </span>
+              </div>
+            </div>
+          )}
+          {error && !isLoading && (
+            <div className="hera-msg hera-msg--assistant">
+              <div className="hera-msg__avatar">H</div>
+              <div className="hera-error">
+                <p className="hera-error__text">No he podido responder. ¿Lo intentamos de nuevo?</p>
+                <button
+                  className="hera-error__retry"
+                  type="button"
+                  onClick={() => regenerate()}
+                  aria-label="Reintentar"
+                >
+                  Reintentar
+                </button>
               </div>
             </div>
           )}
