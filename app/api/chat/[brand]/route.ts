@@ -69,15 +69,16 @@ if (typeof globalThis !== "undefined") {
 // Model selection
 // ─────────────────────────────────────────────
 
-function getModel() {
+function getModels() {
   const isProduction = process.env.NODE_ENV === "production"
     && process.env.VERCEL_ENV === "production"
 
+  // Anthropic primario en producción, Gemini como fallback
   if (isProduction && process.env.ANTHROPIC_API_KEY) {
-    return anthropic("claude-sonnet-4-20250514")
+    return [anthropic("claude-sonnet-4-20250514"), google("gemini-2.5-flash")]
   }
 
-  return google("gemini-2.5-flash")
+  return [google("gemini-2.5-flash")]
 }
 
 // ─────────────────────────────────────────────
@@ -256,79 +257,100 @@ export async function POST(
     }
 
     const trimmedMessages = messages.slice(-MAX_MESSAGES)
+    const convertedMessages = await convertToModelMessages(trimmedMessages)
+    const systemPrompt = buildChatPrompt(brand)
+    const models = getModels()
 
-    const abortController = new AbortController()
-    const timeout = setTimeout(
-      () => abortController.abort(),
-      STREAM_TIMEOUT_MS,
-    )
+    const onFinish = async ({ text }: { text: string }) => {
+      const flatMessages: Array<{ role: string; content: string }> = []
 
-    const result = streamText({
-      model: getModel(),
-      system: buildChatPrompt(brand),
-      messages: await convertToModelMessages(trimmedMessages),
-      maxOutputTokens: 1024,
-      temperature: 0.7,
-      abortSignal: abortController.signal,
-      async onFinish({ text }) {
-        clearTimeout(timeout)
-        const flatMessages: Array<{ role: string; content: string }> = []
+      for (const msg of trimmedMessages) {
+        const textContent = msg.parts
+          ?.filter((p): p is { type: "text"; text: string } => p.type === "text")
+          .map((p) => p.text)
+          .join("") ?? ""
 
-        for (const msg of trimmedMessages) {
-          const textContent = msg.parts
-            ?.filter((p): p is { type: "text"; text: string } => p.type === "text")
-            .map((p) => p.text)
-            .join("") ?? ""
-
-          if (textContent) {
-            flatMessages.push({ role: msg.role, content: textContent })
-          }
+        if (textContent) {
+          flatMessages.push({ role: msg.role, content: textContent })
         }
+      }
 
-        if (text) {
-          flatMessages.push({ role: "assistant", content: text })
-        }
+      if (text) {
+        flatMessages.push({ role: "assistant", content: text })
+      }
 
-        const leadData = extractLeadData(flatMessages)
-        const resolvedSessionId = sessionId ?? `anon-${ip}-${Date.now()}`
+      const leadData = extractLeadData(flatMessages)
+      const resolvedSessionId = sessionId ?? `anon-${ip}-${Date.now()}`
 
-        sendToWebhook(brand.webhookUrl, {
-          session_id: resolvedSessionId,
-          messages: flatMessages,
-          lead_data: leadData,
-          source_url: sourceUrl,
-          source_lang: sourceLang ?? "es",
-          user_agent: userAgent,
-          brand: brand.slug,
-          status: "new",
-        })
+      sendToWebhook(brand.webhookUrl, {
+        session_id: resolvedSessionId,
+        messages: flatMessages,
+        lead_data: leadData,
+        source_url: sourceUrl,
+        source_lang: sourceLang ?? "es",
+        user_agent: userAgent,
+        brand: brand.slug,
+        status: "new",
+      })
 
-        if (leadData) {
-          sendLeadNotification(
-            leadData,
-            resolvedSessionId,
-            brand.emailFrom,
-            brand.notificationEmail,
-            brand.studioName,
-            sourceUrl,
-          )
-        }
-      },
-    })
-
-    const response = result.toUIMessageStreamResponse()
-
-    // Add CORS headers to the streaming response
-    const newHeaders = new Headers(response.headers)
-    for (const [key, value] of Object.entries(cors)) {
-      newHeaders.set(key, value)
+      if (leadData) {
+        sendLeadNotification(
+          leadData,
+          resolvedSessionId,
+          brand.emailFrom,
+          brand.notificationEmail,
+          brand.studioName,
+          sourceUrl,
+        )
+      }
     }
 
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: newHeaders,
-    })
+    // Try each model, fallback on failure
+    let lastError: unknown = null
+    for (const model of models) {
+      try {
+        const abortController = new AbortController()
+        const timeout = setTimeout(
+          () => abortController.abort(),
+          STREAM_TIMEOUT_MS,
+        )
+
+        const result = streamText({
+          model,
+          system: systemPrompt,
+          messages: convertedMessages,
+          maxOutputTokens: 1024,
+          temperature: 0.7,
+          abortSignal: abortController.signal,
+          onFinish: async ({ text }) => {
+            clearTimeout(timeout)
+            await onFinish({ text })
+          },
+        })
+
+        // Wait briefly to catch immediate auth/credit errors before streaming
+        await result.usage
+
+        const response = result.toUIMessageStreamResponse()
+
+        const newHeaders = new Headers(response.headers)
+        for (const [key, value] of Object.entries(cors)) {
+          newHeaders.set(key, value)
+        }
+
+        return new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: newHeaders,
+        })
+      } catch (e) {
+        lastError = e
+        // If not last model, continue to fallback
+      }
+    }
+
+    // All models failed
+    throw lastError
   } catch (error: unknown) {
     const isAbort =
       error instanceof Error && error.name === "AbortError"
