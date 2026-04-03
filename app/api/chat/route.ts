@@ -21,6 +21,7 @@ const NOTIFICATION_EMAIL = "hola@107studio.es"
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
 const MAX_MESSAGES = 50
+const STREAM_TIMEOUT_MS = 8_000
 
 // ─────────────────────────────────────────────
 // Rate limiting en memoria (básico, suficiente para widget)
@@ -220,13 +221,22 @@ export async function POST(req: Request) {
 
     const trimmedMessages = messages.slice(-MAX_MESSAGES)
 
+    // Timeout: si Gemini no responde en 8s, cortamos la petición
+    const abortController = new AbortController()
+    const timeout = setTimeout(
+      () => abortController.abort(),
+      STREAM_TIMEOUT_MS,
+    )
+
     const result = streamText({
       model: getModel(),
       system: buildHeraPrompt(),
       messages: await convertToModelMessages(trimmedMessages),
       maxOutputTokens: 1024,
       temperature: 0.7,
+      abortSignal: abortController.signal,
       async onFinish({ text }) {
+        clearTimeout(timeout)
         // Build flat messages array for the webhook
         const flatMessages: Array<{ role: string; content: string }> = []
 
@@ -271,12 +281,17 @@ export async function POST(req: Request) {
 
     return result.toUIMessageStreamResponse()
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Error interno del servidor"
+    const isAbort =
+      error instanceof Error && error.name === "AbortError"
+    const message = isAbort
+      ? "El servicio tardó demasiado en responder. Inténtalo de nuevo."
+      : error instanceof Error
+        ? error.message
+        : "Error interno del servidor"
 
     return new Response(
       JSON.stringify({ error: message }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
+      { status: isAbort ? 504 : 500, headers: { "Content-Type": "application/json" } },
     )
   }
 }
