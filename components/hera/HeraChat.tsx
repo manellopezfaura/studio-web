@@ -4,11 +4,23 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 
+interface HeraChatProps {
+  assistantName?: string
+  avatarLetter?: string
+  studioName?: string
+  apiUrl?: string
+}
+
 function generateSessionId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
 }
 
-export function HeraChat() {
+export function HeraChat({
+  assistantName = "Hera",
+  avatarLetter = "H",
+  studioName = "107 Studio",
+  apiUrl = "/api/chat",
+}: HeraChatProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(false)
   const [input, setInput] = useState("")
@@ -19,7 +31,7 @@ export function HeraChat() {
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
-        api: "/api/chat",
+        api: apiUrl,
         body: {
           sessionId,
           sourceUrl: typeof window !== "undefined" ? window.location.href : "",
@@ -27,7 +39,7 @@ export function HeraChat() {
           userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
         },
       }),
-    [sessionId],
+    [sessionId, apiUrl],
   )
 
   const { messages, sendMessage, status, error, regenerate } = useChat({ transport })
@@ -95,16 +107,16 @@ export function HeraChat() {
       <div
         className={`hera-panel ${isOpen ? "hera-panel--open" : ""} ${hasInteracted && !isOpen ? "hera-panel--closed" : ""}`}
         role="dialog"
-        aria-label="Chat con Hera, asistente de 107 Studio"
+        aria-label={`Chat con ${assistantName}, asistente de ${studioName}`}
         aria-hidden={!isOpen}
       >
         {/* Header */}
         <div className="hera-header">
           <div className="hera-header__info">
-            <div className="hera-header__avatar">H</div>
+            <div className="hera-header__avatar">{avatarLetter}</div>
             <div>
-              <div className="hera-header__name">Hera</div>
-              <div className="hera-header__status">107 Studio</div>
+              <div className="hera-header__name">{assistantName}</div>
+              <div className="hera-header__status">{studioName}</div>
             </div>
           </div>
           <button
@@ -127,9 +139,9 @@ export function HeraChat() {
         <div className="hera-messages">
           {messages.length === 0 && (
             <div className="hera-empty">
-              <div className="hera-empty__icon">H</div>
+              <div className="hera-empty__icon">{avatarLetter}</div>
               <p className="hera-empty__text">
-                Soy Hera, asistente de 107 Studio.
+                Soy {assistantName}, asistente de {studioName}.
                 <br />
                 Pregúntame lo que necesites.
               </p>
@@ -154,7 +166,7 @@ export function HeraChat() {
                 key={message.id}
                 className={`hera-msg ${isUser ? "hera-msg--user" : "hera-msg--assistant"}`}
               >
-                {!isUser && <div className="hera-msg__avatar">H</div>}
+                {!isUser && <div className="hera-msg__avatar">{avatarLetter}</div>}
                 <div
                   className={`hera-msg__bubble ${isUser ? "hera-msg__bubble--user" : "hera-msg__bubble--assistant"}`}
                 >
@@ -165,7 +177,7 @@ export function HeraChat() {
           })}
           {isLoading && (
             <div className="hera-msg hera-msg--assistant">
-              <div className="hera-msg__avatar">H</div>
+              <div className="hera-msg__avatar">{avatarLetter}</div>
               <div className="hera-msg__bubble hera-msg__bubble--assistant">
                 <span className="hera-typing">
                   <span className="hera-typing__dot" />
@@ -177,7 +189,7 @@ export function HeraChat() {
           )}
           {error && !isLoading && (
             <div className="hera-msg hera-msg--assistant">
-              <div className="hera-msg__avatar">H</div>
+              <div className="hera-msg__avatar">{avatarLetter}</div>
               <div className="hera-error">
                 <p className="hera-error__text">No he podido responder. ¿Lo intentamos de nuevo?</p>
                 <button
@@ -230,7 +242,7 @@ export function HeraChat() {
       <button
         className={`hera-trigger ${isOpen ? "hera-trigger--active" : ""}`}
         onClick={handleToggle}
-        aria-label={isOpen ? "Cerrar chat" : "Abrir chat con Hera"}
+        aria-label={isOpen ? "Cerrar chat" : `Abrir chat con ${assistantName}`}
         aria-expanded={isOpen}
       >
         <span className="hera-trigger__icon hera-trigger__icon--chat">
