@@ -41,6 +41,21 @@ const BRANDS: Record<string, BrandConfig> = {
       "http://localhost:3000",
     ],
   },
+  hera: {
+    slug: "hera",
+    assistantName: "Hera",
+    avatarLetter: "H",
+    studioName: "Hera by 107 Studio",
+    webhookUrl:
+      "https://qqqrcarjphixlvskvpto.supabase.co/functions/v1/hera-webhook",
+    notificationEmail: "hola@107studio.es",
+    emailFrom: "Hera <hera@107studio.es>",
+    accentColor: "#ddf160",
+    allowedOrigins: [
+      "https://saas-landing-eight-theta.vercel.app",
+      "http://localhost:5173",
+    ],
+  },
 }
 
 export function getBrand(slug?: string): BrandConfig {
