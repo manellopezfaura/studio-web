@@ -9,14 +9,6 @@ export function EmbedLayout({ children }: { children: React.ReactNode }) {
     <html lang="es">
       <head>
         <style>{`
-          html.hera-inline {
-            --base: #faf7f6;
-            --base-opp: #161616;
-            --additional: #ddf160;
-          }
-          html.hera-inline body {
-            background: #faf7f6 !important;
-          }
           html.hera-inline .hera-panel {
             position: relative !important;
             bottom: auto !important;
@@ -27,7 +19,6 @@ export function EmbedLayout({ children }: { children: React.ReactNode }) {
             border-radius: 0 !important;
             border: none !important;
             box-shadow: none !important;
-            background: #faf7f6 !important;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
             opacity: 1 !important;

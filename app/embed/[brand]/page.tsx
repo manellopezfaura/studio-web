@@ -15,6 +15,7 @@ export default async function EmbedPage({
       avatarLetter={brand.avatarLetter}
       studioName={brand.studioName}
       apiUrl={`/api/chat/${brand.slug}`}
+      theme={brand.theme}
     />
   )
 }
