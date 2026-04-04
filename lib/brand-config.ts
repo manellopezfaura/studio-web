@@ -54,7 +54,7 @@ const BRANDS: Record<string, BrandConfig> = {
     slug: "hera",
     assistantName: "Hera",
     avatarLetter: "H",
-    studioName: "Hera by 107 Studio",
+    studioName: "Tu asistente virtual",
     webhookUrl:
       "https://qqqrcarjphixlvskvpto.supabase.co/functions/v1/hera-webhook",
     notificationEmail: "hola@107studio.es",
