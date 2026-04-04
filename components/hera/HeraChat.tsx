@@ -21,8 +21,9 @@ export function HeraChat({
   studioName = "107 Studio",
   apiUrl = "/api/chat",
 }: HeraChatProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [hasInteracted, setHasInteracted] = useState(false)
+  const isInline = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("inline")
+  const [isOpen, setIsOpen] = useState(isInline)
+  const [hasInteracted, setHasInteracted] = useState(isInline)
   const [input, setInput] = useState("")
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -124,7 +125,7 @@ export function HeraChat({
               <div className="hera-header__status">{studioName}</div>
             </div>
           </div>
-          <button
+          {!isInline && <button
             className="hera-header__close"
             onClick={handleToggle}
             aria-label="Cerrar chat"
@@ -137,7 +138,7 @@ export function HeraChat({
                 strokeLinecap="round"
               />
             </svg>
-          </button>
+          </button>}
         </div>
 
         {/* Messages */}
@@ -243,8 +244,8 @@ export function HeraChat({
         </div>
       </div>
 
-      {/* Floating trigger */}
-      <button
+      {/* Floating trigger — hidden in inline/embedded mode */}
+      {!isInline && <button
         className={`hera-trigger ${isOpen ? "hera-trigger--active" : ""}`}
         onClick={handleToggle}
         aria-label={isOpen ? "Cerrar chat" : `Abrir chat con ${assistantName}`}
@@ -271,7 +272,7 @@ export function HeraChat({
             />
           </svg>
         </span>
-      </button>
+      </button>}
     </>
   )
 }
