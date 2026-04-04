@@ -147,7 +147,7 @@ export function HeraChat({
             <div className="hera-empty">
               <div className="hera-empty__icon">{avatarLetter}</div>
               <p className="hera-empty__text">
-                Soy {assistantName}, pregúntame lo que sea.
+                Soy {assistantName}, pregúntame lo que necesites.
               </p>
             </div>
           )}
