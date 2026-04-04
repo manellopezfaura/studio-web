@@ -307,7 +307,9 @@ export async function POST(
 
     // Try each model, fallback on failure
     let lastError: unknown = null
-    for (const model of models) {
+    for (let i = 0; i < models.length; i++) {
+      const model = models[i]
+      const isLastModel = i === models.length - 1
       try {
         const abortController = new AbortController()
         const timeout = setTimeout(
@@ -328,8 +330,15 @@ export async function POST(
           },
         })
 
-        // Wait briefly to catch immediate auth/credit errors before streaming
-        await result.usage
+        // For non-last models, verify the stream works before returning
+        if (!isLastModel) {
+          try {
+            await result.usage
+          } catch {
+            clearTimeout(timeout)
+            continue // fallback to next model
+          }
+        }
 
         const response = result.toUIMessageStreamResponse()
 
