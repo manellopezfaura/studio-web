@@ -123,6 +123,27 @@ function extractLeadData(messages: Array<{ role: string; content: string }>): Le
 }
 
 // ─────────────────────────────────────────────
+// HMAC signing for webhook requests
+// ─────────────────────────────────────────────
+
+async function signPayload(body: string): Promise<string> {
+  const secret = process.env.WEBHOOK_SECRET
+  if (!secret) return ""
+  const encoder = new TextEncoder()
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  )
+  const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(body))
+  return Array.from(new Uint8Array(sig))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("")
+}
+
+// ─────────────────────────────────────────────
 // Webhook — send conversation to Supabase
 // ─────────────────────────────────────────────
 
@@ -137,10 +158,15 @@ async function sendToWebhook(webhookUrl: string, payload: {
   status: string
 }) {
   try {
+    const body = JSON.stringify(payload)
+    const signature = await signPayload(body)
     await fetch(webhookUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+        "X-Webhook-Signature": signature,
+      },
+      body,
     })
   } catch {
     // Non-blocking
@@ -214,10 +240,15 @@ async function logUsage(webhookUrl: string, payload: {
   ip_hash: string
 }) {
   try {
+    const body = JSON.stringify({ ...payload, type: "usage" })
+    const signature = await signPayload(body)
     await fetch(webhookUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...payload, type: "usage" }),
+      headers: {
+        "Content-Type": "application/json",
+        "X-Webhook-Signature": signature,
+      },
+      body,
     })
   } catch {
     // Non-blocking
@@ -287,11 +318,11 @@ export async function POST(
       )
     }
 
-    // Log usage (non-blocking)
+    // Log usage (non-blocking) — count 1 per request, not total history
     logUsage(brand.webhookUrl, {
       brand: brand.slug,
       session_id: sessionId ?? `anon-${ip}-${Date.now()}`,
-      message_count: messages.length,
+      message_count: 1,
       timestamp: new Date().toISOString(),
       source_url: sourceUrl,
       ip_hash: hashIp(ip),
