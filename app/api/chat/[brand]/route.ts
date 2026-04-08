@@ -202,6 +202,37 @@ async function sendLeadNotification(
 }
 
 // ─────────────────────────────────────────────
+// Usage tracking — log every request per brand
+// ─────────────────────────────────────────────
+
+async function logUsage(webhookUrl: string, payload: {
+  brand: string
+  session_id: string
+  message_count: number
+  timestamp: string
+  source_url?: string
+  ip_hash: string
+}) {
+  try {
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...payload, type: "usage" }),
+    })
+  } catch {
+    // Non-blocking
+  }
+}
+
+function hashIp(ip: string): string {
+  let hash = 0
+  for (let i = 0; i < ip.length; i++) {
+    hash = ((hash << 5) - hash + ip.charCodeAt(i)) | 0
+  }
+  return Math.abs(hash).toString(36)
+}
+
+// ─────────────────────────────────────────────
 // Handlers
 // ─────────────────────────────────────────────
 
@@ -255,6 +286,16 @@ export async function POST(
         { status: 400, headers: { "Content-Type": "application/json", ...cors } },
       )
     }
+
+    // Log usage (non-blocking)
+    logUsage(brand.webhookUrl, {
+      brand: brand.slug,
+      session_id: sessionId ?? `anon-${ip}-${Date.now()}`,
+      message_count: messages.length,
+      timestamp: new Date().toISOString(),
+      source_url: sourceUrl,
+      ip_hash: hashIp(ip),
+    })
 
     const trimmedMessages = messages.slice(-MAX_MESSAGES)
     const convertedMessages = await convertToModelMessages(trimmedMessages)

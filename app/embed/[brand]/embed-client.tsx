@@ -1,6 +1,7 @@
 "use client"
 
-import { HeraChat } from "@/components/hera/HeraChat"
+import { HeraChatWidget } from "@107/hera"
+import "@107/hera/styles"
 import type { BrandTheme } from "@/lib/brand-config"
 
 interface EmbedClientProps {
@@ -26,11 +27,11 @@ export function EmbedClient({
         "--additional": theme.accent,
       } as React.CSSProperties}
     >
-      <HeraChat
-        assistantName={assistantName}
-        avatarLetter={avatarLetter}
-        studioName={studioName}
+      <HeraChatWidget
         apiUrl={apiUrl}
+        assistantName={assistantName}
+        avatar={avatarLetter}
+        subtitle={studioName}
       />
     </div>
   )

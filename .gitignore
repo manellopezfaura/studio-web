@@ -45,3 +45,5 @@ next-env.d.ts
 *.rar
 *.tar
 *.gz
+supabase/.temp/
+_hera-backup/

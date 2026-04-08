@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@107/hera':
+        specifier: link:/Users/manellopezfaura/hera
+        version: link:../../../hera
       '@ai-sdk/anthropic':
         specifier: ^3.0.64
         version: 3.0.64(zod@4.3.6)

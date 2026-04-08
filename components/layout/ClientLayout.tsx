@@ -19,8 +19,8 @@ const ScrollTop = dynamic(
   () => import("@/components/scroll/ScrollTop"),
   { ssr: false }
 );
-const HeraChat = dynamic(
-  () => import("@/components/hera/HeraChat").then((mod) => mod.HeraChat),
+const HeraChatWidget = dynamic(
+  () => import("@107/hera").then((mod) => mod.HeraChatWidget),
   { ssr: false }
 );
 
@@ -37,7 +37,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       <InitScroll />
       <ScrollTop />
       <LenisSmoothScroll />
-      <HeraChat />
+      <HeraChatWidget apiUrl="/api/chat" assistantName="Hera" avatar="H" subtitle="107 Studio" />
     </>
   );
 }
