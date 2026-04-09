@@ -18,7 +18,7 @@ const RESEND_API_URL = "https://api.resend.com/emails"
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
 const MAX_MESSAGES = 50
-const STREAM_TIMEOUT_MS = 8_000
+const STREAM_TIMEOUT_MS = 30_000
 
 // ─────────────────────────────────────────────
 // CORS helpers
@@ -127,7 +127,7 @@ function extractLeadData(messages: Array<{ role: string; content: string }>): Le
 // ─────────────────────────────────────────────
 
 async function signPayload(body: string): Promise<string> {
-  const secret = process.env.WEBHOOK_SECRET
+  const secret = process.env.WEBHOOK_SECRET?.trim()
   if (!secret) return ""
   const encoder = new TextEncoder()
   const key = await crypto.subtle.importKey(
@@ -396,8 +396,10 @@ export async function POST(
           maxOutputTokens: 1024,
           temperature: 0.7,
           abortSignal: abortController.signal,
-          onFinish: async ({ text }) => {
+          onChunk: () => {
             clearTimeout(timeout)
+          },
+          onFinish: async ({ text }) => {
             await onFinish({ text })
           },
         })
