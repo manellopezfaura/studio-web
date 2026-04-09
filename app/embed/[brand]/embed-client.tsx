@@ -1,7 +1,7 @@
 "use client"
 
-import { HeraChatWidget } from "@107studio/hera"
-import "@107studio/hera/styles"
+import { HeraChatWidget } from "@/components/hera"
+import "@/components/hera/hera.css"
 import type { BrandTheme } from "@/lib/brand-config"
 
 interface EmbedClientProps {

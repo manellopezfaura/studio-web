@@ -1,4 +1,4 @@
-import "@107studio/hera/styles"
+import "@/components/hera/hera.css"
 
 export const metadata = {
   robots: "noindex, nofollow",

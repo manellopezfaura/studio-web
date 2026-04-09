@@ -20,7 +20,7 @@ const ScrollTop = dynamic(
   { ssr: false }
 );
 const HeraChatWidget = dynamic(
-  () => import("@107studio/hera").then((mod) => mod.HeraChatWidget),
+  () => import("@/components/hera").then((mod) => mod.HeraChatWidget),
   { ssr: false }
 );
 
