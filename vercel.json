@@ -1,14 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/hera",
-      "destination": "https://saas-landing-eight-theta.vercel.app/hera/"
-    },
-    {
-      "source": "/hera/:path*",
-      "destination": "https://saas-landing-eight-theta.vercel.app/hera/:path*"
-    }
-  ],
   "headers": [
     {
       "source": "/hera-embed/(.*)",

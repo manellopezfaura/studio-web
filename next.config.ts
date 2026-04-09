@@ -16,6 +16,21 @@ const nextConfig = {
     ],
   },
   productionBrowserSourceMaps: false,
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/hera",
+          destination: "https://saas-landing-eight-theta.vercel.app/hera/",
+        },
+        {
+          source: "/hera/:path*",
+          destination:
+            "https://saas-landing-eight-theta.vercel.app/hera/:path*",
+        },
+      ],
+    };
+  },
 };
 
 export default withNextIntl(nextConfig);
