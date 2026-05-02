@@ -2,13 +2,14 @@
 
 import dynamic from "next/dynamic";
 import Header1 from "@/components/headers/Header1";
+// InitScroll runs the page-entry GSAP choreography (.loading__item fade/slide).
+// It must hydrate eagerly — when it was a dynamic chunk the hero stayed at
+// opacity:0 for the chunk's load time and TypedText started typing in the
+// invisible h1, so the entry animation revealed text mid-typing.
+import InitScroll from "@/components/scroll/InitScroll";
 
 const MobileMenu = dynamic(
   () => import("@/components/headers/MobileMenu"),
-  { ssr: false }
-);
-const InitScroll = dynamic(
-  () => import("@/components/scroll/InitScroll"),
   { ssr: false }
 );
 const LenisSmoothScroll = dynamic(
