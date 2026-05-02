@@ -136,7 +136,7 @@ export default function MobileMenu() {
                 className="mxd-menu__caption fade-in-elm"
                 style={{ transitionDelay: "0.4s" }}
               >
-                🦄 Innovative design
+                Innovative design
                 <br />
                 and cutting-edge development
               </p>
@@ -237,7 +237,7 @@ export default function MobileMenu() {
                     className="menu-promo__caption fade-in-elm"
                     style={{ transitionDelay: "0.4s" }}
                   >
-                    👋 New 107 Studio website is here!
+                    New 107 Studio website is here!
                     <br />
                     Showcase your projects, services and expertise with impact.
                   </p>
