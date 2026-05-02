@@ -178,7 +178,8 @@
     "WorksPage": {
         "Hero": {
             "subtitle": "Proyectos",
-            "title": "Donde las ideas valientes toman forma"
+            "title": "Donde las ideas valientes toman forma",
+            "view": "Ver"
         },
         "List": {
             "title": "Archivo de Portafolio",

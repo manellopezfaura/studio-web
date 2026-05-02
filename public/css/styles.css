@@ -158,6 +158,27 @@
   display: none;
 }
 
+/* Stacking project cards: footer row aligns title (left) with the
+   "Ver" CTA button (right) on the same baseline. */
+.mxd-projects-stack__footer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.6rem 2.4rem;
+}
+
+.mxd-projects-stack__footer .mxd-projects-stack__title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mxd-projects-stack__cta {
+  flex: 0 0 auto;
+  align-self: flex-end;
+}
+
 .hamburger__line {
   transition: all 0.3s ease;
 }

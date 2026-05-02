@@ -178,7 +178,8 @@
     "WorksPage": {
         "Hero": {
             "subtitle": "Works",
-            "title": "Where bold ideas take shape"
+            "title": "Where bold ideas take shape",
+            "view": "View"
         },
         "List": {
             "title": "Portfolio archive",

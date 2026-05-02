@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
 
 import StackCards from "../animation/StackCards";
+import AnimatedButton from "../animation/AnimatedButton";
 import { projectsAll } from "@/data/projects.json";
 import { useTranslations } from "next-intl";
 
@@ -92,10 +92,9 @@ export default function Portfolios1() {
             <div className="content__block loading__fade">
               <StackCards stackName="projects-stack" className="stack-wrapper">
                 {featuredProjects.map((s, idx) => (
-                  <Link
+                  <div
                     key={s.id}
                     className="mxd-projects-stack__inner justify-between"
-                    href={`/projects/${s.slug}`}
                   >
                     <div className="mxd-projects-stack__image">
                       <Image
@@ -116,10 +115,19 @@ export default function Portfolios1() {
                         </span>
                       ))}
                     </div>
-                    <div className="mxd-projects-stack__title no-margin">
-                      <h2 className="permanent-light">{s.title}</h2>
+                    <div className="mxd-projects-stack__footer">
+                      <div className="mxd-projects-stack__title no-margin">
+                        <h2 className="permanent-light">{s.title}</h2>
+                      </div>
+                      <AnimatedButton
+                        text={t("view")}
+                        className="btn btn-anim btn-default btn-outline-permanent btn-on-hero slide-right-up mxd-projects-stack__cta"
+                        href={`/projects/${s.slug}`}
+                      >
+                        <i className="ph-bold ph-arrow-up-right" />
+                      </AnimatedButton>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </StackCards>
             </div>
