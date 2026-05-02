@@ -39,23 +39,18 @@ export default function MobileMenu() {
   const [submenuHeights, setSubmenuHeights] = useState<number[]>([]);
   const handleToggle = () => {
     if (isActive) {
+      // Closing: drop the stagger (transitionDelay handled below) and the
+      // hamburger FLIP runs faster (see useLayoutEffect). Short setTimeout
+      // is just to let the FLIP land before unmounting state.
       setIsActive(false);
-      setTimeout(
-        () => {
-          setIsMenuOpen(false);
-        },
-
-        800
-      );
+      setTimeout(() => {
+        setIsMenuOpen(false);
+      }, 400);
     } else {
       setIsMenuOpen(true);
-      setTimeout(
-        () => {
-          setIsActive(true);
-        },
-
-        600
-      );
+      setTimeout(() => {
+        setIsActive(true);
+      }, 600);
     }
   };
   const isMenuActive = (link?: string) =>
@@ -94,9 +89,11 @@ export default function MobileMenu() {
       hamburgerBtnRef.current.appendChild(flipEl);
     }
 
-    // Animate from previous to new layout
+    // Animate from previous to new layout. Closing is faster than opening:
+    // when opening you want the dramatic morph, when closing you just want
+    // to be out of the way.
     Flip.from(state, {
-      duration: 0.8,
+      duration: toMenu ? 0.6 : 0.4,
       ease: "power4.inOut",
     });
   }, [isMenuOpen]);
@@ -134,7 +131,7 @@ export default function MobileMenu() {
             <div className="mxd-menu__left">
               <p
                 className="mxd-menu__caption fade-in-elm"
-                style={{ transitionDelay: "0.4s" }}
+                style={{ transitionDelay: isActive ? "0.4s" : "0s" }}
               >
                 Innovative design
                 <br />
@@ -147,7 +144,7 @@ export default function MobileMenu() {
                       <li
                         key={index}
                         className="main-menu__item fade-in-up-elm"
-                        style={{ transitionDelay: `${index * 0.1}s` }}
+                        style={{ transitionDelay: isActive ? `${index * 0.1}s` : "0s" }}
                       >
                         {item.submenu ? (
                           <>
@@ -235,13 +232,13 @@ export default function MobileMenu() {
                 <div className="menu-promo__content">
                   <p
                     className="menu-promo__caption fade-in-elm"
-                    style={{ transitionDelay: "0.4s" }}
+                    style={{ transitionDelay: isActive ? "0.4s" : "0s" }}
                   >
                     New 107 Studio website is here!
                     <br />
                     Showcase your projects, services and expertise with impact.
                   </p>
-                  <div className="fade-in-elm" style={{ transitionDelay: "0.5s", marginBottom: "20px" }}>
+                  <div className="fade-in-elm" style={{ transitionDelay: isActive ? "0.5s" : "0s", marginBottom: "20px" }}>
                     <LanguageSwitcher />
                   </div>
                 </div>
