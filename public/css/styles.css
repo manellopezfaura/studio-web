@@ -20,15 +20,19 @@
 
 /* @import url("./plugins.min.css"); */
 /* @import url("./main.min.css"); */
-html {
-  scroll-behavior: smooth;
-}
+/* No CSS scroll-behavior: Lenis handles smooth scrolling. Native CSS smooth would compete
+   with Lenis and cause laggy/jittery scroll on long pages. */
 
 /* Override CSS font variables to use next/font self-hosted files */
 :root {
   --_font-default: var(--font-funnel-sans), "Funnel Sans", sans-serif;
   --_font-accent: var(--font-funnel-display), "Funnel Display", sans-serif;
-  /* Fallback colour tokens for pages without main.min.css (e.g. root not-found) */
+}
+
+/* Fallback colour tokens for pages without main.min.css (e.g. root not-found).
+   Scoped to :not([color-scheme]) so they don't override the theme switcher when
+   main.min.css IS loaded — that file sets [color-scheme="light"|"dark"] tokens. */
+:root:not([color-scheme]) {
   --base-opp: #161616;
   --base: #faf7f6;
   --additional: #ddf160;
@@ -37,7 +41,7 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([color-scheme]) {
     --base-opp: #f0ede8;
     --base: #0e0f0e;
   }
