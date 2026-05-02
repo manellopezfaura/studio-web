@@ -174,9 +174,43 @@
   min-width: 0;
 }
 
+/* Plain link with button styling — no animated component, no state.
+   The card sits over a media background, so the button needs to be
+   high-contrast and self-contained. */
 .mxd-projects-stack__cta {
   flex: 0 0 auto;
   align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.2rem 2rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: #111;
+  font: 600 1.5rem/1 var(--_font-default, system-ui, sans-serif);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mxd-projects-stack__cta:hover,
+.mxd-projects-stack__cta:focus-visible {
+  background-color: #fff;
+  transform: translate(2px, -2px);
+}
+
+.mxd-projects-stack__cta:active {
+  transform: translate(0, 0);
+}
+
+.mxd-projects-stack__cta i {
+  font-size: 1.6rem;
+  line-height: 1;
 }
 
 .hamburger__line {

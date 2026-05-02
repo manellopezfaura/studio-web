@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
+import { Link } from "@/i18n/routing";
 
 import StackCards from "../animation/StackCards";
-import AnimatedButton from "../animation/AnimatedButton";
 import { projectsAll } from "@/data/projects.json";
 import { useTranslations } from "next-intl";
 
@@ -119,13 +119,14 @@ export default function Portfolios1() {
                       <div className="mxd-projects-stack__title no-margin">
                         <h2 className="permanent-light">{s.title}</h2>
                       </div>
-                      <AnimatedButton
-                        text={t("view")}
-                        className="btn btn-anim btn-default btn-outline-permanent btn-on-hero slide-right-up mxd-projects-stack__cta"
+                      <Link
                         href={`/projects/${s.slug}`}
+                        className="mxd-projects-stack__cta"
+                        aria-label={`${t("view")} ${s.title}`}
                       >
-                        <i className="ph-bold ph-arrow-up-right" />
-                      </AnimatedButton>
+                        <span>{t("view")}</span>
+                        <i className="ph-bold ph-arrow-up-right" aria-hidden="true" />
+                      </Link>
                     </div>
                   </div>
                 ))}
