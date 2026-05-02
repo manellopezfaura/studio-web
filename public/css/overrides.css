@@ -13,3 +13,395 @@
     margin-bottom: 2rem;
   }
 }
+
+/* Real project preview images — replace template placeholders.
+   Heros come from /img/projects/posters/ (webm video keyframes — they're the "hero shot"
+   of each project, not random screenshots). */
+.preview-image-1 {
+  /* Hera */
+  background-image: url(/img/projects/captures/foto%20hera%201.webp);
+}
+.preview-image-2 {
+  /* Reinoxpla */
+  background-image: url(/img/projects/posters/reinoxpla.webp);
+}
+.preview-image-3 {
+  /* L de Luis */
+  background-image: url(/img/projects/posters/l-de-luis.webp);
+}
+.preview-image-4 {
+  /* Luminar */
+  background-image: url(/img/projects/posters/luminar.webp);
+}
+.preview-image-5 {
+  /* Flamingos */
+  background-image: url(/img/projects/posters/flamingos.webp);
+}
+
+/* Divider video — same dimensions as the original image divider, but plays a real
+   project showreel instead of a stock template render. */
+.mxd-divider--video {
+  background: var(--base-opp);
+}
+.mxd-divider--video .mxd-divider__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================
+   Project detail page (/projects/[slug])
+   Layout inspired by López & Abarca portfolio: hero with media,
+   meta grid, overview, gallery, next-project link.
+   ========================================================== */
+.mxd-project-detail {
+  display: block;
+  background: var(--base);
+  color: var(--base-opp);
+}
+
+/* HERO */
+.mxd-project-detail__hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 16rem 0 6rem;
+  overflow: hidden;
+  color: #fff;
+}
+.mxd-project-detail__hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.mxd-project-detail__hero-video,
+.mxd-project-detail__hero-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+.mxd-project-detail__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+}
+.mxd-project-detail__hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+.mxd-project-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font: normal var(--fw-medium) 1.4rem/1 var(--_font-accent);
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  margin-bottom: 4rem;
+  transition: color var(--_animspeed-fast) ease;
+}
+.mxd-project-detail__back:hover {
+  color: #fff;
+}
+.mxd-project-detail__back i {
+  transition: transform var(--_animspeed-fast) ease;
+}
+.mxd-project-detail__back:hover i {
+  transform: translateX(-3px);
+}
+.mxd-project-detail__subtitle {
+  font: normal var(--fw-regular) 1.6rem/1.4 var(--_font-default);
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 1.6rem;
+}
+.mxd-project-detail__title {
+  font: normal var(--fw-medium) clamp(5rem, 10vw, 12rem) / 0.95
+    var(--_font-accent);
+  margin: 0 0 4rem;
+  letter-spacing: -0.02em;
+}
+.mxd-project-detail__hero-cta {
+  display: inline-block;
+}
+.btn.btn-on-hero {
+  --btn-c: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.btn.btn-on-hero:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff;
+}
+
+/* META — give breathing room from the dark hero edge */
+.mxd-section.mxd-project-detail__hero + .mxd-section.padding-default {
+  padding-top: 8rem;
+}
+@media (min-width: 768px) {
+  .mxd-section.mxd-project-detail__hero + .mxd-section.padding-default {
+    padding-top: 10rem;
+  }
+}
+.mxd-project-detail__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 4rem;
+  margin: 0 0 6rem;
+  padding-bottom: 6rem;
+  border-bottom: 1px solid var(--neutral-transparent, rgba(0, 0, 0, 0.08));
+}
+.mxd-project-detail__meta-item dt {
+  font: normal var(--fw-medium) 1.1rem/1 var(--_font-accent);
+  color: var(--t-muted, rgba(0, 0, 0, 0.5));
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  margin-bottom: 1.2rem;
+}
+.mxd-project-detail__meta-item dd {
+  font: normal var(--fw-regular) 1.7rem/1.4 var(--_font-default);
+  color: var(--base-opp);
+  margin: 0;
+}
+
+/* STACK */
+.mxd-project-detail__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-bottom: 6rem;
+  padding-bottom: 6rem;
+  border-bottom: 1px solid var(--neutral-transparent, rgba(0, 0, 0, 0.08));
+}
+@media (min-width: 768px) {
+  .mxd-project-detail__stack {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+.mxd-project-detail__stack-label {
+  font: normal var(--fw-medium) 1.1rem/1 var(--_font-accent);
+  color: var(--t-muted, rgba(0, 0, 0, 0.5));
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  flex-shrink: 0;
+}
+.mxd-project-detail__stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* OVERVIEW */
+.mxd-project-detail__overview {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+@media (min-width: 1024px) {
+  .mxd-project-detail__overview {
+    grid-template-columns: 1fr 2fr;
+    gap: 8rem;
+  }
+}
+.mxd-project-detail__overview-label {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font: normal var(--fw-medium) 1.1rem/1 var(--_font-accent);
+  color: var(--t-muted, rgba(0, 0, 0, 0.5));
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  margin: 0;
+}
+.mxd-project-detail__overview-label span {
+  display: inline-block;
+  width: 3.2rem;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.mxd-project-detail__overview-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+.mxd-project-detail__overview-lead {
+  font: normal var(--fw-regular) clamp(1.8rem, 2.2vw, 2.4rem) / 1.45
+    var(--_font-default);
+  color: var(--base-opp);
+  margin: 0;
+}
+.mxd-project-detail__overview-text {
+  font: normal var(--fw-regular) 1.6rem/1.7 var(--_font-default);
+  color: var(--t-medium, rgba(0, 0, 0, 0.65));
+  margin: 0;
+}
+
+/* GALLERY */
+.mxd-project-detail__gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+}
+@media (min-width: 768px) {
+  .mxd-project-detail__gallery {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2.4rem;
+  }
+}
+.mxd-project-detail__gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--_radius-l);
+  background: var(--base-tint, rgba(0, 0, 0, 0.04));
+}
+.mxd-project-detail__gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s var(--_animbezier);
+}
+.mxd-project-detail__gallery-item:hover img {
+  transform: scale(1.02);
+}
+@media (min-width: 768px) {
+  .gallery-item--lead {
+    grid-column: span 12;
+    aspect-ratio: 16 / 9;
+  }
+  .gallery-item--wide {
+    grid-column: span 7;
+    aspect-ratio: 7 / 5;
+  }
+  .gallery-item--tall {
+    grid-column: span 5;
+    aspect-ratio: 5 / 5;
+  }
+}
+.gallery-item--lead {
+  aspect-ratio: 16 / 9;
+}
+
+/* NEXT */
+.mxd-project-detail__next-section {
+  border-top: 1px solid var(--neutral-transparent, rgba(0, 0, 0, 0.08));
+}
+.mxd-project-detail__next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+}
+.mxd-project-detail__next-label {
+  font: normal var(--fw-medium) 1.1rem/1 var(--_font-accent);
+  color: var(--t-muted, rgba(0, 0, 0, 0.5));
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+}
+.mxd-project-detail__next-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+  font: normal var(--fw-medium) clamp(3.6rem, 6vw, 6.4rem) / 1
+    var(--_font-accent);
+  color: var(--base-opp);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: opacity var(--_animspeed-fast) ease;
+}
+.mxd-project-detail__next-link i {
+  font-size: 0.6em;
+  transition: transform var(--_animspeed-medium) var(--_animbezier);
+}
+.mxd-project-detail__next-link:hover {
+  opacity: 0.6;
+}
+.mxd-project-detail__next-link:hover i {
+  transform: translateX(0.6em);
+}
+
+/* Mobile fine-tuning */
+@media (max-width: 767px) {
+  .mxd-project-detail__hero {
+    padding: 12rem 0 4rem;
+    min-height: 80vh;
+  }
+  .mxd-project-detail__back {
+    margin-bottom: 2rem;
+  }
+  .mxd-project-detail__title {
+    margin-bottom: 2.4rem;
+  }
+}
+
+/* Stack cards (works-simple) — clip overflow so the next card cannot peek
+   out below the stack window during the GSAP scrub animation. */
+.projects-stack {
+  overflow: hidden;
+}
+
+/* Stack card frames cycle through 4 brand surfaces — gives the stack a
+   palette rhythm rather than a flat dark/light flicker.
+     1: blanco   → --base (#faf7f6)
+     2: negro    → --base-opp (#161616)
+     3: lila     → --brand-lila
+     4: verde    → --brand-verde (--additional)
+   Repeats every 4 cards. */
+:root {
+  --brand-lila: #c4b5fd;
+  --brand-verde: var(--additional, #ddf160);
+}
+.stack-item:nth-child(4n + 1) > .mxd-projects-stack__inner {
+  background-color: var(--base);
+}
+.stack-item:nth-child(4n + 2) > .mxd-projects-stack__inner {
+  background-color: var(--base-opp);
+}
+.stack-item:nth-child(4n + 3) > .mxd-projects-stack__inner {
+  background-color: var(--brand-lila);
+}
+.stack-item:nth-child(4n) > .mxd-projects-stack__inner {
+  background-color: var(--brand-verde);
+}
+
+/* Inset the image so the frame colour shows around it. */
+.mxd-projects-stack__inner > .mxd-projects-stack__image {
+  inset: 1.6rem;
+  border-radius: calc(var(--_radius-l) - 1.2rem);
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .mxd-projects-stack__inner > .mxd-projects-stack__image {
+    inset: 2rem;
+    border-radius: calc(var(--_radius-l) - 1.4rem);
+  }
+}
+
+/* Title contrast: 3 of the 4 frames are light surfaces and need a dark
+   heading; only the negro frame keeps the default white heading. */
+.stack-item:nth-child(4n + 1) .mxd-projects-stack__title h2.permanent-light,
+.stack-item:nth-child(4n + 3) .mxd-projects-stack__title h2.permanent-light,
+.stack-item:nth-child(4n) .mxd-projects-stack__title h2.permanent-light {
+  color: var(--base-opp);
+}

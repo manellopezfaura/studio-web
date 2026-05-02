@@ -1,11 +1,23 @@
 "use client";
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
+import { Link } from "@/i18n/routing";
 import RevealText from "../animation/RevealText";
 import AnimatedButton from "../animation/AnimatedButton";
-import { projects8 } from "@/data/projects.json";
+import { projectsAll } from "@/data/projects.json";
 import { useTranslations } from "next-intl";
+
+// Slugs already shown in the featured stacking cards above. Filter them
+// out here so we don't duplicate projects on the same page.
+const FEATURED_SLUGS = new Set([
+  "hera",
+  "flamingos",
+  "luminar",
+  "there-you-are",
+  "wire-mesh",
+]);
+
+const restProjects = projectsAll.filter((p) => !FEATURED_SLUGS.has(p.slug));
 
 type HoverState = {
   activeIndex: number | null;
@@ -13,7 +25,6 @@ type HoverState = {
 };
 export default function PortfolioList() {
   const t = useTranslations("WorksPage.List");
-  const tProjects = useTranslations("Projects");
 
   const [hoverState, setHoverState] = useState<HoverState>({
     activeIndex: null,
@@ -71,86 +82,76 @@ export default function PortfolioList() {
         {/* Block - Projects List #01 Start */}
         <div className="mxd-block">
           <div className="mxd-projects-list hover-reveal">
-            {projects8.map((item, idx) => {
-              const title = tProjects(`${item.id}.title`);
-              const tags = tProjects.raw(`${item.id}.tags`) as string[];
-              return (
-                <Link
-                  key={item.id}
-                  className="mxd-projects-list__item hover-reveal__item"
-                  href={`/project-details`}
-                  onMouseMove={(e) => handleMouseMove(e, idx)}
-                  onMouseLeave={handleMouseLeave}
+            {restProjects.map((item, idx) => (
+              <Link
+                key={item.id}
+                className="mxd-projects-list__item hover-reveal__item"
+                href={`/projects/${item.slug}`}
+                onMouseMove={(e) => handleMouseMove(e, idx)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <div className="mxd-projects-list__border anim-uni-in-up" />
+                <div
+                  className="hover-reveal__content hover-reveal-280x340"
+                  style={{
+                    opacity: hoverState.activeIndex === idx ? 1 : 0,
+                    transform: "translate(-80%, -50%)",
+                    left: hoverState.x,
+                    pointerEvents: "none",
+                    transition: "opacity 0.3s ease",
+                  }}
                 >
-                  <div className="mxd-projects-list__border anim-uni-in-up" />
-                  <div
-                    className="hover-reveal__content hover-reveal-280x340"
+                  <Image
                     style={{
-                      opacity: hoverState.activeIndex === idx ? 1 : 0,
-                      transform: "translate(-80%, -50%)",
-                      left: hoverState.x,
-
-                      pointerEvents: "none",
-                      transition: "opacity 0.3s ease",
+                      transform:
+                        hoverState.activeIndex === idx
+                          ? "scale(1,1)"
+                          : "scale(1,1.4)",
+                      transition: "transform 0.3s ease",
                     }}
-                  >
-                    <Image
-                      style={{
-                        transform:
-                          hoverState.activeIndex === idx
-                            ? "scale(1,1)"
-                            : "scale(1,1.4)",
-                        transition: "transform 0.3s ease",
-                      }}
-                      className="hover-reveal__image"
-                      alt="Portfolio project thumbnail by 107 Studio"
-                      src={item.thumb}
-                      width={600}
-                      height={730}
-                    />
-                  </div>
-                  <div className="mxd-projects-list__inner">
-                    <div className="container-fluid px-0">
-                      <div className="row gx-0">
-                        <div className="col-12 col-xl-8 mxd-grid-item no-margin">
-                          <div className="mxd-projects-list__title anim-uni-in-up">
-                            <div className="mxd-projects-list__icon">
-                              <i className="ph ph-arrow-right" />
-                            </div>
-                            <p>{title}</p>
+                    className="hover-reveal__image"
+                    alt={`${item.title} — 107 Studio`}
+                    src={item.thumb}
+                    width={600}
+                    height={730}
+                  />
+                </div>
+                <div className="mxd-projects-list__inner">
+                  <div className="container-fluid px-0">
+                    <div className="row gx-0">
+                      <div className="col-12 col-xl-8 mxd-grid-item no-margin">
+                        <div className="mxd-projects-list__title anim-uni-in-up">
+                          <div className="mxd-projects-list__icon">
+                            <i className="ph ph-arrow-up-right" />
                           </div>
-                          <div className="mxd-projects-list__image anim-uni-in-up">
-                            <Image
-                              alt="Portfolio project thumbnail by 107 Studio"
-                              src={item.image}
-                              width={1200}
-                              height={800}
-                            />
-                          </div>
+                          <p>
+                            <span>{item.title}</span>{" "}
+                            <span className="t-muted">{item.subtitle}</span>
+                          </p>
                         </div>
-                        <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
-                          <div className="mxd-projects-list__tagslist">
-                            <ul>
-                              {tags.map((t, i) => (
-                                <li key={i} className="anim-uni-in-up">
-                                  <p className="t-small">{t}</p>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                      </div>
+                      <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
+                        <div className="mxd-projects-list__tagslist">
+                          <ul>
+                            {item.tags.map((tag, i) => (
+                              <li key={i} className="anim-uni-in-up">
+                                <p className="t-small">{tag}</p>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                        <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
-                          <div className="mxd-projects-list__date anim-uni-in-up">
-                            <p className="t-small">{item.date}</p>
-                          </div>
+                      </div>
+                      <div className="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
+                        <div className="mxd-projects-list__date anim-uni-in-up">
+                          <p className="t-small">{item.year}</p>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="mxd-projects-list__border anim-uni-in-up" />
-                </Link>
-              );
-            })}
+                </div>
+                <div className="mxd-projects-list__border anim-uni-in-up" />
+              </Link>
+            ))}
           </div>
         </div>
         {/* Block - Projects List #01 End */}

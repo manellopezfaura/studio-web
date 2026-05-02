@@ -84,5 +84,17 @@ export default function LenisSmoothScroll() {
   ) {
     return null;
   }
-  return <ReactLenis root />;
+  return (
+    <ReactLenis
+      root
+      options={{
+        // Slightly more responsive than the default lerp (0.1).
+        // Users were reporting laggy/floaty scroll on long pages.
+        lerp: 0.14,
+        smoothWheel: true,
+        // Wheel multiplier: 1 = native; lower means scrolling feels heavier.
+        wheelMultiplier: 1,
+      }}
+    />
+  );
 }

@@ -1,36 +1,13 @@
-import "../../public/css/plugins.min.css";
-import "../../public/css/main.min.css";
-import "../../public/css/styles.css";
-import "../../public/css/overrides.css";
-import "@/components/hera/hera.css";
 import React from "react";
-import { Funnel_Display, Funnel_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import ClientLayout from "@/components/layout/ClientLayout";
+import { DocumentLang } from "@/components/layout/DocumentLang";
 import { Metadata } from "next";
 import { seoConfig } from "@/data/seo-config";
-import { OrganizationSchema } from "@/components/seo/JsonLd";
-import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
-
 import { getTranslations } from "next-intl/server";
-
-const funnelDisplay = Funnel_Display({
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700"],
-    display: "swap",
-    variable: "--font-funnel-display",
-});
-
-const funnelSans = Funnel_Sans({
-    subsets: ["latin"],
-    weight: ["300", "400", "500", "600", "700"],
-    style: ["normal"],
-    display: "swap",
-    variable: "--font-funnel-sans",
-});
 
 // Generate static params for all locales
 export function generateStaticParams() {
@@ -47,7 +24,7 @@ export async function generateMetadata({
 
     const title = t("title") || seoConfig.defaultTitle;
     const description = t("description") || seoConfig.defaultDescription;
-    const baseUrl = seoConfig.siteUrl; // Ensure this is set to your actual domain
+    const baseUrl = seoConfig.siteUrl;
 
     return {
         title: {
@@ -96,16 +73,8 @@ export async function generateMetadata({
                 "max-snippet": -1,
             },
         },
-    };
+    } satisfies Metadata;
 }
-const setColorSchemeScript = `
-(function() {
-  try {
-    var scheme = localStorage.getItem('color-scheme') || 'light';
-    document.documentElement.setAttribute('color-scheme', scheme);
-  } catch(e) {}
-})();
-`;
 
 export default async function LocaleLayout({
     children,
@@ -116,36 +85,17 @@ export default async function LocaleLayout({
 }) {
     const { locale } = await params;
 
-    // Ensure that the incoming `locale` is valid
-    if (!routing.locales.includes(locale as any)) {
+    if (!routing.locales.includes(locale as never)) {
         notFound();
     }
 
-    // Enable static rendering
     setRequestLocale(locale);
-
-    // Providing all messages to the client
-    // side is the easiest way to get started
     const messages = await getMessages();
 
     return (
-        <html suppressHydrationWarning lang={locale} className={`no-touch ${funnelDisplay.variable} ${funnelSans.variable}`}>
-            <head>
-                <script dangerouslySetInnerHTML={{ __html: setColorSchemeScript }} />
-                <OrganizationSchema />
-            </head>
-            <body>
-                <a
-                    href="#mxd-page-content"
-                    className="skip-to-content"
-                >
-                    Skip to content
-                </a>
-                <GoogleAnalytics />
-                <NextIntlClientProvider messages={messages}>
-                    <ClientLayout>{children}</ClientLayout>
-                </NextIntlClientProvider>
-            </body>
-        </html>
+        <NextIntlClientProvider messages={messages}>
+            <DocumentLang locale={locale} />
+            <ClientLayout>{children}</ClientLayout>
+        </NextIntlClientProvider>
     );
 }

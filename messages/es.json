@@ -3,6 +3,15 @@
         "title": "Inicio",
         "Hero": {
             "caption": "Estudio digital<br />de diseño y<br />desarrollo"
+        },
+        "Capabilities": {
+            "title": "Qué hacemos",
+            "cta": "Todos los servicios"
+        },
+        "Projects": {
+            "title": "Proyectos",
+            "description": "Una selección de trabajos donde diseño, tecnología y resultados van de la mano.",
+            "cta": "Ver todos"
         }
     },
     "AboutPage": {
@@ -247,24 +256,86 @@
     },
     "Testimonials": {
         "testimonial_1": {
-            "text": "¡Trabajar con el equipo de 107 Studio fue un placer absoluto! Se tomaron el tiempo para entender nuestras necesidades comerciales y las tradujeron en un sitio web bellamente diseñado y fácil de usar.",
-            "position": "Brand Manager en Nexora Health"
+            "text": "Simplificaron nuestro mensaje y crearon una web modular que el equipo de marketing puede editar sin complicaciones.",
+            "position": "Founder en Nova AI"
         },
         "testimonial_2": {
-            "text": "La atención al detalle, la creatividad y la experiencia técnica del equipo superaron nuestras expectativas. Ya hemos recibido muchos comentarios positivos de nuestros clientes.",
-            "position": "SEO Lead en Kova Digital"
+            "text": "Llegamos con bastante desorden y nos ayudaron a poner estructura. El briefing acabó siendo una guía clara, la marca ganó coherencia y la web funciona rápida en cualquier dispositivo.",
+            "position": "CEO en The Lot Co."
+        },
+        "testimonial_3": {
+            "text": "Proceso claro, comunicación directa y cero complicaciones. Las demos semanales nos ayudaron a mantener el foco y todas las decisiones quedaron bien documentadas.",
+            "position": "COO en MexMa Design"
+        },
+        "testimonial_4": {
+            "text": "Desde el primer día hablaron de resultados, no solo de diseño. Las llamadas de ventas empiezan con un 'nos encantó vuestra web' y nuestro CAC está bajando.",
+            "position": "Head of Growth en Bernard Systems"
         }
     },
     "ProjectDetails": {
-        "challenge": {
-            "title": "Reto",
-            "intro": "Cada proyecto arranca con un conjunto único de restricciones — plazos ajustados, requisitos cambiantes o la necesidad de destacar en un mercado saturado.",
-            "body": "Nuestro papel fue destilar complejidad en claridad: entender el problema central, alinear a las partes interesadas en torno a una visión compartida y definir un camino que equilibre ambición con viabilidad."
-        },
-        "solution": {
-            "title": "Solución",
-            "intro": "Abordamos el proyecto con una mentalidad research-first — mapeando necesidades del usuario, auditando el panorama competitivo e identificando las oportunidades de mayor impacto.",
-            "body": "Desde ahí, avanzamos con sprints iterativos de diseño y desarrollo, validando decisiones temprano y entregando con precisión. El resultado: un producto que se siente intencional en cada detalle."
+        "back": "Volver",
+        "viewLive": "Ver en vivo",
+        "next": "Siguiente proyecto",
+        "role": "Rol",
+        "year": "Año",
+        "scope": "Alcance",
+        "stack": "Stack",
+        "overview": "Resumen",
+        "items": {
+            "hera": {
+                "role": "Co-fundadores, diseño y desarrollo",
+                "scope": "Producto, UI/UX, widget embebible",
+                "overview": "Plataforma SaaS de agentes IA que automatizan conversaciones 24/7 y cualifican leads en tiempo real. Desde la landing de marketing hasta el widget embebible y el dashboard operativo.",
+                "description": "Diseñamos un sistema coherente que acompaña al usuario en tres superficies distintas: landing pública, widget integrado en web de cliente, y panel de control para equipos. La complejidad técnica de los modelos queda invisible — lo que queda es una herramienta que parece simple porque está cuidada."
+            },
+            "reinoxpla": {
+                "role": "Diseño y desarrollo",
+                "scope": "Web corporativa, GSAP, fotografía",
+                "overview": "Web corporativa para fabricante de mobiliario profesional de acero inoxidable. Animaciones GSAP sofisticadas, formulario de presupuesto integrado y foco absoluto en fotografía de producto.",
+                "description": "La marca llegaba con una tipografía serif fuerte y una línea editorial marcada. Diseñamos una retícula que respeta ese carácter mientras acompaña al visitante por cada sector — cocina, barra, frío — sin perder unidad visual."
+            },
+            "l-de-luis": {
+                "role": "Branding y desarrollo",
+                "scope": "Branding, web, motion",
+                "overview": "Identidad y landing para una barbería urbana con ADN cinematográfico. Blanco y negro, tipografía impactante y transiciones GSAP que dan ritmo a la página.",
+                "description": "Construimos el sitio alrededor de una única imagen de archivo icónica, usándola como ancla narrativa. Cada sección posterior es un contrapunto al silencio inicial, manteniendo el pulso editorial en toda la experiencia."
+            },
+            "luminar": {
+                "role": "Diseño y desarrollo",
+                "scope": "Landing, 3D, interacción",
+                "overview": "Landing de producto para una suite de herramientas creativas. Hero 3D con escena de cubos iluminados que reaccionan al cursor, y navegación por cinco escenas temáticas que exponen cada herramienta sin una sola palabra de más.",
+                "description": "La premisa era que el propio hero demostrara el producto: en lugar de explicar «luz y materia», la escena se encarga de enseñarlo. Cada slide redibuja la iluminación con un foco distinto — así la página funciona también como primera demo."
+            },
+            "flamingos": {
+                "role": "Diseño y desarrollo",
+                "scope": "3D, Three.js, animación de scroll",
+                "overview": "Una exploración visual donde la elegancia natural se encuentra con el artesanado digital. Flamenco low-poly renderizado en tiempo real, con transiciones scroll-driven que responden al movimiento del usuario.",
+                "description": "El objetivo era demostrar cómo un objeto 3D puede sostener por sí solo una narrativa completa. Cada rotación, cada cambio de luz y cada tipografía están orquestados para que el scroll se convierta en coreografía."
+            },
+            "wire-mesh": {
+                "role": "Investigación y desarrollo",
+                "scope": "WebGL, shaders en tiempo real",
+                "overview": "Retrato wireframe en tiempo real renderizado con shaders WebGL. Una pieza de exploración técnica que examina cómo la geometría puede comunicar presencia.",
+                "description": "Experimento orientado a entender los límites de los shaders custom en navegador. La cara se reconstruye continuamente como una malla de líneas — frágil, expresiva, computacional."
+            },
+            "solar-system": {
+                "role": "Investigación y desarrollo",
+                "scope": "Three.js, navegación procedural",
+                "overview": "Sistema solar navegable con planetas a escala relativa, iluminación física y controles de cámara orbital. Un sandbox para probar técnicas de renderizado astronómico.",
+                "description": "La intención fue hacer un sistema que se sintiera real sin ser una réplica científica. Las texturas son procedurales, los movimientos respetan ratios reales y el usuario puede pasar de visión global a primer plano sin saltos."
+            },
+            "there-you-are": {
+                "role": "Diseño e investigación",
+                "scope": "Three.js, narrativa interactiva",
+                "overview": "Poema cósmico interactivo donde el lenguaje y la geometría conviven. Cada palabra escrita reacciona al espacio 3D que la rodea.",
+                "description": "Un experimento de tipografía espacial: el texto no se sitúa sobre una imagen, sino dentro del espacio. La pieza es a la vez poema, demo técnica y pequeño universo navegable."
+            },
+            "flock": {
+                "role": "Investigación y desarrollo",
+                "scope": "Three.js, generación procedural",
+                "overview": "Paisaje 3D de cubos generativo. Cada visita reconstruye una topografía distinta a partir de ruido procedural y reglas de composición.",
+                "description": "Estudio sobre cuánto puede sugerir un mundo hecho exclusivamente de cubos. Sin texturas, sin assets — solo geometría primitiva, luz y composición algorítmica."
+            }
         }
     },
     "Navigation": {
@@ -303,6 +374,14 @@
             "phonePlaceholder": "Teléfono",
             "messagePlaceholder": "Unas palabras sobre tu proyecto*",
             "submitButton": "Enviar",
+            "sending": "Enviando…",
+            "nameRequired": "Indica tu nombre",
+            "emailRequired": "Indica tu email",
+            "emailInvalid": "Email no válido",
+            "messageRequired": "Cuéntanos algo sobre tu proyecto",
+            "messageTooShort": "El mensaje es demasiado corto",
+            "statusSuccess": "Mensaje enviado. Te respondemos pronto.",
+            "statusError": "No se ha podido enviar. Inténtalo de nuevo.",
             "toastSuccess": "Mensaje enviado — ¡gracias!",
             "toastError": "Error al enviar — por favor intenta más tarde."
         },

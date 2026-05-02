@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import Cta from "@/components/common/Cta";
 import Footer2 from "@/components/footers/Footer2";
 
@@ -6,9 +5,9 @@ import MarqueeSlider from "@/components/portfolios/MarqueeSlider";
 import PortfolioList from "@/components/portfolios/PortfolioList";
 import Portfolios1 from "@/components/portfolios/Portfolios1";
 
-const Testimonials = dynamic(
-  () => import("@/components/common/Testimonials")
-);
+// Testimonials hidden — pendiente de tener opiniones reales de clientes.
+// import dynamic from "next/dynamic";
+// const Testimonials = dynamic(() => import("@/components/common/Testimonials"));
 import { Metadata } from "next";
 import { pageMetadata, getCanonicalUrl, SITE_URL } from "@/data/seo-config";
 import { WebPageSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
@@ -57,7 +56,7 @@ export default async function WorksSimplePage({
         <Portfolios1 />
         <PortfolioList />
         <MarqueeSlider />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Cta />
       </main>
       <Footer2 />

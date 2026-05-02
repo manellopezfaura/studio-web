@@ -1,14 +1,27 @@
 "use client";
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { Link } from "@/i18n/routing";
 
 import StackCards from "../animation/StackCards";
-import { projects10 } from "@/data/projects.json";
+import { projectsAll } from "@/data/projects.json";
 import { useTranslations } from "next-intl";
+
+// Featured projects shown in the top stacking cards. The remaining
+// projects appear below in the hover-reveal list (PortfolioList).
+const FEATURED_SLUGS = [
+  "hera",
+  "flamingos",
+  "luminar",
+  "there-you-are",
+  "wire-mesh",
+] as const;
+
+const featuredProjects = FEATURED_SLUGS.map(
+  (slug) => projectsAll.find((p) => p.slug === slug)!,
+);
 
 export default function Portfolios1() {
   const t = useTranslations("WorksPage.Hero");
-  const tProjects = useTranslations("Projects");
 
   return (
     <>
@@ -78,39 +91,36 @@ export default function Portfolios1() {
           <div className="mxd-block mxd-grid-item no-margin">
             <div className="content__block loading__fade">
               <StackCards stackName="projects-stack" className="stack-wrapper">
-                {projects10.map((s) => {
-                  const title = tProjects(`${s.id}.title`);
-                  const tags = tProjects.raw(`${s.id}.tags`) as string[];
-                  return (
-                    <Link
-                      key={s.id}
-                      className="mxd-projects-stack__inner justify-between"
-                      href={`/project-details`}
-                    >
-                      <div className="mxd-projects-stack__image">
-                        <Image
-                          alt="Featured project by 107 Studio"
-                          src={s.image}
-                          width={1920}
-                          height={1080}
-                        />
-                      </div>
-                      <div className="mxd-projects-stack__tags">
-                        {tags.map((t, i) => (
-                          <span
-                            key={i}
-                            className="tag tag-default tag-outline-permanent"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="mxd-projects-stack__title no-margin">
-                        <h2 className="permanent-light">{title}</h2>
-                      </div>
-                    </Link>
-                  );
-                })}
+                {featuredProjects.map((s, idx) => (
+                  <Link
+                    key={s.id}
+                    className="mxd-projects-stack__inner justify-between"
+                    href={`/projects/${s.slug}`}
+                  >
+                    <div className="mxd-projects-stack__image">
+                      <Image
+                        alt={`${s.title} — 107 Studio`}
+                        src={s.image}
+                        width={1920}
+                        height={1080}
+                        priority={idx === 0}
+                      />
+                    </div>
+                    <div className="mxd-projects-stack__tags">
+                      {s.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="tag tag-default tag-outline-permanent"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mxd-projects-stack__title no-margin">
+                      <h2 className="permanent-light">{s.title}</h2>
+                    </div>
+                  </Link>
+                ))}
               </StackCards>
             </div>
           </div>

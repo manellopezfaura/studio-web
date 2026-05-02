@@ -8,6 +8,7 @@ import { anthropic } from "@ai-sdk/anthropic"
 import { streamText, convertToModelMessages, type UIMessage } from "ai"
 import { getBrand, isAllowedOrigin } from "@/lib/brand-config"
 import { buildChatPrompt } from "@/lib/hera-prompt"
+import { buildBookingTools } from "@/lib/booking-tools"
 
 // ─────────────────────────────────────────────
 // Constants
@@ -332,6 +333,7 @@ export async function POST(
     const convertedMessages = await convertToModelMessages(trimmedMessages)
     const systemPrompt = buildChatPrompt(brand)
     const models = getModels()
+    const bookingTools = buildBookingTools(brand)
 
     const onFinish = async ({ text }: { text: string }) => {
       const flatMessages: Array<{ role: string; content: string }> = []
@@ -396,6 +398,10 @@ export async function POST(
           maxOutputTokens: 1024,
           temperature: 0.7,
           abortSignal: abortController.signal,
+          ...(bookingTools && {
+            tools: bookingTools,
+            maxSteps: 5,
+          }),
           onChunk: () => {
             clearTimeout(timeout)
           },

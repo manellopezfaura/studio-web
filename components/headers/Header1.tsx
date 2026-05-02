@@ -1,6 +1,6 @@
 "use client";
 import { Link } from "@/i18n/routing";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import AnimatedButton from "../animation/AnimatedButton";
 import ThemeSwitcherButton from "./ColorSwitcher";
@@ -13,17 +13,11 @@ const NAV_ITEMS = menuItems.filter((item) => item.href !== "/");
 export default function Header1() {
   const t = useTranslations("Navigation");
   const pathname = usePathname();
-  const [isHidden, setIsHidden] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsHidden(window.pageYOffset > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Auto-hide on scroll removed: the header stays fixed and visible at all times.
+  // Only the active-link pill animates to indicate the current section.
 
   const isActive = (href?: string) => {
     if (!href) return false;
@@ -82,9 +76,9 @@ export default function Header1() {
   }, [snapToActive]);
 
   return (
-    <header id="header" className={`mxd-header ${isHidden ? "is-hidden" : ""}`}>
+    <header id="header" className="mxd-header">
       {/* header logo */}
-      <div className="mxd-header__logo loading__fade">
+      <div className="mxd-header__logo">
         <Link href={`/`} className="mxd-logo">
           {/* logo icon */}
           <svg
@@ -156,7 +150,7 @@ export default function Header1() {
       {/* desktop navigation */}
       <nav
         ref={navRef}
-        className="mxd-header__nav loading__fade"
+        className="mxd-header__nav"
         aria-label="Main navigation"
         onMouseLeave={handleMouseLeave}
       >
@@ -173,7 +167,7 @@ export default function Header1() {
         ))}
       </nav>
       {/* header controls */}
-      <div className="mxd-header__controls loading__fade">
+      <div className="mxd-header__controls">
         <ThemeSwitcherButton />
         <LanguageSwitcher />
         <AnimatedButton

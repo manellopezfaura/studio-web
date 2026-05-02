@@ -1,7 +1,7 @@
 "use client";
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import capabilities from "@/data/capabilities.json";
 import RevealText from "@/components/animation/RevealText";
 import AnimatedButton from "@/components/animation/AnimatedButton";
@@ -11,6 +11,7 @@ type HoverState = {
   x: number;
 };
 export default function Capabilities() {
+  const t = useTranslations("HomePage.Capabilities");
   const [hoverState, setHoverState] = useState<HoverState>({
     activeIndex: null,
     x: 0,
@@ -46,7 +47,7 @@ export default function Capabilities() {
                 <div className="col-12 col-xl-6 mxd-grid-item no-margin">
                   <div className="mxd-section-title__hrtitle">
                     <RevealText as="h2" className="reveal-type">
-                      Our capabilities
+                      {t("title")}
                     </RevealText>
                   </div>
                 </div>
@@ -54,7 +55,7 @@ export default function Capabilities() {
                 <div className="col-12 col-xl-3 mxd-grid-item no-margin">
                   <div className="mxd-section-title__hrcontrols anim-uni-in-up">
                     <AnimatedButton
-                      text="All Services"
+                      text={t("cta")}
                       className="btn btn-anim btn-default btn-outline slide-right-up"
                       href={`/services`}
                     >

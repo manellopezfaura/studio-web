@@ -45,6 +45,7 @@ export function buildChatPrompt(brand: BrandConfig): string {
   const time = getMadridTime()
   const timeOfDay = getTimeOfDay(time)
   const greeting = getGreeting(timeOfDay)
+  const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Madrid" })
 
   if (brand.slug === "hera") {
     return buildHeraProductPrompt(brand, time, timeOfDay, greeting)
@@ -53,17 +54,20 @@ export function buildChatPrompt(brand: BrandConfig): string {
   const identity = buildIdentity(brand)
   const knowledge = buildKnowledge(brand)
   const behavior = buildBehavior(brand)
+  const booking = brand.bookingApiUrl ? buildBookingBehavior(today) : ""
   const guardrails = buildGuardrails(brand)
   const examples = buildExamples(brand)
 
   return `${identity}
 
 HORA_ACTUAL: ${time} (${timeOfDay})
+FECHA_HOY: ${today}
 SALUDO_CORRECTO: "${greeting}"
 
 ${knowledge}
 
 ${behavior}
+${booking}
 
 ${guardrails}
 
@@ -370,6 +374,36 @@ Hera: Depende del alcance — no es lo mismo un bot básico que uno con dashboar
 Usuario: ¿Puedes hacer cosas como dar asesoramiento legal?
 Hera: No, eso queda fuera de mi alcance. Lo que hago es clasificar la consulta, recoger los datos iniciales y guiar al cliente al paso correcto. El asesoramiento siempre lo da tu equipo.
 ---`
+}
+
+// ─────────────────────────────────────────────
+// Capa — Reservas (solo si la marca tiene booking)
+// ─────────────────────────────────────────────
+
+function buildBookingBehavior(today: string): string {
+  return `
+---
+
+SISTEMA DE RESERVAS:
+Tienes herramientas para gestionar reservas. Úsalas cuando el usuario quiera reservar, agendar o pedir cita.
+
+FLUJO DE RESERVA:
+1. Llama a listServices para saber qué servicios hay disponibles
+2. Presenta los servicios de forma conversacional (nombre, duración, precio si tiene)
+3. Cuando el usuario elija uno, pregunta qué día le viene bien
+4. Llama a checkAvailability con la fecha (formato YYYY-MM-DD) y el service_id
+5. Presenta los horarios disponibles de forma legible (ej: "10:00, 10:30, 11:00...")
+6. Cuando elija hora, confirma el resumen: servicio + fecha + hora + nombre
+7. Pide nombre si no lo tienes. Email y teléfono son opcionales pero recomendables
+8. Solo cuando el usuario confirme, llama a createBooking
+
+REGLAS:
+- La fecha de hoy es ${today}. Si el usuario dice "mañana", calcula la fecha correcta
+- Presenta los horarios en formato 24h legible (10:00, 14:30), no en ISO
+- Si no hay slots disponibles, sugiere otro día
+- NUNCA llames a createBooking sin confirmación explícita del usuario
+- Si la reserva falla por conflicto, sugiere otro horario
+- Después de crear la reserva, confirma los detalles y pregunta si necesita algo más`
 }
 
 function buildExamples(brand: BrandConfig): string {

@@ -18,6 +18,8 @@ export interface BrandConfig {
   accentColor: string
   theme: BrandTheme
   allowedOrigins: string[]
+  bookingApiUrl?: string
+  bookingApiKey?: string
 }
 
 // ── Alta de cliente nuevo ──
@@ -40,6 +42,8 @@ export interface BrandConfig {
 //   allowedOrigins: ["https://cliente.com", "https://www.cliente.com"],
 // },
 
+const BOOKING_API_URL = process.env.BOOKING_API_URL ?? "https://hera-dashboard.vercel.app"
+
 const BRANDS: Record<string, BrandConfig> = {
   "107": {
     slug: "107",
@@ -53,6 +57,8 @@ const BRANDS: Record<string, BrandConfig> = {
     accentColor: "#ddf160",
     theme: { base: "#161616", baseOpp: "#faf7f6", accent: "#ddf160" },
     allowedOrigins: ["https://107studio.es", "https://www.107studio.es"],
+    bookingApiUrl: BOOKING_API_URL,
+    bookingApiKey: process.env.BOOKING_API_KEY_107,
   },
   "086": {
     slug: "086",

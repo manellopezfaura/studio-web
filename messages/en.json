@@ -3,6 +3,15 @@
         "title": "Home",
         "Hero": {
             "caption": "Design-driven<br />digital studio<br />& development"
+        },
+        "Capabilities": {
+            "title": "What we do",
+            "cta": "All services"
+        },
+        "Projects": {
+            "title": "Selected work",
+            "description": "A few projects where design, tech and outcomes meet.",
+            "cta": "View all"
         }
     },
     "AboutPage": {
@@ -247,15 +256,89 @@
     },
     "Testimonials": {
         "testimonial_1": {
-            "text": "Working with 107 Studio team was an absolute pleasure! They took the time to understand our business needs and translated them into a beautifully designed, user-friendly website.",
-            "position": "Brand Manager at Nexora Health"
+            "text": "They simplified our message and built a modular website the marketing team can edit without friction.",
+            "position": "Founder at Nova AI"
         },
         "testimonial_2": {
-            "text": "The team's attention to detail, creativity, and technical expertise exceeded our expectations. We've received so much positive feedback from our customers already.",
-            "position": "SEO Lead at Kova Digital"
+            "text": "We came in with a fair amount of chaos and they helped us add structure. The brief became a clear guide, the brand gained coherence and the site is fast on any device.",
+            "position": "CEO at The Lot Co."
+        },
+        "testimonial_3": {
+            "text": "Clear process, direct communication, zero drama. The weekly demos kept us focused and every decision was properly documented.",
+            "position": "COO at MexMa Design"
+        },
+        "testimonial_4": {
+            "text": "From day one they talked outcomes, not just design. Sales calls now open with 'we loved your website' and our CAC is dropping.",
+            "position": "Head of Growth at Bernard Systems"
         }
     },
     "ProjectDetails": {
+        "back": "Back",
+        "viewLive": "View live",
+        "next": "Next project",
+        "role": "Role",
+        "year": "Year",
+        "scope": "Scope",
+        "stack": "Stack",
+        "overview": "Overview",
+        "items": {
+            "hera": {
+                "role": "Co-founders, design & development",
+                "scope": "Product, UI/UX, embeddable widget",
+                "overview": "A SaaS platform of AI agents that automate 24/7 conversations and qualify leads in real time. From the marketing landing to the embeddable widget and the operations dashboard.",
+                "description": "We designed a coherent system across three distinct surfaces: public landing, widget embedded in a client's site, and a dashboard for teams. The technical complexity stays invisible — what remains is a tool that feels simple because it's been handled with care."
+            },
+            "reinoxpla": {
+                "role": "Design & development",
+                "scope": "Corporate web, GSAP, photography",
+                "overview": "Corporate site for a manufacturer of professional stainless-steel furniture. Sophisticated GSAP animations, integrated quote form, and uncompromising focus on product photography.",
+                "description": "The brand came with a strong serif and a clear editorial voice. We designed a grid that honors that character while guiding the visitor through each segment — kitchen, bar, cold storage — without breaking visual unity."
+            },
+            "l-de-luis": {
+                "role": "Branding & development",
+                "scope": "Branding, web, motion",
+                "overview": "Identity and landing for an urban barbershop with cinematic DNA. Black and white, bold typography, and GSAP transitions that shape the pacing of the page.",
+                "description": "We built the site around a single iconic archival image, using it as a narrative anchor. Every subsequent section is a counterpoint to that opening silence, sustaining an editorial pulse through the whole experience."
+            },
+            "luminar": {
+                "role": "Design & development",
+                "scope": "Landing, 3D, interaction",
+                "overview": "Product landing for a suite of creative tools. A 3D hero with illuminated cubes that react to the cursor, and navigation across five themed scenes that expose each tool without a single extra word.",
+                "description": "The premise was that the hero itself should demonstrate the product: instead of explaining 'light and matter', the scene does the teaching. Each slide re-lights the stage with a different focus — so the page doubles as the first demo."
+            },
+            "flamingos": {
+                "role": "Design & development",
+                "scope": "3D, Three.js, scroll animation",
+                "overview": "A visual exploration where natural elegance meets digital craft. A low-poly flamingo rendered in real time, with scroll-driven transitions that respond to the visitor's pace.",
+                "description": "The goal was to prove a single 3D object can carry an entire narrative on its own. Every rotation, light shift and type change is orchestrated so that scrolling becomes choreography."
+            },
+            "wire-mesh": {
+                "role": "Research & development",
+                "scope": "WebGL, real-time shaders",
+                "overview": "A real-time wireframe portrait rendered with WebGL shaders. A piece of technical exploration that examines how geometry can communicate presence.",
+                "description": "Experiment focused on probing the limits of custom shaders in the browser. The face is continuously rebuilt as a mesh of lines — fragile, expressive, computational."
+            },
+            "solar-system": {
+                "role": "Research & development",
+                "scope": "Three.js, procedural navigation",
+                "overview": "A navigable solar system with planets at relative scale, physical lighting, and orbital camera controls. A sandbox for testing astronomical rendering techniques.",
+                "description": "The intent was to make a system that felt real without being a scientific replica. Textures are procedural, motions respect real ratios, and you can shift from a global view to a close-up without jumps."
+            },
+            "there-you-are": {
+                "role": "Design & research",
+                "scope": "Three.js, interactive narrative",
+                "overview": "An interactive cosmic poem where language and geometry coexist. Every written word reacts to the 3D space around it.",
+                "description": "An experiment in spatial typography: the text doesn't sit on top of an image — it lives inside the space. The piece is at once a poem, a tech demo and a small navigable universe."
+            },
+            "flock": {
+                "role": "Research & development",
+                "scope": "Three.js, procedural generation",
+                "overview": "A generative 3D cube landscape. Every visit reconstructs a different topography from procedural noise and composition rules.",
+                "description": "A study on how much a world made entirely of cubes can suggest. No textures, no assets — only primitive geometry, light, and algorithmic composition."
+            }
+        }
+    },
+    "ProjectDetailsLegacy": {
         "challenge": {
             "title": "Challenge",
             "intro": "Every project starts with a unique set of constraints — tight timelines, evolving requirements, or the need to stand out in a saturated market.",
@@ -303,6 +386,14 @@
             "phonePlaceholder": "Phone",
             "messagePlaceholder": "A few words about your project*",
             "submitButton": "Submit",
+            "sending": "Sending…",
+            "nameRequired": "Name is required",
+            "emailRequired": "Email is required",
+            "emailInvalid": "Invalid email address",
+            "messageRequired": "Tell us about your project",
+            "messageTooShort": "Message is too short",
+            "statusSuccess": "Message sent. We'll reply soon.",
+            "statusError": "Could not send now. Please try again.",
             "toastSuccess": "Message sent — thanks!",
             "toastError": "Submission failed — please try again later."
         },

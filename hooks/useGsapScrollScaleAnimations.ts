@@ -33,12 +33,12 @@ export default function useGsapScrollScaleAnimations() {
           {
             y: 0,
             opacity: 1,
-            duration: 1.2,
+            duration: 0.6,
             scrollTrigger: {
               trigger: el,
               start: "top 95%",
               // end: "bottom 15%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         );
@@ -55,12 +55,12 @@ export default function useGsapScrollScaleAnimations() {
             x: 0,
             opacity: 1,
             scale: 1,
-            duration: 1.2,
+            duration: 0.6,
             scrollTrigger: {
               trigger: el,
               start: "top 85%",
               end: "bottom 15%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         );
@@ -79,12 +79,12 @@ export default function useGsapScrollScaleAnimations() {
             x: 0,
             opacity: 1,
             scale: 1,
-            duration: 1.2,
+            duration: 0.6,
             scrollTrigger: {
               trigger: el,
               start: "top 85%",
               end: "bottom 15%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         );
@@ -103,12 +103,12 @@ export default function useGsapScrollScaleAnimations() {
             x: 0,
             opacity: 1,
             scale: 1,
-            duration: 1.2,
+            duration: 0.6,
             scrollTrigger: {
               trigger: el,
               start: "top 85%",
               end: "bottom 15%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         );
@@ -230,6 +230,8 @@ export default function useGsapScrollScaleAnimations() {
       });
 
       // ✅ Loading animation
+      // Page-entry choreography: was way too slow (~2s before the hero text was fully visible).
+      // Trimmed to ~0.6s total: small initial delay + faster fade/slide.
       const loadingWrap = document.querySelector(".loading-wrap");
       if (loadingWrap) {
         const loadingItems = loadingWrap.querySelectorAll(".loading__item");
@@ -238,21 +240,21 @@ export default function useGsapScrollScaleAnimations() {
         const pageAppearance = () => {
           gsap.set(loadingItems, { opacity: 0 });
           gsap.to(loadingItems, {
-            duration: 1.1,
-            ease: "power4",
-            startAt: { y: 120 },
+            duration: 0.55,
+            ease: "power2.out",
+            startAt: { y: 40 },
             y: 0,
             opacity: 1,
-            delay: 0.8,
-            stagger: 0.08,
+            delay: 0.05,
+            stagger: 0.04,
           });
 
           gsap.set(fadeInItems, { opacity: 0 });
           gsap.to(fadeInItems, {
-            duration: 0.8,
+            duration: 0.4,
             ease: "none",
             opacity: 1,
-            delay: 1.2,
+            delay: 0.1,
           });
         };
 
@@ -263,12 +265,30 @@ export default function useGsapScrollScaleAnimations() {
     // Remove global refresh listener - let individual components handle their own refresh
     // ScrollTrigger.addEventListener("refresh", handleRefresh);
 
-    // Initialize with a small delay to ensure DOM is ready
-    setTimeout(() => {
-      initAnim();
-    }, 100);
+    // useEffect already guarantees the DOM is mounted; no extra delay needed.
+    // The previous 100ms setTimeout added perceptible lag to the page-entry feel.
+    initAnim();
+
+    // Safety fallback: after route changes or slow ScrollTrigger refreshes,
+    // some `.anim-uni-*` elements can stay at opacity 0 forever (the trigger never fires
+    // because the page already loaded with them in viewport). After 2.5s, force any
+    // still-invisible animation element to its final state. This is a no-op for elements
+    // that GSAP did animate correctly.
+    const safetyTimer = setTimeout(() => {
+      document
+        .querySelectorAll<HTMLElement>(
+          ".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade"
+        )
+        .forEach((el) => {
+          if (parseFloat(getComputedStyle(el).opacity) < 0.95) {
+            el.style.opacity = "1";
+            el.style.transform = "none";
+          }
+        });
+    }, 2500);
 
     return () => {
+      clearTimeout(safetyTimer);
       // Only kill our specific ScrollTriggers
       ScrollTrigger.getAll()
         .filter((st) => {

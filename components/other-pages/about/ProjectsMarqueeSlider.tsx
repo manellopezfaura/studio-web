@@ -1,9 +1,9 @@
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { Link } from "@/i18n/routing";
 
 import VelocityMarquee from "@/components/animation/VelocityMarquee";
 import AnimateRotation from "@/components/animation/AnimateRotation";
-import { projects6 } from "@/data/projects.json";
+import { projectsAll } from "@/data/projects.json";
 
 export default function ProjectsMarqueeSlider() {
   return (
@@ -60,26 +60,24 @@ export default function ProjectsMarqueeSlider() {
         <div className="mxd-block loading__fade">
           {/* Marquee Divider Start */}
           <VelocityMarquee className="marquee marquee-right--gsap">
-            {projects6.map((item, idx) => {
-              const src = item.src;
-
-              const href = item.id ? `/project-details` : "/project-details";
-              return (
-                <div
-                  key={idx}
-                  className="marquee__item one-line item-large image"
+            {projectsAll.map((item) => (
+              <div
+                key={item.id}
+                className="marquee__item one-line item-large image"
+              >
+                <Link
+                  className="marquee__link"
+                  href={`/projects/${item.slug}`}
                 >
-                  <Link className="marquee__link" href={href}>
-                    <Image
-                      alt={item.title || "Featured project"}
-                      src={src}
-                      width={1400}
-                      height={1080}
-                    />
-                  </Link>
-                </div>
-              );
-            })}
+                  <Image
+                    alt={`${item.title} — 107 Studio`}
+                    src={item.image}
+                    width={1400}
+                    height={1080}
+                  />
+                </Link>
+              </div>
+            ))}
           </VelocityMarquee>
         </div>
         {/* Block - Marquee Projects Links One Line End */}

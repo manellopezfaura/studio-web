@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm as useHookForm } from "react-hook-form";
 import { useForm } from "@formspree/react";
+import { useTranslations } from "next-intl";
 import AnimatedButton from "../animation/AnimatedButton";
 
 type FooterContactFields = {
@@ -12,6 +13,7 @@ type FooterContactFields = {
 };
 
 export default function FooterContactForm() {
+  const t = useTranslations("ContactPage.Form");
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const {
     register,
@@ -41,10 +43,10 @@ export default function FooterContactForm() {
       >
         <input
           type="text"
-          placeholder="Your name*"
+          placeholder={t("namePlaceholder")}
           {...register("Name", {
-            required: "Name is required",
-            minLength: { value: 2, message: "Name is required" },
+            required: t("nameRequired"),
+            minLength: { value: 2, message: t("nameRequired") },
           })}
         />
         {errors.Name && (
@@ -53,12 +55,12 @@ export default function FooterContactForm() {
 
         <input
           type="email"
-          placeholder="Email*"
+          placeholder={t("emailPlaceholder")}
           {...register("E-mail", {
-            required: "Email is required",
+            required: t("emailRequired"),
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Invalid email address",
+              message: t("emailInvalid"),
             },
           })}
         />
@@ -69,10 +71,10 @@ export default function FooterContactForm() {
         )}
 
         <textarea
-          placeholder="Tell us about your project*"
+          placeholder={t("messagePlaceholder")}
           {...register("Message", {
-            required: "Message is required",
-            minLength: { value: 5, message: "Message is too short" },
+            required: t("messageRequired"),
+            minLength: { value: 5, message: t("messageTooShort") },
           })}
         />
         {errors.Message && (
@@ -80,7 +82,7 @@ export default function FooterContactForm() {
         )}
 
         <AnimatedButton
-          text={fsState.submitting ? "Sending..." : "Send Message"}
+          text={fsState.submitting ? t("sending") : t("submitButton")}
           position={"next"}
           as={"button"}
           className="btn btn-anim btn-default btn-small btn-outline slide-right-up footer-contact-form__submit"
@@ -93,12 +95,12 @@ export default function FooterContactForm() {
 
       {status === "success" && (
         <p className="footer-contact-form__status footer-contact-form__status--ok">
-          Message sent. We&apos;ll reply soon.
+          {t("statusSuccess")}
         </p>
       )}
       {status === "error" && (
         <p className="footer-contact-form__status footer-contact-form__status--error">
-          Could not send now. Please try again.
+          {t("statusError")}
         </p>
       )}
     </div>
