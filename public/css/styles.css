@@ -72,6 +72,22 @@
   pointer-events: all;
 }
 
+/* Menu has its own dark identity, independent of the page theme.
+   Without this, in light mode the menu opens with no background and the
+   page below shows through — when closing, the inner items fade out
+   first and you see a "ghost" frame. */
+.mxd-menu__base {
+  background-color: #0e0f0e;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.mxd-nav__wrap.active_menu .mxd-menu__base {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .mxd-menu__wrapper .fade-in-elm {
   transition: all 0.6s ease;
   visibility: hidden;
