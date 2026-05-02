@@ -121,14 +121,26 @@
 }
 .mxd-project-detail__subtitle {
   font: normal var(--fw-regular) 1.6rem/1.4 var(--_font-default);
-  color: rgba(255, 255, 255, 0.75);
+  color: #fff;
   margin-bottom: 1.6rem;
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.7),
+    0 1px 3px rgba(0, 0, 0, 0.6);
 }
+/* Sit on top of any hero capture (light or dark): force white type and
+   a layered drop shadow so the title and subtitle stay readable against
+   any project poster regardless of its background. The double shadow
+   creates a soft halo that separates the type from busy backgrounds. */
 .mxd-project-detail__title {
   font: normal var(--fw-medium) clamp(5rem, 10vw, 12rem) / 0.95
     var(--_font-accent);
   margin: 0 0 4rem;
   letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow:
+    0 4px 32px rgba(0, 0, 0, 0.85),
+    0 2px 8px rgba(0, 0, 0, 0.7),
+    0 0 2px rgba(0, 0, 0, 0.6);
 }
 .mxd-project-detail__hero-cta {
   display: inline-block;

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
-import RevealText from "@/components/animation/RevealText";
 import AnimatedButton from "@/components/animation/AnimatedButton";
 import { projectsAll } from "@/data/projects.json";
 
@@ -60,12 +59,13 @@ export async function ProjectDetail({ project, nextProject }: ProjectDetailProps
           <p className="mxd-project-detail__subtitle loading__item">
             {project.subtitle}
           </p>
-          <RevealText
-            as="h1"
-            className="mxd-project-detail__title loading__item"
-          >
+          {/* Plain h1 — RevealText with scrub:true left chars at intermediate
+              opacity (~0.72) because this title sits high in the page and
+              the scrub trigger never reaches its end. The loading__item
+              class still handles the fade-in on page load. */}
+          <h1 className="mxd-project-detail__title loading__item">
             {project.title}
-          </RevealText>
+          </h1>
           <div className="mxd-project-detail__hero-cta loading__item">
             <AnimatedButton
               text={t("viewLive")}
