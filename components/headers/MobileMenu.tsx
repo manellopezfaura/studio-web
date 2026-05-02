@@ -244,32 +244,6 @@ export default function MobileMenu() {
                   <div className="fade-in-elm" style={{ transitionDelay: "0.5s", marginBottom: "20px" }}>
                     <LanguageSwitcher />
                   </div>
-                  <div
-                    className="menu-promo__video fade-in-up-elm"
-                    style={{ transitionDelay: "0.3s" }}
-                  >
-                    {isMenuOpen && (
-                      <video
-                        className="menu-video"
-                        id="inner-video"
-                        preload="metadata"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        poster="/video/540x310_video-01.webp"
-                      >
-                        <source
-                          type="video/mp4"
-                          src="/video/540x310_video-01.mp4"
-                        />
-                        <source
-                          type="video/webm"
-                          src="/video/540x310_video-01.webm"
-                        />
-                      </video>
-                    )}
-                  </div>
                 </div>
               </div>
             </div>
