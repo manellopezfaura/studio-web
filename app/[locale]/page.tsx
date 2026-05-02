@@ -15,9 +15,6 @@ const Capabilities = dynamic(
 const ParallaxBanner = dynamic(
   () => import("@/components/homes/home-software-development-company/ParallaxBanner")
 );
-const ParallaxDivider = dynamic(
-  () => import("@/components/homes/home-software-development-company/ParallaxDivider")
-);
 
 import { Metadata } from "next";
 
@@ -54,7 +51,6 @@ export default async function Home({
         <Projects />
         <MarqueeSlider2 />
         <Facts />
-        <ParallaxDivider />
         <Cta />
       </main>
       <Footer2 />
