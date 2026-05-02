@@ -37,18 +37,22 @@ export default function RevealText<T extends HtmlTag = "span">({
   const splitRef = useRef<SplitType | null>(null);
 
   useEffect(() => {
+    // Capture the current element so the cleanup uses the same reference
+    // even if elRef.current changes between effect run and cleanup.
+    const el = elRef.current;
+
     const createAnimation = () => {
-      if (!elRef.current) return;
+      if (!el) return;
 
       // Revert previous split if exists
       splitRef.current?.revert();
 
-      const split = new SplitType(elRef.current, { types: "words,chars" });
+      const split = new SplitType(el, { types: "words,chars" });
       splitRef.current = split;
 
       const anim = gsap.from(split.chars, {
         scrollTrigger: {
-          trigger: elRef.current,
+          trigger: el,
           start,
           end,
           scrub,
@@ -82,7 +86,7 @@ export default function RevealText<T extends HtmlTag = "span">({
 
       // Clean up ScrollTrigger instances for this element
       ScrollTrigger.getAll()
-        .filter((t) => t.vars.trigger === elRef.current)
+        .filter((t) => t.vars.trigger === el)
         .forEach((t) => t.kill());
 
       // No global refresh listener to remove

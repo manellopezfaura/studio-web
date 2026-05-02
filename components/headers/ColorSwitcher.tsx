@@ -12,6 +12,9 @@ export default function ThemeSwitcherButton({}) {
     return "light";
   });
   useEffect(() => {
+    // Defer rendering until after hydration so the icon matches the persisted
+    // theme without causing an SSR/client markup mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowSwitcher(true);
   }, []);
 

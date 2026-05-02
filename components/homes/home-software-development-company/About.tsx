@@ -1,6 +1,5 @@
 import AnimatedButton from "@/components/animation/AnimatedButton";
 import RevealText from "@/components/animation/RevealText";
-import { Link } from "@/i18n/routing";
 
 export default function About() {
   return (

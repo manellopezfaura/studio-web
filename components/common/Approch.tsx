@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 
 import { approach1 } from "@/data/approach.json";

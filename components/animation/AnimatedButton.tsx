@@ -66,6 +66,9 @@ export default function AnimatedButton<As extends ElementType = "div">(
   const letters = useMemo(() => splitToLetters(text), [text]);
 
   useEffect(() => {
+    // Defer the animated/interactive variant to client-only to avoid
+    // hydration mismatch between the static SSR markup and the hydrated DOM.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
   }, []);
 

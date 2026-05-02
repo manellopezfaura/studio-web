@@ -1,5 +1,4 @@
 import VelocityMarquee from "@/components/animation/VelocityMarquee";
-import VideoParallax from "@/components/animation/VideoParallax";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 

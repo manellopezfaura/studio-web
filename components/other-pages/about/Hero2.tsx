@@ -1,4 +1,3 @@
-import BackgroundParallax from "@/components/animation/BackgroundParallax";
 import RevealText from "@/components/animation/RevealText";
 
 export default function Hero2() {

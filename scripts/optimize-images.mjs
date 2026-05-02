@@ -36,17 +36,7 @@ async function optimizeImages(dir) {
                             image.resize(MAX_WIDTH);
                         }
 
-                        const buffer = await image
-                            .webp({ quality: QUALITY, effort: 6 }) // Convert/Compress to WebP settings (even if input is PNG/JPG, output format depends on file ext but sharp handles buffer)
-                            // Wait, if I overwrite, I must respect extension OR switch everything to WebP. 
-                            // The user already uses .webp mostly.
-                            // better: maintain format but compress.
-                            .toBuffer();
-
-                        // Overwrite with optimized buffer
-                        // But wait, toBuffer() defaults to png/jpeg based on input? No, must specify.
-                        // So I need to branch based on extension.
-
+                        // Build pipeline branching by extension to preserve format
                         let pipeline = sharp(filePath);
                         if (metadata.width > MAX_WIDTH) {
                             pipeline = pipeline.resize(MAX_WIDTH);
