@@ -24,6 +24,13 @@ export default function useGsapScrollScaleAnimations() {
     const initAnim = () => {
       const docStyle = getComputedStyle(document.documentElement);
 
+      // Start the entry animations BEFORE the element enters the viewport so
+      // fast scrolling never reveals an element that's still half-faded.
+      // "top bottom-=120" fires when the element's top is 120px below the
+      // viewport bottom — animation gets a head start and finishes by the
+      // time the element is comfortably in view.
+      const ENTRY_START = "top bottom-=120";
+
       // ✅ Fade & slide up
       const animateInUp = document.querySelectorAll(".anim-uni-in-up");
       animateInUp.forEach((el) => {
@@ -36,8 +43,7 @@ export default function useGsapScrollScaleAnimations() {
             duration: 0.6,
             scrollTrigger: {
               trigger: el,
-              start: "top 95%",
-              // end: "bottom 15%",
+              start: ENTRY_START,
               once: true,
             },
           }
@@ -58,8 +64,7 @@ export default function useGsapScrollScaleAnimations() {
             duration: 0.6,
             scrollTrigger: {
               trigger: el,
-              start: "top 85%",
-              end: "bottom 15%",
+              start: ENTRY_START,
               once: true,
             },
           }
@@ -82,8 +87,7 @@ export default function useGsapScrollScaleAnimations() {
             duration: 0.6,
             scrollTrigger: {
               trigger: el,
-              start: "top 85%",
-              end: "bottom 15%",
+              start: ENTRY_START,
               once: true,
             },
           }
@@ -106,8 +110,7 @@ export default function useGsapScrollScaleAnimations() {
             duration: 0.6,
             scrollTrigger: {
               trigger: el,
-              start: "top 85%",
-              end: "bottom 15%",
+              start: ENTRY_START,
               once: true,
             },
           }
