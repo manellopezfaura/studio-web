@@ -67,42 +67,21 @@
   }
 }
 
-/* Header readability: the header is positioned absolutely over whatever
-   content is below, so when the page transitions from a light section to
-   a dark one (e.g. into the project video divider) the header used to
-   show the seam straight through itself. Give the logo + controls a soft
-   self-pilled background so they always read against any underlying
-   color, while keeping the area between them transparent so the page
-   keeps breathing. Adapts to light/dark via --base / --base-opp tokens. */
-.mxd-header__logo,
-.mxd-header__controls,
-.mxd-nav__contain {
-  position: relative;
-  isolation: isolate;
+/* Project detail hero: pull the section to the top of the viewport so
+   the poster/video starts at pixel 0. Without this, the .inner-page-content
+   wrapper added padding-top above the hero, which read as a gray strip
+   between the transparent header and the dark hero — looked like a
+   horizontal seam. Now the hero owns the full top edge and the header
+   sits cleanly over the project media. */
+.inner-page-content:has(.mxd-project-detail) {
+  padding-top: 0 !important;
 }
-
-.mxd-header__logo::before,
-.mxd-header__controls::before,
-.mxd-nav__contain::before {
-  content: "";
-  position: absolute;
-  inset: -0.6rem -1.2rem;
-  z-index: -1;
-  border-radius: 999px;
-  background: rgba(var(--base-rgb, 250, 247, 246), 0.55);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  pointer-events: none;
+.mxd-project-detail {
+  margin-top: 0;
 }
-
-/* The hamburger already has its own pill shape via .hamburger__base, so
-   skip the extra backdrop on .mxd-nav__contain for that container —
-   we'd be doubling the surface. Keep the nav__contain rule for symmetry
-   on tablets where the hamburger is the only right-side affordance. */
-@media only screen and (min-width: 1024px) {
-  .mxd-nav__contain::before {
-    display: none;
-  }
+.mxd-project-detail__hero {
+  margin-top: 0;
+  padding-top: 0;
 }
 
 /* ==========================================================

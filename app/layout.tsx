@@ -27,7 +27,7 @@ const funnelSans = Funnel_Sans({
 const setColorSchemeScript = `
 (function() {
   try {
-    var scheme = localStorage.getItem('color-scheme') || 'light';
+    var scheme = localStorage.getItem('color-scheme') || 'dark';
     document.documentElement.setAttribute('color-scheme', scheme);
   } catch(e) {}
 })();
