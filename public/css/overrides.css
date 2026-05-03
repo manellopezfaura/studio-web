@@ -39,15 +39,32 @@
 }
 
 /* Divider video — same dimensions as the original image divider, but plays a real
-   project showreel instead of a stock template render. */
+   project showreel instead of a stock template render. Rounded corners so the
+   transition into the dark video panel doesn't read as an abrupt horizontal cut
+   against the light page background. */
 .mxd-divider--video {
   background: var(--base-opp);
+  border-radius: var(--_radius-l, 3.8rem);
+  overflow: hidden;
 }
 .mxd-divider--video .mxd-divider__video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Header: more breathing room between the Contact button and the floating
+   hamburger on medium screens — they were almost touching at 1024-1280px. */
+@media only screen and (min-width: 1024px) and (max-width: 1599px) {
+  .mxd-header {
+    width: calc(100% - 14.6rem) !important;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .mxd-header__controls {
+    margin-right: 1.6rem;
+  }
 }
 
 /* ==========================================================
