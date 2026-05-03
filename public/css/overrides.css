@@ -67,6 +67,44 @@
   }
 }
 
+/* Header readability: the header is positioned absolutely over whatever
+   content is below, so when the page transitions from a light section to
+   a dark one (e.g. into the project video divider) the header used to
+   show the seam straight through itself. Give the logo + controls a soft
+   self-pilled background so they always read against any underlying
+   color, while keeping the area between them transparent so the page
+   keeps breathing. Adapts to light/dark via --base / --base-opp tokens. */
+.mxd-header__logo,
+.mxd-header__controls,
+.mxd-nav__contain {
+  position: relative;
+  isolation: isolate;
+}
+
+.mxd-header__logo::before,
+.mxd-header__controls::before,
+.mxd-nav__contain::before {
+  content: "";
+  position: absolute;
+  inset: -0.6rem -1.2rem;
+  z-index: -1;
+  border-radius: 999px;
+  background: rgba(var(--base-rgb, 250, 247, 246), 0.55);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  pointer-events: none;
+}
+
+/* The hamburger already has its own pill shape via .hamburger__base, so
+   skip the extra backdrop on .mxd-nav__contain for that container —
+   we'd be doubling the surface. Keep the nav__contain rule for symmetry
+   on tablets where the hamburger is the only right-side affordance. */
+@media only screen and (min-width: 1024px) {
+  .mxd-nav__contain::before {
+    display: none;
+  }
+}
+
 /* ==========================================================
    Project detail page (/projects/[slug])
    Layout inspired by López & Abarca portfolio: hero with media,
