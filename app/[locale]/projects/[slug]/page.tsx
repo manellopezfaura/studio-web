@@ -76,8 +76,25 @@ export default async function ProjectPage({
   const currentIndex = projectsAll.findIndex((p) => p.slug === slug);
   const nextProject = projectsAll[(currentIndex + 1) % projectsAll.length];
 
+  // Pre-connect to the project's live URL during page render so the TLS
+  // handshake is already established by the time the user clicks
+  // "Ver en vivo". Cuts perceived "tarda mucho" delay on the new tab.
+  const liveOrigin = (() => {
+    try {
+      return new URL(project.url).origin;
+    } catch {
+      return null;
+    }
+  })();
+
   return (
     <>
+      {liveOrigin ? (
+        <>
+          <link rel="preconnect" href={liveOrigin} />
+          <link rel="dns-prefetch" href={liveOrigin} />
+        </>
+      ) : null}
       <main id="mxd-page-content" className="mxd-page-content inner-page-content">
         <ProjectDetail project={project} nextProject={nextProject} />
         <Cta />
