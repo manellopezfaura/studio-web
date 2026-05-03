@@ -88,6 +88,22 @@
   overflow: hidden;
   color: #fff;
 }
+/* On mobile the hero used to take ~92vh of a small screen, so the user
+   landed on a wall of poster + huge title before any project content
+   appeared. Drop to ~70vh and lighter padding so meta/overview tease
+   into view as soon as you finish reading the title. */
+@media only screen and (max-width: 600px) {
+  .mxd-project-detail__hero {
+    min-height: 70vh;
+    padding: 10rem 0 3.6rem;
+  }
+  .mxd-project-detail__back {
+    margin-bottom: 2.4rem;
+  }
+  .mxd-project-detail__title {
+    margin-bottom: 2.4rem;
+  }
+}
 .mxd-project-detail__hero-media {
   position: absolute;
   inset: 0;
@@ -239,6 +255,42 @@
   font: normal var(--fw-regular) 1.7rem/1.4 var(--_font-default);
   color: var(--base-opp);
   margin: 0;
+}
+
+/* Mobile meta: turn the three-line stack into a 2-col card grid with
+   the first (most important) item spanning both columns. Cards add
+   visual rhythm and separate the meta from the overview block.
+   Bigger value, smaller label — clearer hierarchy. */
+@media only screen and (max-width: 600px) {
+  .mxd-project-detail__meta {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+  }
+  .mxd-project-detail__meta-item {
+    background: var(--base-tint, rgba(127, 127, 127, 0.06));
+    border-radius: 1.4rem;
+    padding: 1.8rem 1.6rem;
+    min-height: 9.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .mxd-project-detail__meta-item:first-child {
+    grid-column: span 2;
+  }
+  .mxd-project-detail__meta-item dt {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  .mxd-project-detail__meta-item dd {
+    font: normal var(--fw-medium) 2rem/1.2 var(--_font-accent);
+  }
+  .mxd-project-detail__meta-item:nth-child(2) dd,
+  .mxd-project-detail__meta-item:nth-child(3) dd {
+    font-size: 2.4rem;
+  }
 }
 
 /* STACK */
