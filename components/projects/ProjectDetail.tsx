@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
-import AnimatedButton from "@/components/animation/AnimatedButton";
 import { projectsAll } from "@/data/projects.json";
 
 type Project = (typeof projectsAll)[number];
@@ -67,16 +66,18 @@ export async function ProjectDetail({ project, nextProject }: ProjectDetailProps
             {project.title}
           </h1>
           <div className="mxd-project-detail__hero-cta loading__item">
-            <AnimatedButton
-              text={t("viewLive")}
-              as="a"
-              className="btn btn-anim btn-default btn-outline-permanent btn-on-hero slide-right-up"
+            {/* Plain <a> — AnimatedButton's internal state (play/isMounted)
+                re-renders the link on hover/animationend and breaks the
+                click → external navigation handoff in some browsers. */}
+            <a
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
+              className="mxd-project-detail__live-cta"
             >
+              <span>{t("viewLive")}</span>
               <i className="ph-bold ph-arrow-up-right" aria-hidden="true" />
-            </AnimatedButton>
+            </a>
           </div>
         </div>
       </section>

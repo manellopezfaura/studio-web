@@ -145,6 +145,41 @@
 .mxd-project-detail__hero-cta {
   display: inline-block;
 }
+
+/* Plain external link — high contrast pill that overlays the project
+   poster. No state, no JS animation; predictable click → new tab. */
+.mxd-project-detail__live-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.4rem 2.4rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #111;
+  font: 600 1.6rem/1 var(--_font-default, system-ui, sans-serif);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mxd-project-detail__live-cta:hover,
+.mxd-project-detail__live-cta:focus-visible {
+  background-color: #fff;
+  transform: translate(2px, -2px);
+}
+
+.mxd-project-detail__live-cta:active {
+  transform: translate(0, 0);
+}
+
+.mxd-project-detail__live-cta i {
+  font-size: 1.8rem;
+  line-height: 1;
+}
 .btn.btn-on-hero {
   --btn-c: #fff;
   border-color: rgba(255, 255, 255, 0.4);
