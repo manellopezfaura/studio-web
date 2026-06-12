@@ -32,6 +32,9 @@ const setColorSchemeScript = `
     var scheme = localStorage.getItem('color-scheme') || 'dark';
     document.documentElement.setAttribute('color-scheme', scheme);
   } catch(e) {}
+  // Gate GSAP entry-animation initial states (opacity 0 in CSS) to JS-on:
+  // without JS the content stays visible instead of hidden forever.
+  document.documentElement.classList.add('has-js');
 })();
 `;
 

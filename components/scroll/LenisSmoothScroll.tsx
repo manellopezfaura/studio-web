@@ -8,72 +8,30 @@ export default function LenisSmoothScroll() {
   const lenis = useLenis();
   const pathname = usePathname();
 
-  // Scroll to top on route change
+  // Scroll to top on route change; refresh on the next frame so the new
+  // page's layout is what gets measured, not the outgoing one.
   useEffect(() => {
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });
-      ScrollTrigger.refresh();
+      requestAnimationFrame(() => ScrollTrigger.refresh());
     }
   }, [pathname, lenis]);
 
   useEffect(() => {
     if (!lenis) return;
 
-    // Create scrollerProxy for better ScrollTrigger integration
-    ScrollTrigger.scrollerProxy(document.body, {
-      scrollTop(value) {
-        if (arguments.length && value !== undefined) {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-      },
-      scrollLeft(value) {
-        if (arguments.length && value !== undefined) {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-      pinType: document.body.style.transform ? "transform" : "fixed",
-    });
-
-    // Ensure scrollbar is visible and working
-    document.body.style.overflow = "auto";
-
-    // Update ScrollTrigger when Lenis scrolls
+    // Root Lenis scrolls the document natively, so ScrollTrigger needs no
+    // scrollerProxy — just a position update per Lenis tick.
+    //
+    // NOTE: never call ScrollTrigger.refresh() from ScrollTrigger's own
+    // "refresh" event — refresh() emits that event, so the wiring becomes a
+    // self-sustaining loop that re-measures every pinned/scrubbed section
+    // ~10×/s forever (visible jitter sitewide). ScrollTrigger already
+    // refreshes itself on resize and on load.
     lenis.on("scroll", ScrollTrigger.update);
 
-    // Centralized refresh handler for all animations
-    const handleRefresh = () => {
-      // Small delay to ensure all components are ready
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 100);
-    };
-
-    // Handle window resize
-    const handleResize = () => {
-      handleRefresh();
-    };
-
-    // Listen for ScrollTrigger refresh events
-    ScrollTrigger.addEventListener("refresh", handleRefresh);
-    window.addEventListener("resize", handleResize);
-
     return () => {
-      window.removeEventListener("resize", handleResize);
-      ScrollTrigger.removeEventListener("refresh", handleRefresh);
-      // Revert scrollerProxy
-      ScrollTrigger.scrollerProxy(document.body, {});
-      // Reset body overflow
-      document.body.style.overflow = "";
+      lenis.off("scroll", ScrollTrigger.update);
     };
   }, [lenis]);
   // return null for ios

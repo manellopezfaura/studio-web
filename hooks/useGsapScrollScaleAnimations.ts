@@ -13,7 +13,7 @@ export default function useGsapScrollScaleAnimations() {
     // Respect prefers-reduced-motion: show all content immediately, skip animations
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) {
-      document.querySelectorAll(".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5")
+      document.querySelectorAll(".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5, .reveal-type")
         .forEach((el) => {
           (el as HTMLElement).style.opacity = "1";
           (el as HTMLElement).style.transform = "none";
@@ -265,25 +265,33 @@ export default function useGsapScrollScaleAnimations() {
       }
     };
 
-    // Remove global refresh listener - let individual components handle their own refresh
-    // ScrollTrigger.addEventListener("refresh", handleRefresh);
+    // Double-rAF: arranca la coreografía tras dos frames para no escribir
+    // estilos inline sobre nodos que React aún está hidratando (provocaba
+    // hydration mismatch en consola). Coste: ~32ms, imperceptible — los
+    // elementos siguen ocultos por CSS (html.has-js) durante la espera.
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => initAnim());
+    });
 
-    // useEffect already guarantees the DOM is mounted; no extra delay needed.
-    // The previous 100ms setTimeout added perceptible lag to the page-entry feel.
-    initAnim();
-
-    // Safety fallback: after route changes or slow ScrollTrigger refreshes,
-    // some `.anim-uni-*` elements can stay at opacity 0 forever (the trigger never fires
-    // because the page already loaded with them in viewport). After 2.5s, force any
-    // still-invisible animation element to its final state. This is a no-op for elements
-    // that GSAP did animate correctly.
+    // Safety fallback: if an element whose entry-trigger already passed is
+    // still invisible after 2.5s (failed init, killed trigger), force it
+    // visible. ONLY elements in or above the viewport — below-fold elements
+    // are legitimately waiting for their scroll trigger; forcing those made
+    // them pop in at 2.5s and snap back to 0 when their trigger fired while
+    // scrolling (visible flicker).
     const safetyTimer = setTimeout(() => {
       document
         .querySelectorAll<HTMLElement>(
-          ".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade"
+          ".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5, .reveal-type"
         )
         .forEach((el) => {
-          if (parseFloat(getComputedStyle(el).opacity) < 0.95) {
+          const inOrAboveViewport =
+            el.getBoundingClientRect().top < window.innerHeight - 60;
+          if (
+            inOrAboveViewport &&
+            parseFloat(getComputedStyle(el).opacity) < 0.95
+          ) {
             el.style.opacity = "1";
             el.style.transform = "none";
           }
@@ -291,6 +299,8 @@ export default function useGsapScrollScaleAnimations() {
     }, 2500);
 
     return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
       clearTimeout(safetyTimer);
       // Only kill our specific ScrollTriggers
       ScrollTrigger.getAll()

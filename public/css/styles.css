@@ -257,6 +257,30 @@ a.mxd-projects-stack__inner {
   opacity: 0;
 }
 
+/* GSAP entry-animation initial states.
+   Without these, SSR paints the elements fully visible and the GSAP init
+   (post-hydration) snaps them to opacity 0 before animating in — a visible
+   bright→hidden→reveal flash on every load. Gated to html.has-js (set by an
+   inline head script) so content stays visible when JS is unavailable; a
+   2.5s safety fallback in useGsapScrollScaleAnimations covers GSAP failures. */
+html.has-js .anim-uni-in-up,
+html.has-js .anim-uni-scale-in,
+html.has-js .anim-uni-scale-in-right,
+html.has-js .anim-uni-scale-in-left,
+html.has-js .animate-card-2,
+html.has-js .animate-card-3,
+html.has-js .animate-card-4,
+html.has-js .animate-card-5 {
+  opacity: 0;
+}
+
+/* RevealText titles rest at their pre-reveal char opacity instead of
+   flashing full-bright before the split runs. The component releases the
+   container back to opacity 1 once the per-char tween takes over. */
+html.has-js .reveal-type {
+  opacity: 0.2;
+}
+
 .footer-contact-form {
   display: flex;
   flex-direction: column;

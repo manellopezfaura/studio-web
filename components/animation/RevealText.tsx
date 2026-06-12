@@ -41,6 +41,12 @@ export default function RevealText<T extends HtmlTag = "span">({
     // even if elRef.current changes between effect run and cleanup.
     const el = elRef.current;
 
+    // Reduced motion: show the text plainly and skip the char choreography.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (el) gsap.set(el, { opacity: 1 });
+      return;
+    }
+
     const createAnimation = () => {
       if (!el) return;
 
@@ -64,15 +70,17 @@ export default function RevealText<T extends HtmlTag = "span">({
         ease: "power2.out",
       });
 
+      // The chars now own the reveal — release the container from its CSS
+      // pre-reveal state (html.has-js .reveal-type { opacity: .2 }) in the
+      // same tick so there's no double-dimming and no full-bright flash.
+      gsap.set(el, { opacity: 1 });
+
       animRef.current = anim;
     };
-    // Small delay to ensure DOM is ready
-    setTimeout(() => {
-      createAnimation();
-    }, 100);
-
-    // Remove global refresh listener to prevent conflicts
-    // Individual components should handle their own refresh needs
+    // useEffect runs after the DOM is mounted — init synchronously. The old
+    // 100ms setTimeout left a window where the SSR text painted full-bright
+    // and then snapped to the dimmed pre-reveal state.
+    createAnimation();
 
     return () => {
       // Clean up animation

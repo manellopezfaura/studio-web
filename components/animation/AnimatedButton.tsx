@@ -85,8 +85,9 @@ export default function AnimatedButton<As extends ElementType = "div">(
     ...tagProps,
     className: `btn-anim ${className} ${play ? "play" : ""}`,
     onMouseEnter: () => setPlay(true),
+    // Let the letter animation finish on its own; resetting on mouseleave
+    // snapped the letters mid-flight when brushing across buttons.
     onAnimationEnd: () => setPlay(false),
-    onMouseLeave: () => setPlay(false),
   };
 
   // Prevent hydration mismatch by rendering static content on server
