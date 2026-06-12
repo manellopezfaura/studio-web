@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useForm as useHookForm } from "react-hook-form";
-import { useForm } from "@formspree/react";
 import { useTranslations } from "next-intl";
 import AnimatedButton from "../animation/AnimatedButton";
 
@@ -10,6 +9,7 @@ type FooterContactFields = {
   Name: string;
   "E-mail": string;
   Message: string;
+  website?: string;
 };
 
 export default function FooterContactForm() {
@@ -22,12 +22,16 @@ export default function FooterContactForm() {
     formState: { errors, isSubmitting },
   } = useHookForm<FooterContactFields>();
 
-  const [fsState, fsSubmit] = useForm<FooterContactFields>("meoljlry");
-
+  // Same pipeline as the /contact page form: POST /api/contact → Resend.
   const onSubmit = async (data: FooterContactFields) => {
     setStatus("idle");
     try {
-      await fsSubmit(data);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, source: "footer" }),
+      });
+      if (!res.ok) throw new Error("Submit failed");
       reset();
       setStatus("success");
     } catch {
@@ -41,6 +45,15 @@ export default function FooterContactForm() {
         className="form footer-contact-form form-light"
         onSubmit={handleSubmit(onSubmit)}
       >
+        {/* Honeypot — hidden from humans, bots fill it */}
+        <input
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px" }}
+          {...register("website")}
+        />
         <input
           type="text"
           placeholder={t("namePlaceholder")}
@@ -82,12 +95,12 @@ export default function FooterContactForm() {
         )}
 
         <AnimatedButton
-          text={fsState.submitting ? t("sending") : t("submitButton")}
+          text={isSubmitting ? t("sending") : t("submitButton")}
           position={"next"}
           as={"button"}
           className="btn btn-anim btn-default btn-small btn-outline slide-right-up footer-contact-form__submit"
           type="submit"
-          disabled={isSubmitting || fsState.submitting}
+          disabled={isSubmitting}
         >
           <i className="ph-bold ph-arrow-up-right" />
         </AnimatedButton>

@@ -1,8 +1,13 @@
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 const SITE_URL = "https://107studio.es";
 const locales = ["es", "en"];
 const today = new Date().toISOString().split("T")[0];
+
+// Project detail pages come from the same source of truth as the site.
+const { projectsAll } = JSON.parse(
+  readFileSync(new URL("../data/projects.json", import.meta.url), "utf8")
+);
 
 const pages = [
   { path: "", changefreq: "weekly", priority: "1.0", label: "Home" },
@@ -12,6 +17,12 @@ const pages = [
   { path: "/contact", changefreq: "monthly", priority: "0.7", label: "Contact" },
   { path: "/privacy-policy", changefreq: "yearly", priority: "0.3", label: "Privacy Policy" },
   { path: "/terms", changefreq: "yearly", priority: "0.3", label: "Terms" },
+  ...projectsAll.map((p) => ({
+    path: `/projects/${p.slug}`,
+    changefreq: "monthly",
+    priority: "0.7",
+    label: p.title,
+  })),
 ];
 
 function buildUrl(locale, path) {

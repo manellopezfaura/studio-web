@@ -538,3 +538,63 @@
 .stack-item:nth-child(4n) .mxd-projects-stack__title h2.permanent-light {
   color: var(--base-opp);
 }
+
+/* ------------------------------------------------
+ * Contrast fixes (WCAG AA)
+ * ------------------------------------------------ */
+
+/* Home services cards: the lilac (bg-accent) and lime (bg-additional)
+   frames are light surfaces in BOTH themes, but their text follows the
+   theme ("opposite" = light text in light mode, default = light text in
+   dark mode). Pin dark ink on these fixed-color surfaces. */
+.mxd-services-cards-s__inner.bg-accent .opposite,
+.mxd-services-cards-s__inner.bg-accent .t-opposite,
+.mxd-services-cards-s__inner.bg-additional h3,
+.mxd-services-cards-s__inner.bg-additional p {
+  color: #161616;
+}
+.mxd-services-cards-s__inner.bg-accent .tag-outline-opposite,
+.mxd-services-cards-s__inner.bg-additional .tag {
+  color: #161616;
+  border-color: rgba(22, 22, 22, 0.45);
+}
+
+/* Contact hero email — the primary conversion element was set in
+   --t-muted-extra (≈2.2:1 on light). Muted by default, full ink on hover. */
+.btn-line-headline {
+  color: var(--t-muted);
+}
+.btn-line-headline:hover,
+.btn-line-headline:focus-visible {
+  color: var(--base-opp);
+}
+
+/* Dark theme muted text sat at ≈4.3:1 on #161616 — nudge above 4.5:1. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --t-muted--dark: #919191;
+  }
+}
+html[color-scheme="dark"] {
+  --t-muted: #919191;
+}
+
+/* Focus ring: lime fails on light surfaces; the media-query fallback in
+   styles.css doesn't cover the manual theme toggle. Mirror it here. */
+html[color-scheme="light"] :focus-visible {
+  outline-color: var(--base-opp, #161616);
+}
+html[color-scheme="light"] button:focus-visible,
+html[color-scheme="light"] a:focus-visible,
+html[color-scheme="light"] input:focus-visible,
+html[color-scheme="light"] textarea:focus-visible {
+  outline-color: var(--base-opp, #161616) !important;
+}
+
+/* Stack cards (works): the whole card is the link now — let the "Ver"
+   pill respond to hovering anywhere on the card, not just the pill. */
+a.mxd-projects-stack__inner:hover .mxd-projects-stack__cta,
+a.mxd-projects-stack__inner:focus-visible .mxd-projects-stack__cta {
+  background-color: #fff;
+  transform: translate(2px, -2px);
+}

@@ -194,9 +194,10 @@
   min-width: 0;
 }
 
-/* Plain link with button styling — no animated component, no state.
-   The card sits over a media background, so the button needs to be
-   high-contrast and self-contained. */
+a.mxd-projects-stack__inner {
+  color: inherit;
+}
+
 .mxd-projects-stack__cta {
   flex: 0 0 auto;
   align-self: flex-end;

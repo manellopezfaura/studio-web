@@ -92,9 +92,11 @@ export default function Portfolios1() {
             <div className="content__block loading__fade">
               <StackCards stackName="projects-stack" className="stack-wrapper">
                 {featuredProjects.map((s, idx) => (
-                  <div
+                  <Link
                     key={s.id}
+                    href={`/projects/${s.slug}`}
                     className="mxd-projects-stack__inner justify-between"
+                    aria-label={`${t("view")} ${s.title}`}
                   >
                     <div className="mxd-projects-stack__image">
                       <Image
@@ -119,16 +121,12 @@ export default function Portfolios1() {
                       <div className="mxd-projects-stack__title no-margin">
                         <h2 className="permanent-light">{s.title}</h2>
                       </div>
-                      <Link
-                        href={`/projects/${s.slug}`}
-                        className="mxd-projects-stack__cta"
-                        aria-label={`${t("view")} ${s.title}`}
-                      >
+                      <span className="mxd-projects-stack__cta">
                         <span>{t("view")}</span>
                         <i className="ph-bold ph-arrow-up-right" aria-hidden="true" />
-                      </Link>
+                      </span>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </StackCards>
             </div>

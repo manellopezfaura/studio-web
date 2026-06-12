@@ -16,20 +16,9 @@ const ParallaxBanner = dynamic(
   () => import("@/components/homes/home-software-development-company/ParallaxBanner")
 );
 
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "107 Studio - Digital Studio | Brand, Product, Web & AI Solutions",
-  description:
-    "107 Studio is a digital studio specializing in Brand Identity, Product Design, Web Design & Development, AI-Custom Automation, and Marketing Performance.",
-  openGraph: {
-    title: "107 Studio - Digital Studio",
-    description:
-      "Brand Identity, Product Design, Web Design & Dev, AI-Custom Automation, Marketing Performance",
-    type: "website",
-  },
-};
-
+// Home metadata is inherited from app/[locale]/layout.tsx — localized
+// title/description via the Metadata namespace plus the default OG image.
+// (A hardcoded English block here used to override both on /es and /en.)
 import { setRequestLocale } from "next-intl/server";
 
 export default async function Home({

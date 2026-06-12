@@ -14,7 +14,6 @@
     "@ai-sdk/anthropic": "^3.0.64",
     "@ai-sdk/google": "^3.0.55",
     "@ai-sdk/react": "^3.0.145",
-    "@formspree/react": "^3.0.0",
     "@hookform/resolvers": "^5.2.2",
     "ai": "^6.0.143",
     "gsap": "^3.13.0",

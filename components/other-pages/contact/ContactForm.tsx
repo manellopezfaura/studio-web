@@ -2,7 +2,6 @@
 import { type ContactForm, contactSchema } from "@/schemas/contact";
 import { useForm as useHookForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// Web3Forms for contact form submissions
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AnimatedButton from "@/components/animation/AnimatedButton";
@@ -16,21 +15,16 @@ export default function ContactForm() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useHookForm<ContactForm>({
+  } = useHookForm<ContactForm & { website?: string }>({
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async (data: ContactForm) => {
+  const onSubmit = async (data: ContactForm & { website?: string }) => {
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: "a0cd5541-ff70-497d-b92d-88188530eb58",
-          subject: "Nuevo mensaje de contacto — 107studio.es",
-          from_name: data.Name,
-          ...data,
-        }),
+        body: JSON.stringify({ ...data, source: "contact-page" }),
       });
       if (!res.ok) throw new Error("Submit failed");
       reset();
@@ -66,7 +60,15 @@ export default function ContactForm() {
                           id="contact-form"
                           onSubmit={handleSubmit(onSubmit)}
                         >
-                          {/* Hidden Fields */}
+                          {/* Honeypot — hidden from humans, bots fill it */}
+                          <input
+                            type="text"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            aria-hidden="true"
+                            style={{ position: "absolute", left: "-9999px" }}
+                            {...register("website")}
+                          />
                           {/* Visible Fields */}
                           <div className="container-fluid p-0">
                             <div className="row gx-0">

@@ -9,7 +9,7 @@ import Portfolios1 from "@/components/portfolios/Portfolios1";
 // import dynamic from "next/dynamic";
 // const Testimonials = dynamic(() => import("@/components/common/Testimonials"));
 import { Metadata } from "next";
-import { pageMetadata, getCanonicalUrl, SITE_URL } from "@/data/seo-config";
+import { pageMetadata, getCanonicalUrl, SITE_URL, seoConfig } from "@/data/seo-config";
 import { WebPageSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: pageMetadata.works.title,
     description: pageMetadata.works.description,
+    images: [seoConfig.defaultImage],
   },
 };
 import { setRequestLocale } from "next-intl/server";

@@ -9,7 +9,7 @@ import { ServiceProcess } from "@/components/other-pages/services/ServiceProcess
 const ParallaxDivider = dynamic(
   () => import("@/components/other-pages/services/ParallaxDivider")
 );
-import { pageMetadata, SITE_URL } from "@/data/seo-config";
+import { pageMetadata, SITE_URL, seoConfig } from "@/data/seo-config";
 import { Metadata } from "next";
 import { WebPageSchema, ServiceSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 
@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: pageMetadata.services.title,
         description: pageMetadata.services.description,
+        images: [seoConfig.defaultImage],
         url: pageMetadata.services.canonical,
         type: "website",
     },

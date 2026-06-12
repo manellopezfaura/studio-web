@@ -12,7 +12,7 @@ import Techstack from "@/components/other-pages/about/Techstack";
 const Team = dynamic(
   () => import("@/components/other-pages/about/Team")
 );
-import { pageMetadata, SITE_URL } from "@/data/seo-config";
+import { pageMetadata, SITE_URL, seoConfig } from "@/data/seo-config";
 import { Metadata } from "next";
 import { WebPageSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 
@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: pageMetadata.aboutUs.title,
         description: pageMetadata.aboutUs.description,
+        images: [seoConfig.defaultImage],
         url: pageMetadata.aboutUs.canonical,
         type: "website",
     },

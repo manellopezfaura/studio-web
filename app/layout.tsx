@@ -5,9 +5,11 @@ import "../public/css/overrides.css";
 import "@/components/hera/hera.css";
 
 import { ReactNode } from "react";
+import { headers } from "next/headers";
 import { Funnel_Display, Funnel_Sans } from "next/font/google";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { routing } from "@/i18n/routing";
 
 const funnelDisplay = Funnel_Display({
   subsets: ["latin"],
@@ -33,11 +35,19 @@ const setColorSchemeScript = `
 })();
 `;
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  // The [locale] segment param isn't accessible here, so the middleware
+  // forwards the pathname and we derive the locale for <html lang>.
+  const pathname = (await headers()).get("x-pathname") ?? "";
+  const maybeLocale = pathname.split("/")[1];
+  const lang = (routing.locales as readonly string[]).includes(maybeLocale)
+    ? maybeLocale
+    : routing.defaultLocale;
+
   return (
     <html
       suppressHydrationWarning
-      lang="es"
+      lang={lang}
       className={`no-touch ${funnelDisplay.variable} ${funnelSans.variable}`}
     >
       <head>

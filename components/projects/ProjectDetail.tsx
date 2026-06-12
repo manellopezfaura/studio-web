@@ -65,20 +65,22 @@ export async function ProjectDetail({ project, nextProject }: ProjectDetailProps
           <h1 className="mxd-project-detail__title loading__item">
             {project.title}
           </h1>
-          <div className="mxd-project-detail__hero-cta loading__item">
-            {/* Plain <a> — AnimatedButton's internal state (play/isMounted)
-                re-renders the link on hover/animationend and breaks the
-                click → external navigation handoff in some browsers. */}
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mxd-project-detail__live-cta"
-            >
-              <span>{t("viewLive")}</span>
-              <i className="ph-bold ph-arrow-up-right" aria-hidden="true" />
-            </a>
-          </div>
+          {project.url ? (
+            <div className="mxd-project-detail__hero-cta loading__item">
+              {/* Plain <a> — AnimatedButton's internal state (play/isMounted)
+                  re-renders the link on hover/animationend and breaks the
+                  click → external navigation handoff in some browsers. */}
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mxd-project-detail__live-cta"
+              >
+                <span>{t("viewLive")}</span>
+                <i className="ph-bold ph-arrow-up-right" aria-hidden="true" />
+              </a>
+            </div>
+          ) : null}
         </div>
       </section>
 

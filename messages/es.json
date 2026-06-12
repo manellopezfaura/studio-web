@@ -289,6 +289,12 @@
                 "overview": "Plataforma SaaS de agentes IA que automatizan conversaciones 24/7 y cualifican leads en tiempo real. Desde la landing de marketing hasta el widget embebible y el dashboard operativo.",
                 "description": "Diseñamos un sistema coherente que acompaña al usuario en tres superficies distintas: landing pública, widget integrado en web de cliente, y panel de control para equipos. La complejidad técnica de los modelos queda invisible — lo que queda es una herramienta que parece simple porque está cuidada."
             },
+            "purezza": {
+                "role": "Diseño de producto y packaging",
+                "scope": "Identidad, packaging, impresión",
+                "overview": "Sistema de packaging para una línea de suplementos naturales. Diseño de envases, etiquetas y materiales de impresión que comunican pureza, origen natural y rigor formulativo.",
+                "description": "Trabajamos sobre una arquitectura visual sobria que deja respirar al producto. Tipografía con carácter editorial, jerarquía clara de claims y una paleta restringida que separa cada referencia sin romper la unidad de la gama."
+            },
             "reinoxpla": {
                 "role": "Diseño y desarrollo",
                 "scope": "Web corporativa, GSAP, fotografía",
@@ -387,10 +393,11 @@
             "toastError": "Error al enviar — por favor intenta más tarde."
         },
         "Locations": {
-            "title": "Bienvenido a nuestra oficina",
-            "text": "Ideas inspiradoras, conocimientos creativos y lo último en diseño y tecnología.",
-            "ny": "Nueva York",
-            "oakland": "Oakland"
+            "title": "Dónde estamos",
+            "text": "Estudio en Barcelona, proyectos en cualquier parte. Escríbenos o llámanos.",
+            "barcelona": "Barcelona",
+            "remote": "En remoto",
+            "remoteText": "Trabajamos con clientes en cualquier zona horaria."
         }
     },
     "NotFound": {

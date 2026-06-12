@@ -29,31 +29,30 @@ export default function Locations() {
                           <div className="col-12 col-md-6 col-xl-5 mxd-paragraph__lists-item">
                             <div className="mxd-paragraph__lists-title">
                               <p className="t-large t-bright t-caption anim-uni-in-up">
-                                {t("ny")}
+                                {t("barcelona")}
                               </p>
                             </div>
                             <ul>
                               <li className="anim-uni-in-up">
                                 <a
                                   className="anim-uni-in-up"
-                                  href="https://goo.gl/maps/nWXKpGaDPuyH6gxRA"
+                                  href="https://maps.app.goo.gl/wbhWXYBkpTwBLSXC9"
                                   target="_blank"
+                                  rel="noopener noreferrer"
                                 >
-                                  11 West 53 Street,
+                                  Barcelona,
                                   <br />
-                                  New York, NY
-                                  <br />
-                                  10019
+                                  España
                                 </a>
                               </li>
                             </ul>
                             <ul>
                               <li className="anim-uni-in-up">
-                                <a href="tel:+12127089400">+1 212-708-9400</a>
+                                <a href="tel:+34677184699">+34 677 18 46 99</a>
                               </li>
                               <li className="anim-uni-in-up">
-                                <a href="mailto:hello@107studio.es?subject=Message%20from%20your%20site">
-                                  hello@107studio.es
+                                <a href="mailto:hola@107studio.es?subject=Hola%20107%20Studio">
+                                  hola@107studio.es
                                 </a>
                               </li>
                             </ul>
@@ -61,30 +60,16 @@ export default function Locations() {
                           <div className="col-12 col-md-6 col-xl-5 mxd-paragraph__lists-item">
                             <div className="mxd-paragraph__lists-title">
                               <p className="t-large t-bright t-caption anim-uni-in-up">
-                                {t("oakland")}
+                                {t("remote")}
                               </p>
                             </div>
                             <ul>
-                              <li className="anim-uni-in-up">
-                                <a
-                                  href="https://goo.gl/maps/xap5o3MZBuC6DFHz8"
-                                  target="_blank"
-                                >
-                                  3400 Broadway,
-                                  <br />
-                                  Oakland, CA
-                                  <br />
-                                  94611
-                                </a>
-                              </li>
+                              <li className="anim-uni-in-up">{t("remoteText")}</li>
                             </ul>
                             <ul>
                               <li className="anim-uni-in-up">
-                                <a href="tel:+15104570211">+1 510-457-0211</a>
-                              </li>
-                              <li className="anim-uni-in-up">
-                                <a href="mailto:hello@107studio.es?subject=Message%20from%20your%20site">
-                                  hello@107studio.es
+                                <a href="mailto:hola@107studio.es?subject=Hola%20107%20Studio">
+                                  hola@107studio.es
                                 </a>
                               </li>
                             </ul>

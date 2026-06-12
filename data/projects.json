@@ -72,6 +72,25 @@
       ]
     },
     {
+      "id": "purezza",
+      "slug": "purezza",
+      "title": "Purezza",
+      "subtitle": "Diseño de producto y packaging para suplementos naturales",
+      "thumb": "/img/projects/posters/purezza.webp",
+      "image": "/img/projects/posters/purezza.webp",
+      "tags": ["Branding", "Packaging", "Product Design"],
+      "year": "2026",
+      "url": "",
+      "kind": "client",
+      "video": null,
+      "poster": "/img/projects/posters/purezza.webp",
+      "gallery": [
+        "/img/projects/captures/purezza.webp",
+        "/img/projects/captures/purezza-2.webp",
+        "/img/projects/captures/purezza-3.webp"
+      ]
+    },
+    {
       "id": "reinoxpla",
       "slug": "reinoxpla",
       "title": "Reinoxpla",
