@@ -350,7 +350,9 @@
         "about": "Nosotros",
         "services": "Servicios",
         "work": "Proyectos",
-        "contact": "Contacto"
+        "contact": "Contacto",
+        "menuCaption": "Diseño con intención\ny desarrollo a medida",
+        "menuPromo": "Cuéntanos tu idea y la convertimos en producto. Diseño, código y resultados."
     },
     "Metadata": {
         "title": "107 Studio | Agencia Digital Creativa",
@@ -369,7 +371,7 @@
     "ContactPage": {
         "Header": {
             "subtitle": "Contacto",
-            "title": "Hablemos<br />de tu proyecto!",
+            "title": "¡Hablemos<br />de tu proyecto!",
             "text": "¿Tienes preguntas? ¡Tenemos respuestas! Aquí encontrarás información clara sobre nuestros servicios. Si necesitas más detalles, ¡contáctanos!"
         },
         "Form": {

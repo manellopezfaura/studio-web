@@ -568,6 +568,13 @@
 .btn-line-headline:focus-visible {
   color: var(--base-opp);
 }
+/* Touch devices can't hover, so the email would stay permanently muted —
+   the #1 conversion element looking disabled. Default it to full ink there. */
+@media (hover: none) {
+  .btn-line-headline {
+    color: var(--base-opp);
+  }
+}
 
 /* Dark theme muted text sat at ≈4.3:1 on #161616 — nudge above 4.5:1. */
 @media (prefers-color-scheme: dark) {
@@ -597,4 +604,49 @@ a.mxd-projects-stack__inner:hover .mxd-projects-stack__cta,
 a.mxd-projects-stack__inner:focus-visible .mxd-projects-stack__cta {
   background-color: #fff;
   transform: translate(2px, -2px);
+}
+
+/* ------------------------------------------------
+ * Mobile polish & interaction fixes
+ * ------------------------------------------------ */
+
+/* Scroll-to-top sat on top of the Hera chat trigger (both fixed
+   bottom-right) — they overlapped ~38px, making the chat the only
+   tappable one. Move scroll-to-top to the bottom-LEFT so each floating
+   control owns its corner. */
+.btn-to-top {
+  right: auto !important;
+  left: 2rem;
+  bottom: 2rem;
+}
+@media only screen and (min-width: 768px) {
+  .btn-to-top {
+    left: 3rem;
+    bottom: 3rem;
+  }
+}
+
+/* Services hero: the decorative pill image (an AI-render thumbnail) sits
+   inline before the H1. On mobile it crowds the eyebrow and the wrapped
+   title. Hide it on small screens — it's purely decorative. */
+@media only screen and (max-width: 767px) {
+  .inner-headline__title.headline-img-before::before,
+  .inner-headline__title.headline-img-after::after {
+    display: none;
+  }
+}
+
+/* Language switcher: the 22px-wide "EN" in the header was a sub-44px tap
+   target. Pad the hit area without moving the glyph. */
+.language-switcher-btn {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Inside the mobile menu the overlay is always a light surface, but the
+   switcher inherits --base-opp (light text in dark theme) → near-invisible
+   "EN" on white. Force dark ink within the menu. */
+.mxd-menu__wrapper .language-switcher-btn,
+.mxd-menu__wrapper .language-switcher-btn span {
+  color: #161616 !important;
 }

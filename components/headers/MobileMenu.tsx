@@ -132,11 +132,10 @@ export default function MobileMenu() {
               <p
                 className="mxd-menu__caption fade-in-elm"
                 style={{ transitionDelay: isActive ? "0.4s" : "0s" }}
-              >
-                Innovative design
-                <br />
-                and cutting-edge development
-              </p>
+                dangerouslySetInnerHTML={{
+                  __html: t("menuCaption").replace(/\n/g, "<br />"),
+                }}
+              />
               <div className="main-menu">
                 <nav className="main-menu__content">
                   <ul id="main-menu" className="main-menu__accordion">
@@ -234,9 +233,7 @@ export default function MobileMenu() {
                     className="menu-promo__caption fade-in-elm"
                     style={{ transitionDelay: isActive ? "0.4s" : "0s" }}
                   >
-                    New 107 Studio website is here!
-                    <br />
-                    Showcase your projects, services and expertise with impact.
+                    {t("menuPromo")}
                   </p>
                   <div className="fade-in-elm" style={{ transitionDelay: isActive ? "0.5s" : "0s", marginBottom: "20px" }}>
                     <LanguageSwitcher />

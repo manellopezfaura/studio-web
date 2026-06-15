@@ -345,24 +345,14 @@
             }
         }
     },
-    "ProjectDetailsLegacy": {
-        "challenge": {
-            "title": "Challenge",
-            "intro": "Every project starts with a unique set of constraints — tight timelines, evolving requirements, or the need to stand out in a saturated market.",
-            "body": "Our role was to distill complexity into clarity: understand the core problem, align stakeholders around a shared vision, and define a path that balances ambition with feasibility."
-        },
-        "solution": {
-            "title": "Solution",
-            "intro": "We approached the project with a research-first mindset — mapping user needs, auditing the competitive landscape, and identifying the highest-impact opportunities.",
-            "body": "From there, we moved into iterative design and development sprints, validating decisions early and shipping with precision. The result: a product that feels intentional in every detail."
-        }
-    },
     "Navigation": {
         "home": "Home",
         "about": "About",
         "services": "Services",
         "work": "Works",
-        "contact": "Contact"
+        "contact": "Contact",
+        "menuCaption": "Intentional design\nand custom development",
+        "menuPromo": "Tell us your idea and we turn it into product. Design, code, and results."
     },
     "Metadata": {
         "title": "107 Studio | Creative Digital Agency",
