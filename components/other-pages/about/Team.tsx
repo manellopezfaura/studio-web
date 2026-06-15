@@ -1,12 +1,15 @@
 import RevealText from "@/components/animation/RevealText";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import teamData from "@/data/team.json";
 import AnimatedButton from "@/components/animation/AnimatedButton";
 
 // Team members data
 const teamMembers = teamData;
 
-export default function Team() {
+export default async function Team() {
+  const t = await getTranslations("AboutPage.Team");
+  const positions = t.raw("positions") as string[];
   return (
     <div className="mxd-section padding-pre-grid">
       <div className="mxd-container grid-container">
@@ -19,7 +22,7 @@ export default function Team() {
                 <div className="col-12 col-xl-8">
                   <div className="container-fluid p-0">
                     <div className="row g-0">
-                      {teamMembers.map((member) => (
+                      {teamMembers.map((member, memberIndex) => (
                         <div
                           key={member.id}
                           className="col-12 col-md-6 mxd-team-cards__item mxd-grid-item no-margin-desktop animate-card-3"
@@ -51,7 +54,7 @@ export default function Team() {
                               {member.name}
                             </p>
                             <p className="mxd-team-cards__position t-small t-medium t-140">
-                              {member.position}
+                              {positions[memberIndex] ?? member.position}
                             </p>
                           </div>
                         </div>
@@ -69,23 +72,20 @@ export default function Team() {
                           <div className="col-12">
                             <div className="mxd-section-title__title">
                               <RevealText as="h2" className="reveal-type">
-                                Creative leaders
+                                {t("title")}
                               </RevealText>
                             </div>
                           </div>
                           <div className="col-12">
                             <div className="mxd-section-title__descr">
-                              <p className="anim-uni-in-up">
-                                Technical experts dedicated to delivering
-                                flawless, high-performing digital experiences.
-                              </p>
+                              <p className="anim-uni-in-up">{t("desc")}</p>
                             </div>
                           </div>
                           <div className="col-12">
                             <div className="mxd-section-title__controls anim-uni-in-up">
                               <AnimatedButton
                                 className="btn btn-anim btn-default btn-outline slide-right-up"
-                                text="Contact us"
+                                text={t("cta")}
                                 href={`/contact`}
                               >
                                 <i className="ph-bold ph-arrow-up-right" />

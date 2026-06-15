@@ -6,13 +6,81 @@
         },
         "Capabilities": {
             "title": "What we do",
-            "cta": "All services"
+            "cta": "All services",
+            "items": [
+                "Software development",
+                "Web app development",
+                "Mobile app development",
+                "UI/UX design",
+                "Software testing",
+                "Generative AI development",
+                "Data engineering"
+            ]
         },
         "Projects": {
             "title": "Selected work",
             "description": "A few projects where design, tech and outcomes meet.",
-            "cta": "View all"
-        }
+            "cta": "View all",
+            "descriptions": {
+                "hera": "AI platform and chat widget",
+                "reinoxpla": "Corporate site for hospitality furniture",
+                "l-de-luis": "Urban barbershop — identity and landing",
+                "luminar": "3D landing for design tools",
+                "flamingos": "3D experiment — Grace in motion"
+            }
+        },
+        "ServicesCards": {
+            "srTitle": "Services",
+            "brandIdentity": {
+                "title": "Brand\nIdentity",
+                "desc": "Memorable brands that connect. Strategy, color psychology and visual design for one-of-a-kind identities."
+            },
+            "productDesign": {
+                "title": "Product Design",
+                "desc": "Digital products people want to use. We validate with real users and optimize past the industry average."
+            },
+            "webDev": {
+                "title": "Web Design & Dev",
+                "desc": "Fast, accessible, SEO-friendly sites. Next.js and React with clean code that scales."
+            },
+            "aiAutomation": {
+                "title": "AI Automation",
+                "desc": "We automate repetitive work with AI. Integrations, chatbots and smart flows for your team."
+            },
+            "marketing": {
+                "title": "Marketing Performance",
+                "desc": "Google Ads and Meta Ads with continuous optimization. We measure every euro and adjust weekly."
+            }
+        },
+        "About": {
+            "title": "Creative, with judgment",
+            "intro": "We don't follow trends, we build solutions that work. Every project blends strategic design, robust code and obsessive attention to detail.",
+            "values": [
+                "Strategy",
+                "Design",
+                "Development",
+                "Results",
+                "Transparency",
+                "Commitment"
+            ],
+            "cta": "About us"
+        },
+        "Marquee": {
+            "line1": [
+                "Design",
+                "Development",
+                "Branding",
+                "eCommerce",
+                "Mobile Apps"
+            ],
+            "line2": "Understanding Your Industry"
+        },
+        "Facts": [
+            "Projects delivered\nsuccessfully",
+            "Clients come back\nfor more",
+            "Founders with\ncomplementary experience",
+            "Average initial\nresponse time"
+        ]
     },
     "AboutPage": {
         "Hero": {
@@ -25,7 +93,27 @@
                 "3": "Web Developers",
                 "4": "Brand Strategists"
             }
-        }
+        },
+        "Team": {
+            "title": "Who's behind it",
+            "desc": "Two complementary profiles — design and development — obsessed with detail and results.",
+            "cta": "Let's talk",
+            "positions": [
+                "Co-founder & Developer",
+                "Co-founder & Designer",
+                "Co-founder & Business Strategist",
+                "Marketing Director"
+            ]
+        },
+        "marqueeClients": "Clients Approve",
+        "marqueeSkills": [
+            "Design",
+            "Development",
+            "Branding",
+            "eCommerce",
+            "Mobile Apps"
+        ],
+        "marqueeWork": "View projects"
     },
     "ServicesPage": {
         "Hero": {
@@ -379,7 +467,7 @@
             "successText": "Thanks for your message. We'll get back as soon as possible.",
             "namePlaceholder": "Your name*",
             "companyPlaceholder": "Company name",
-            "emailPlaceholder": "Email*",
+            "emailPlaceholder": "Your email*",
             "phonePlaceholder": "Phone",
             "messagePlaceholder": "A few words about your project*",
             "submitButton": "Submit",

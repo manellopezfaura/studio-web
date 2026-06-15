@@ -1,6 +1,8 @@
+import { getTranslations } from "next-intl/server";
 import VelocityMarquee from "@/components/animation/VelocityMarquee";
 
-export default function MarqueeSlider2() {
+export default async function MarqueeSlider2() {
+  const t = await getTranslations("HomePage.Marquee");
   return (
     <div className="mxd-section padding-mtext-pre-grid">
       <div className="mxd-container fullwidth-container">
@@ -13,7 +15,7 @@ export default function MarqueeSlider2() {
                 key={index}
                 className="marquee__item one-line item-regular text"
               >
-                <p className="marquee__text">Understanding Your Industry</p>
+                <p className="marquee__text">{t("line2")}</p>
                 <div className="marquee__image">
                   <svg
                     version="1.1"

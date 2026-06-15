@@ -12,6 +12,7 @@ type HoverState = {
 };
 export default function Capabilities() {
   const t = useTranslations("HomePage.Capabilities");
+  const itemTitles = t.raw("items") as string[];
   const [hoverState, setHoverState] = useState<HoverState>({
     activeIndex: null,
     x: 0,
@@ -109,7 +110,7 @@ export default function Capabilities() {
                         />
                       </div>
                       <div className="mxd-cpb-list__content anim-uni-in-up">
-                        <h3 className="mxd-cpb-list__title">{item.title}</h3>
+                        <h3 className="mxd-cpb-list__title">{itemTitles[idx] ?? item.title}</h3>
                         <div className="mxd-cpb-list__num">
                           <span>{item.num}</span>
                         </div>

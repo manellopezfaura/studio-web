@@ -6,13 +6,81 @@
         },
         "Capabilities": {
             "title": "Qué hacemos",
-            "cta": "Todos los servicios"
+            "cta": "Todos los servicios",
+            "items": [
+                "Desarrollo de software",
+                "Desarrollo de apps web",
+                "Desarrollo de apps móviles",
+                "Diseño UI/UX",
+                "Testing de software",
+                "Desarrollo de IA generativa",
+                "Ingeniería de datos"
+            ]
         },
         "Projects": {
             "title": "Proyectos",
             "description": "Una selección de trabajos donde diseño, tecnología y resultados van de la mano.",
-            "cta": "Ver todos"
-        }
+            "cta": "Ver todos",
+            "descriptions": {
+                "hera": "Plataforma IA y widget de chat",
+                "reinoxpla": "Web corporativa para mobiliario de hostelería",
+                "l-de-luis": "Barbería urbana — identidad y landing",
+                "luminar": "Landing 3D para herramientas de diseño",
+                "flamingos": "Experimento 3D — Grace in motion"
+            }
+        },
+        "ServicesCards": {
+            "srTitle": "Servicios",
+            "brandIdentity": {
+                "title": "Identidad\nde Marca",
+                "desc": "Marcas memorables que conectan. Estrategia, psicología del color y diseño visual para identidades únicas."
+            },
+            "productDesign": {
+                "title": "Diseño de Producto",
+                "desc": "Productos digitales que la gente quiere usar. Validamos con usuarios reales y optimizamos hasta superar la media del sector."
+            },
+            "webDev": {
+                "title": "Diseño & Desarrollo Web",
+                "desc": "Webs rápidas, accesibles y SEO-friendly. Next.js y React con código limpio que escala."
+            },
+            "aiAutomation": {
+                "title": "IA & Automatización",
+                "desc": "Automatizamos tareas repetitivas con IA. Integraciones, chatbots y flujos inteligentes para tu equipo."
+            },
+            "marketing": {
+                "title": "Marketing & Performance",
+                "desc": "Google Ads y Meta Ads con optimización continua. Medimos cada euro y ajustamos semanalmente."
+            }
+        },
+        "About": {
+            "title": "Creativos con criterio",
+            "intro": "No seguimos modas, creamos soluciones que funcionan. Cada proyecto combina diseño estratégico, código robusto y atención obsesiva al detalle.",
+            "values": [
+                "Estrategia",
+                "Diseño",
+                "Desarrollo",
+                "Resultados",
+                "Transparencia",
+                "Compromiso"
+            ],
+            "cta": "Conócenos"
+        },
+        "Marquee": {
+            "line1": [
+                "Diseño",
+                "Desarrollo",
+                "Branding",
+                "eCommerce",
+                "Apps móviles"
+            ],
+            "line2": "Entendemos tu sector"
+        },
+        "Facts": [
+            "Proyectos entregados\ncon éxito",
+            "Clientes repiten\ncon nosotros",
+            "Fundadores con\nexperiencia complementaria",
+            "Tiempo medio de\nrespuesta inicial"
+        ]
     },
     "AboutPage": {
         "Hero": {
@@ -25,7 +93,27 @@
                 "3": "Desarrolladores Web",
                 "4": "Estrategas de Marca"
             }
-        }
+        },
+        "Team": {
+            "title": "Quién está detrás",
+            "desc": "Dos perfiles complementarios — diseño y desarrollo — obsesionados con el detalle y el resultado.",
+            "cta": "Hablemos",
+            "positions": [
+                "Co-fundador & Desarrollador",
+                "Co-fundador & Diseñador",
+                "Co-fundador & Estratega de negocio",
+                "Directora de Marketing"
+            ]
+        },
+        "marqueeClients": "Aprobado por clientes",
+        "marqueeSkills": [
+            "Diseño",
+            "Desarrollo",
+            "Branding",
+            "eCommerce",
+            "Apps móviles"
+        ],
+        "marqueeWork": "Ver proyectos"
     },
     "ServicesPage": {
         "Hero": {
@@ -143,10 +231,10 @@
         },
         "Marquee": {
             "items": [
-                "Brand Identity",
-                "Product Design",
-                "Web Design",
-                "AI & Automation",
+                "Identidad de Marca",
+                "Diseño de Producto",
+                "Diseño Web",
+                "IA & Automatización",
                 "Marketing & Performance"
             ]
         },
@@ -379,7 +467,7 @@
             "successText": "Gracias por tu mensaje. Te responderemos lo antes posible.",
             "namePlaceholder": "Tu nombre*",
             "companyPlaceholder": "Nombre de empresa",
-            "emailPlaceholder": "Email*",
+            "emailPlaceholder": "Tu email*",
             "phonePlaceholder": "Teléfono",
             "messagePlaceholder": "Unas palabras sobre tu proyecto*",
             "submitButton": "Enviar",

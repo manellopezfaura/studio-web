@@ -1,6 +1,9 @@
+import { getTranslations } from "next-intl/server";
 import VelocityMarquee from "@/components/animation/VelocityMarquee";
 
-export default function MarqueeSlider2() {
+export default async function MarqueeSlider2() {
+  const t = await getTranslations("AboutPage");
+  const skills = t.raw("marqueeSkills") as string[];
   return (
     <div className="mxd-section padding-mtext">
       <div className="mxd-container fullwidth-container">
@@ -9,13 +12,7 @@ export default function MarqueeSlider2() {
           <VelocityMarquee className="marquee marquee-right--gsap muted-extra">
             <div className="marquee__toright">
               {/* single item */}
-              {[
-                "Design",
-                "Development",
-                "Branding",
-                "eCommerce",
-                "Mobile Apps",
-              ].map((text, i) => (
+              {skills.map((text, i) => (
                 <div
                   key={i}
                   className="marquee__item one-line item-regular text"

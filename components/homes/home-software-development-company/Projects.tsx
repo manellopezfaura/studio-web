@@ -6,6 +6,7 @@ import RevealText from "@/components/animation/RevealText";
 import AnimatedButton from "@/components/animation/AnimatedButton";
 export default async function Projects() {
   const t = await getTranslations("HomePage.Projects");
+  const descriptions = t.raw("descriptions") as Record<string, string>;
   return (
     <div className="mxd-section padding-pre-grid mobile-grid-title">
       <div className="mxd-container grid-container">
@@ -82,7 +83,7 @@ export default async function Projects() {
                                 href={detailHref}
                               >
                                 <span>{project.title}</span>{" "}
-                                {project.description}
+                                {descriptions[project.slug] ?? project.description}
                               </Link>
                             </div>
                           </div>

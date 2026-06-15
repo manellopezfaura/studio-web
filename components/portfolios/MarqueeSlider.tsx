@@ -1,6 +1,8 @@
+import { getTranslations } from "next-intl/server";
 import VelocityMarquee from "../animation/VelocityMarquee";
 
-export default function MarqueeSlider() {
+export default async function MarqueeSlider() {
+  const t = await getTranslations("AboutPage");
   return (
     <div className="mxd-section padding-mtext">
       <div className="mxd-container fullwidth-container">
@@ -9,7 +11,7 @@ export default function MarqueeSlider() {
           <VelocityMarquee className="marquee marquee-right--gsap muted-extra">
             {/* single item */}
             <div className="marquee__item one-line item-regular text">
-              <p className="marquee__text">Clients Approve</p>
+              <p className="marquee__text">{t("marqueeClients")}</p>
               <div className="marquee__image">
                 <svg
                   version="1.1"
@@ -33,7 +35,7 @@ export default function MarqueeSlider() {
             </div>
             {/* single item */}
             <div className="marquee__item one-line item-regular text">
-              <p className="marquee__text">Clients Approve</p>
+              <p className="marquee__text">{t("marqueeClients")}</p>
               <div className="marquee__image">
                 <svg
                   version="1.1"
@@ -57,7 +59,7 @@ export default function MarqueeSlider() {
             </div>
             {/* single item */}
             <div className="marquee__item one-line item-regular text">
-              <p className="marquee__text">Clients Approve</p>
+              <p className="marquee__text">{t("marqueeClients")}</p>
               <div className="marquee__image">
                 <svg
                   version="1.1"

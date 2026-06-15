@@ -1,11 +1,14 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 
 import VelocityMarquee from "@/components/animation/VelocityMarquee";
 import AnimateRotation from "@/components/animation/AnimateRotation";
 import { projectsAll } from "@/data/projects.json";
 
-export default function ProjectsMarqueeSlider() {
+export default async function ProjectsMarqueeSlider() {
+  const t = await getTranslations("AboutPage");
+  const work = t("marqueeWork");
   return (
     <div className="mxd-section padding-pre-title">
       <div className="mxd-container fullwidth-container">
@@ -40,7 +43,7 @@ export default function ProjectsMarqueeSlider() {
                 <text>
                   {/* button text here!!! */}
                   <textPath xlinkHref="#textPath">
-                    Download CV * Download CV * Download CV *
+                    {`${work} * ${work} * ${work} *`}
                   </textPath>
                 </text>
               </g>

@@ -1,8 +1,11 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import factsData from "@/data/facts-simple.json";
 import Counter from "@/components/common/Counter";
 
-export default function Facts() {
+export default async function Facts() {
+  const t = await getTranslations("HomePage");
+  const descriptions = t.raw("Facts") as string[];
   return (
     <div className="mxd-section padding-default">
       <div className="mxd-container grid-container">
@@ -11,7 +14,7 @@ export default function Facts() {
           <div className="mxd-stats-simple">
             <div className="container-fluid p-0">
               <div className="row g-0 mxd-stats-simple">
-                {factsData.map((fact) => (
+                {factsData.map((fact, index) => (
                   <div
                     key={fact.id}
                     className="col-12 col-lg-3 mxd-stats-simple__item mxd-grid-item"
@@ -38,13 +41,14 @@ export default function Facts() {
                       />
                       {/* description */}
                       <p className="mxd-stats-simple__descr t-140 t-bright">
-                        {fact.description.split("\n").map((line, index) => (
-                          <span key={index}>
-                            {line}
-                            {index <
-                              fact.description.split("\n").length - 1 && <br />}
-                          </span>
-                        ))}
+                        {descriptions[index]
+                          .split("\n")
+                          .map((line, i, arr) => (
+                            <span key={i}>
+                              {line}
+                              {i < arr.length - 1 && <br />}
+                            </span>
+                          ))}
                       </p>
                     </div>
                   </div>
