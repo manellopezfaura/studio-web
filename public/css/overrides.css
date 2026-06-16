@@ -3,6 +3,34 @@
    Loaded after main.min.css to ensure correct cascade order
    ========================================================== */
 
+/* Legal pages (aviso-legal, cookies, privacy, terms): links inside the
+   content used the browser-default blue. Match the brand instead, with
+   spacing/readability for the long-form text. */
+.content-text {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+.content-text a {
+  color: var(--base-opp);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--additional, #ddf160);
+}
+.content-text a:hover {
+  color: var(--additional, #ddf160);
+}
+.content-text h2 {
+  margin-top: 3.2rem;
+}
+.content-text ul {
+  margin: 1.2rem 0;
+  padding-left: 2rem;
+  list-style: disc;
+}
+.content-text li {
+  margin-bottom: 0.6rem;
+}
+
 /* Hero — mobile */
 @media only screen and (max-width: 991px) {
   .mxd-hero-03__top {

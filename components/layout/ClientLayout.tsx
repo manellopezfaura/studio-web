@@ -7,6 +7,7 @@ import Header1 from "@/components/headers/Header1";
 // opacity:0 for the chunk's load time and TypedText started typing in the
 // invisible h1, so the entry animation revealed text mid-typing.
 import InitScroll from "@/components/scroll/InitScroll";
+import { CookieConsent } from "@/components/common/CookieConsent";
 
 const MobileMenu = dynamic(
   () => import("@/components/headers/MobileMenu"),
@@ -39,6 +40,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       <ScrollTop />
       <LenisSmoothScroll />
       <HeraChatWidget apiUrl="/api/chat" assistantName="Hera" avatar="H" subtitle="107 Studio" />
+      <CookieConsent />
     </>
   );
 }

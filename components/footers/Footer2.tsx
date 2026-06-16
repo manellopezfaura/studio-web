@@ -3,6 +3,7 @@ import footerNav from "@/data/footer-nav.json";
 import AnimatedButton from "../animation/AnimatedButton";
 import FooterContactForm from "./FooterContactForm";
 import { useTranslations } from "next-intl";
+import { legalEntity } from "@/data/seo-config";
 
 export default function Footer2({ text = "107 studio" }: { text?: string }) {
   const tFooter = useTranslations("Footer");
@@ -96,6 +97,22 @@ export default function Footer2({ text = "107 studio" }: { text?: string }) {
                 <i className="ph ph-arrow-right" />
               </AnimatedButton>
               <AnimatedButton
+                text={tFooter("legal")}
+                as={"a"}
+                className="btn btn-line-xsmall btn-muted slide-right anim-no-delay"
+                href="/aviso-legal"
+              >
+                <i className="ph ph-arrow-right" />
+              </AnimatedButton>
+              <AnimatedButton
+                text={tFooter("cookies")}
+                as={"a"}
+                className="btn btn-line-xsmall btn-muted slide-right anim-no-delay"
+                href="/cookies"
+              >
+                <i className="ph ph-arrow-right" />
+              </AnimatedButton>
+              <AnimatedButton
                 text={tFooter("terms")}
                 as={"a"}
                 className="btn btn-line-xsmall btn-muted slide-right anim-no-delay"
@@ -104,6 +121,13 @@ export default function Footer2({ text = "107 studio" }: { text?: string }) {
                 <i className="ph ph-arrow-right" />
               </AnimatedButton>
             </div>
+            {/* legal entity — LSSI identification */}
+            <p
+              className="t-small t-muted anim-uni-in-up"
+              style={{ marginTop: "1.6rem", opacity: 0.7 }}
+            >
+              {legalEntity.name} · CIF {legalEntity.cif}
+            </p>
           </div>
         </div>
         <div className="footer-blocks__column animate-card-3">

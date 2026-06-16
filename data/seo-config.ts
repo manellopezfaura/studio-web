@@ -13,17 +13,15 @@ export const seoConfig = {
   twitterHandle: "@107studio",
   locale: "es_ES",
 
-  // Contact info for Schema.org
+  // Contact info for Schema.org. Public-facing location is Barcelona (where
+  // the studio operates); the registered legal address lives in `legal` below
+  // and is only surfaced on the legal pages (Aviso Legal / Privacidad).
   contact: {
     email: "hola@107studio.es",
     phone: "+34677184699" as string | undefined,
-    address: {
-      street: "Barcelona", // TODO: Update with real address
-      city: "Barcelona",
-      region: "Catalunya",
-      postalCode: "08000",
-      country: "ES",
-    },
+    city: "Barcelona",
+    region: "Catalunya",
+    country: "ES",
   },
 
   // Social profiles for Schema.org
@@ -32,6 +30,20 @@ export const seoConfig = {
     "https://instagram.com/107studio",
     "https://twitter.com/107studio",
   ],
+};
+
+// Registered legal entity (domicilio social). Required on the Aviso Legal
+// (LSSI art. 10) and as the data controller on the Privacy Policy (RGPD).
+export const legalEntity = {
+  name: "107 AI STUDIO, S.L.",
+  cif: "B88694237",
+  address: "C. Sil, 9",
+  postalCode: "28224",
+  city: "Pozuelo de Alarcón",
+  province: "Madrid",
+  country: "España",
+  email: "hola@107studio.es",
+  fullAddress: "C. Sil, 9, 28224 Pozuelo de Alarcón, Madrid, España",
 };
 
 // Helper to generate canonical URL
@@ -83,8 +95,20 @@ export const pageMetadata = {
   privacyPolicy: {
     title: "Política de Privacidad",
     description:
-      "Política de privacidad de 107 Studio. Información sobre cómo tratamos y protegemos tus datos personales.",
+      "Política de privacidad de 107 Studio. Información sobre cómo tratamos y protegemos tus datos personales conforme al RGPD.",
     canonical: getCanonicalUrl("/privacy-policy"),
+  },
+  avisoLegal: {
+    title: "Aviso Legal",
+    description:
+      "Aviso legal de 107 AI STUDIO, S.L. Datos identificativos, condiciones de uso y propiedad intelectual del sitio web 107studio.es.",
+    canonical: getCanonicalUrl("/aviso-legal"),
+  },
+  cookies: {
+    title: "Política de Cookies",
+    description:
+      "Política de cookies de 107 Studio. Qué cookies usamos, con qué finalidad y cómo gestionar tu consentimiento.",
+    canonical: getCanonicalUrl("/cookies"),
   },
   terms: {
     title: "Términos y Condiciones",

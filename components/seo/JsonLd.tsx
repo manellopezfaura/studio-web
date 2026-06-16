@@ -1,4 +1,15 @@
-import { seoConfig } from "@/data/seo-config";
+import { seoConfig, legalEntity } from "@/data/seo-config";
+
+// Registered postal address (PostalAddress) shared by the Organization and
+// LocalBusiness schemas — the verifiable legal address.
+const legalPostalAddress = {
+    "@type": "PostalAddress",
+    streetAddress: legalEntity.address,
+    addressLocality: legalEntity.city,
+    addressRegion: legalEntity.province,
+    postalCode: legalEntity.postalCode,
+    addressCountry: "ES",
+};
 
 interface OrganizationSchemaProps {
     name?: string;
@@ -27,19 +38,15 @@ export function OrganizationSchema({
         "@context": "https://schema.org",
         "@type": "Organization",
         name,
+        legalName: legalEntity.name,
+        taxID: legalEntity.cif,
+        vatID: `ES${legalEntity.cif}`,
         url,
         logo,
         description: seoConfig.defaultDescription,
         email: seoConfig.contact.email,
         ...(seoConfig.contact.phone ? { telephone: seoConfig.contact.phone } : {}),
-        address: {
-            "@type": "PostalAddress",
-            streetAddress: seoConfig.contact.address.street,
-            addressLocality: seoConfig.contact.address.city,
-            addressRegion: seoConfig.contact.address.region,
-            postalCode: seoConfig.contact.address.postalCode,
-            addressCountry: seoConfig.contact.address.country,
-        },
+        address: legalPostalAddress,
         sameAs: seoConfig.socialProfiles,
     };
 
@@ -61,14 +68,7 @@ export function LocalBusinessSchema() {
         description: seoConfig.defaultDescription,
         email: seoConfig.contact.email,
         ...(seoConfig.contact.phone ? { telephone: seoConfig.contact.phone } : {}),
-        address: {
-            "@type": "PostalAddress",
-            streetAddress: seoConfig.contact.address.street,
-            addressLocality: seoConfig.contact.address.city,
-            addressRegion: seoConfig.contact.address.region,
-            postalCode: seoConfig.contact.address.postalCode,
-            addressCountry: seoConfig.contact.address.country,
-        },
+        address: legalPostalAddress,
         priceRange: "$$",
         openingHours: "Mo-Fr 09:00-18:00",
         sameAs: seoConfig.socialProfiles,

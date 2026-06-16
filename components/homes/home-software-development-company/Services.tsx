@@ -158,13 +158,19 @@ export default async function Services() {
                     <div className="mxd-services-cards-s__info">
                       <div className="mxd-services-cards-s__tags">
                         <span className="tag tag-default tag-outline anim-uni-in-up">
-                          Paid Ads
+                          GEO
+                        </span>
+                        <span className="tag tag-default tag-outline anim-uni-in-up">
+                          Google ADS
+                        </span>
+                        <span className="tag tag-default tag-outline anim-uni-in-up">
+                          Social Content
+                        </span>
+                        <span className="tag tag-default tag-outline anim-uni-in-up">
+                          Lead Strategy
                         </span>
                         <span className="tag tag-default tag-outline anim-uni-in-up">
                           SEO
-                        </span>
-                        <span className="tag tag-default tag-outline anim-uni-in-up">
-                          Analytics
                         </span>
                       </div>
                       <p className="anim-uni-in-up">{t("marketing.desc")}</p>

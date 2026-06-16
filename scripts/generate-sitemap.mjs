@@ -16,6 +16,8 @@ const pages = [
   { path: "/works-simple", changefreq: "weekly", priority: "0.8", label: "Portfolio" },
   { path: "/contact", changefreq: "monthly", priority: "0.7", label: "Contact" },
   { path: "/privacy-policy", changefreq: "yearly", priority: "0.3", label: "Privacy Policy" },
+  { path: "/aviso-legal", changefreq: "yearly", priority: "0.3", label: "Legal Notice" },
+  { path: "/cookies", changefreq: "yearly", priority: "0.3", label: "Cookies" },
   { path: "/terms", changefreq: "yearly", priority: "0.3", label: "Terms" },
   ...projectsAll.map((p) => ({
     path: `/projects/${p.slug}`,

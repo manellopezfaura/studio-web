@@ -49,7 +49,7 @@
             },
             "marketing": {
                 "title": "Marketing & Performance",
-                "desc": "Google Ads y Meta Ads con optimización continua. Medimos cada euro y ajustamos semanalmente."
+                "desc": "Visibilidad que convierte: GEO para aparecer en respuestas de IA, Google Ads, contenido social y captación de leads. Medido y optimizado cada semana."
             }
         },
         "About": {
@@ -450,7 +450,9 @@
         "privacy": "Política de Privacidad",
         "terms": "Términos y Condiciones",
         "contactTitle": "Contacto",
-        "contactText": "Compártenos tu proyecto y te responderemos pronto."
+        "contactText": "Compártenos tu proyecto y te responderemos pronto.",
+        "legal": "Aviso legal",
+        "cookies": "Cookies"
     },
     "Shared": {
         "CtaTitle": "¿Tienes un proyecto en mente?",
@@ -500,5 +502,11 @@
         "description": "Se produjo un error inesperado. Inténtalo de nuevo.",
         "retry": "Intentar de nuevo",
         "cta": "Volver al inicio"
+    },
+    "CookieBanner": {
+        "message": "Usamos cookies propias y de analítica para mejorar el sitio. Puedes aceptarlas o rechazarlas.",
+        "accept": "Aceptar",
+        "reject": "Rechazar",
+        "more": "Más información"
     }
 }
