@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // ✅ Only allow HTML tags here, not SVG:
 type HtmlTag = keyof HTMLElementTagNameMap; // 'div' | 'span' | 'h1' | 'a' | ...
@@ -13,93 +10,88 @@ type RevealTextProps<T extends HtmlTag = "span"> = {
   as?: T;
   className?: string;
   children: React.ReactNode;
-  start?: string;
-  end?: string;
-  scrub?: boolean | number;
+  /** Per-character stagger, seconds. */
   stagger?: number;
-  opacityFrom?: number;
 } & Omit<React.ComponentPropsWithoutRef<T>, "as" | "children" | "className">;
 
+/**
+ * Heading text that reveals its characters one-shot when it scrolls into view.
+ * Driven by IntersectionObserver (not GSAP ScrollTrigger) so it fires reliably
+ * under Lenis / fast scroll and never leaves the heading stuck dim or blank.
+ */
 export default function RevealText<T extends HtmlTag = "span">({
   as,
   className,
   children,
-  start = "top 80%",
-  end = "top 20%",
-  scrub = true,
-  stagger = 0.1,
-  opacityFrom = 0.2,
+  stagger = 0.012,
   ...rest
 }: RevealTextProps<T>) {
   const Tag = (as || "span") as unknown as React.ElementType;
   const elRef = useRef<HTMLElement | null>(null);
-  const animRef = useRef<gsap.core.Tween | null>(null);
-  const splitRef = useRef<SplitType | null>(null);
 
   useEffect(() => {
-    // Capture the current element so the cleanup uses the same reference
-    // even if elRef.current changes between effect run and cleanup.
     const el = elRef.current;
+    if (!el) return;
 
-    // Reduced motion: show the text plainly and skip the char choreography.
+    const reveal = () => el.classList.add("is-revealed");
+
+    // Reduced motion: show plainly, no char choreography.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      if (el) gsap.set(el, { opacity: 1 });
+      reveal();
       return;
     }
 
-    const createAnimation = () => {
-      if (!el) return;
+    let split: SplitType | null = null;
+    try {
+      split = new SplitType(el, { types: "chars" });
+    } catch {
+      reveal();
+      return;
+    }
 
-      // Revert previous split if exists
-      splitRef.current?.revert();
+    const chars = split.chars ?? [];
+    // Container visible; characters hidden until they animate in.
+    reveal();
+    if (chars.length === 0) return;
+    gsap.set(chars, { opacity: 0, yPercent: 20 });
 
-      const split = new SplitType(el, { types: "words,chars" });
-      splitRef.current = split;
-
-      const anim = gsap.from(split.chars, {
-        scrollTrigger: {
-          trigger: el,
-          start,
-          end,
-          scrub,
-          toggleActions: "play none none reverse",
-        },
-        opacity: opacityFrom,
-        duration: 1.2,
-        stagger,
+    let done = false;
+    const play = () => {
+      if (done) return;
+      done = true;
+      gsap.to(chars, {
+        opacity: 1,
+        yPercent: 0,
+        duration: 0.7,
         ease: "power2.out",
+        stagger,
+        overwrite: true,
       });
-
-      // The chars now own the reveal — release the container from its CSS
-      // pre-reveal state (html.has-js .reveal-type { opacity: .2 }) in the
-      // same tick so there's no double-dimming and no full-bright flash.
-      gsap.set(el, { opacity: 1 });
-
-      animRef.current = anim;
     };
-    // useEffect runs after the DOM is mounted — init synchronously. The old
-    // 100ms setTimeout left a window where the SSR text painted full-bright
-    // and then snapped to the dimmed pre-reveal state.
-    createAnimation();
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          play();
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0 },
+    );
+    io.observe(el);
+
+    // Failsafe: if it's already in/above the viewport (IO edge cases), play.
+    const t = setTimeout(() => {
+      if (!done && el.getBoundingClientRect().top < window.innerHeight) play();
+    }, 2000);
 
     return () => {
-      // Clean up animation
-      animRef.current?.kill();
-
-      // Clean up SplitType
-      if (splitRef.current) {
-        splitRef.current.revert();
-        splitRef.current = null;
-      }
-
-      // Clean up ScrollTrigger instances for this element
-      ScrollTrigger.getAll()
-        .filter((t) => t.vars.trigger === el)
-        .forEach((t) => t.kill());
-
-      // No global refresh listener to remove
+      io.disconnect();
+      clearTimeout(t);
+      gsap.killTweensOf(chars);
+      split?.revert();
     };
-  }, [start, end, scrub, stagger, opacityFrom]);
+  }, [stagger]);
 
   return (
     <Tag

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
@@ -16,6 +16,7 @@ export const COOKIE_CONSENT_EVENT = "cookie-consent-change";
 export function CookieConsent() {
   const t = useTranslations("CookieBanner");
   const [visible, setVisible] = useState(false);
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try {
@@ -25,6 +26,28 @@ export function CookieConsent() {
       setVisible(true);
     }
   }, []);
+
+  // While the banner is visible on narrow viewports it spans the bottom of the
+  // screen and would overlap the Hera chat trigger (bottom-right). Expose its
+  // real height + a flag on <html> so the trigger can lift above it (hera.css).
+  useEffect(() => {
+    if (!visible) return;
+    const el = bannerRef.current;
+    if (!el) return;
+    const root = document.documentElement;
+    const syncHeight = () => {
+      root.style.setProperty("--cookie-banner-height", `${el.offsetHeight}px`);
+    };
+    syncHeight();
+    root.classList.add("cookie-consent-open");
+    const observer = new ResizeObserver(syncHeight);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      root.classList.remove("cookie-consent-open");
+      root.style.removeProperty("--cookie-banner-height");
+    };
+  }, [visible]);
 
   const decide = (value: "accepted" | "rejected") => {
     try {
@@ -42,6 +65,7 @@ export function CookieConsent() {
 
   return (
     <div
+      ref={bannerRef}
       className="cookie-banner"
       role="dialog"
       aria-live="polite"

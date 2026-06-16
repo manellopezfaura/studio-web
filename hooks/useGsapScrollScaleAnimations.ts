@@ -7,119 +7,101 @@ import { usePathname } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Entry-reveal elements: these were previously faded in via per-element GSAP
+// ScrollTriggers, but those could fail to fire under Lenis smooth-scroll / fast
+// scrolling / stale refreshes, leaving content stuck at opacity 0 (blank gaps).
+// They are now revealed with an IntersectionObserver, which fires reliably when
+// an element crosses the viewport. CSS (html.has-js …) handles the hidden state
+// and the `.is-revealed` transition.
+const REVEAL_SELECTOR =
+  ".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5";
+
 export default function useGsapScrollScaleAnimations() {
   const pathname = usePathname();
   useEffect(() => {
-    // Respect prefers-reduced-motion: show all content immediately, skip animations
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    // Reduced motion: reveal everything immediately, no animation.
     if (prefersReducedMotion) {
-      document.querySelectorAll(".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5, .reveal-type")
-        .forEach((el) => {
-          (el as HTMLElement).style.opacity = "1";
-          (el as HTMLElement).style.transform = "none";
-        });
+      document
+        .querySelectorAll(`${REVEAL_SELECTOR}, .loading__item, .loading__fade, .reveal-type`)
+        .forEach((el) => el.classList.add("is-revealed"));
       return;
     }
 
-    const initAnim = () => {
+    // ── Entry reveals via IntersectionObserver (reliable) ──────────────────
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            obs.unobserve(entry.target);
+          }
+        }
+      },
+      // Start a touch before the element fully enters for a natural feel.
+      { rootMargin: "0px 0px 80px 0px", threshold: 0 },
+    );
+
+    // Observe every matching element once. Re-runnable so elements that mount
+    // AFTER the initial scan (team cards, marquees, route transitions) also get
+    // picked up — without this they'd never be observed and stay blank, which
+    // is exactly what happened on client-side navigation.
+    const seen = new WeakSet<Element>();
+    const observeAll = () => {
+      document
+        .querySelectorAll<HTMLElement>(REVEAL_SELECTOR)
+        .forEach((el) => {
+          if (seen.has(el) || el.classList.contains("is-revealed")) return;
+          seen.add(el);
+          // Already scrolled past (above viewport) → reveal now; it never
+          // intersects on a downward scroll.
+          if (el.getBoundingClientRect().bottom < 0) {
+            el.classList.add("is-revealed");
+          } else {
+            io.observe(el);
+          }
+        });
+    };
+    observeAll();
+
+    // Catch late-mounting elements. MutationObserver only fires on node
+    // add/remove (not on marquee transform changes), so it's cheap; debounced
+    // to one rAF.
+    let scheduled = false;
+    const mo = new MutationObserver(() => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => {
+        scheduled = false;
+        observeAll();
+      });
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    // Belt-and-suspenders: anything still hidden inside the viewport after 2.5s
+    // gets revealed regardless (covers any edge case).
+    const safetyTimer = setTimeout(() => {
+      document
+        .querySelectorAll<HTMLElement>(REVEAL_SELECTOR)
+        .forEach((el) => {
+          if (
+            !el.classList.contains("is-revealed") &&
+            el.getBoundingClientRect().top < window.innerHeight
+          ) {
+            el.classList.add("is-revealed");
+            io.unobserve(el);
+          }
+        });
+    }, 2500);
+
+    // ── Scroll-linked scrub effects (these don't gate visibility) ──────────
+    const ctx = gsap.context(() => {
       const docStyle = getComputedStyle(document.documentElement);
 
-      // Start the entry animations BEFORE the element enters the viewport so
-      // fast scrolling never reveals an element that's still half-faded.
-      // "top bottom-=120" fires when the element's top is 120px below the
-      // viewport bottom — animation gets a head start and finishes by the
-      // time the element is comfortably in view.
-      const ENTRY_START = "top bottom-=120";
-
-      // ✅ Fade & slide up
-      const animateInUp = document.querySelectorAll(".anim-uni-in-up");
-      animateInUp.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 50, ease: "sine" },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            scrollTrigger: {
-              trigger: el,
-              start: ENTRY_START,
-              once: true,
-            },
-          }
-        );
-      });
-
-      // ✅ Scale-in center
-      const animateInUpFront = document.querySelectorAll(".anim-uni-scale-in");
-      animateInUpFront.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 50, scale: 1.2, ease: "sine" },
-          {
-            y: 0,
-            x: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            scrollTrigger: {
-              trigger: el,
-              start: ENTRY_START,
-              once: true,
-            },
-          }
-        );
-      });
-
-      // ✅ Scale-in from right
-      const animateInUpRight = document.querySelectorAll(
-        ".anim-uni-scale-in-right"
-      );
-      animateInUpRight.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 50, x: -70, scale: 1.2, ease: "sine" },
-          {
-            y: 0,
-            x: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            scrollTrigger: {
-              trigger: el,
-              start: ENTRY_START,
-              once: true,
-            },
-          }
-        );
-      });
-
-      // ✅ Scale-in from left
-      const animateInUpLeft = document.querySelectorAll(
-        ".anim-uni-scale-in-left"
-      );
-      animateInUpLeft.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 50, x: 70, scale: 1.2, ease: "sine" },
-          {
-            y: 0,
-            x: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            scrollTrigger: {
-              trigger: el,
-              start: ENTRY_START,
-              once: true,
-            },
-          }
-        );
-      });
-
-      // ✅ Top to bottom animation
-      const toBottomEl = document.querySelectorAll(".anim-top-to-bottom");
-      toBottomEl.forEach((e) => {
+      gsap.utils.toArray<HTMLElement>(".anim-top-to-bottom").forEach((el) => {
         gsap
           .timeline({
             scrollTrigger: {
@@ -130,26 +112,16 @@ export default function useGsapScrollScaleAnimations() {
             },
           })
           .fromTo(
-            e,
+            el,
             { transform: "translate3d(0, -100%, 0)" },
-            { transform: "translate3d(0, 0, 0)" }
+            { transform: "translate3d(0, 0, 0)" },
           );
       });
-      // ------------------------------------------------
-      // Zoom animations (NEW ✅)
-      // ------------------------------------------------
-      const zoomInContainer = document.querySelectorAll(
-        ".anim-zoom-in-container"
-      );
-      zoomInContainer.forEach((el) => {
+
+      gsap.utils.toArray<HTMLElement>(".anim-zoom-in-container").forEach((el) => {
         gsap
           .timeline({
-            scrollTrigger: {
-              trigger: el,
-              start: "top 82%",
-              end: "top 14%",
-              scrub: true,
-            },
+            scrollTrigger: { trigger: el, start: "top 82%", end: "top 14%", scrub: true },
           })
           .fromTo(
             el,
@@ -157,22 +129,14 @@ export default function useGsapScrollScaleAnimations() {
             {
               borderRadius: docStyle.getPropertyValue("--_radius-l"),
               transform: "scale3d(1, 1, 1)",
-            }
+            },
           );
       });
 
-      const zoomOutContainer = document.querySelectorAll(
-        ".anim-zoom-out-container"
-      );
-      zoomOutContainer.forEach((el) => {
+      gsap.utils.toArray<HTMLElement>(".anim-zoom-out-container").forEach((el) => {
         gsap
           .timeline({
-            scrollTrigger: {
-              trigger: el,
-              start: "top 82%",
-              end: "top 14%",
-              scrub: true,
-            },
+            scrollTrigger: { trigger: el, start: "top 82%", end: "top 14%", scrub: true },
           })
           .fromTo(
             el,
@@ -180,153 +144,39 @@ export default function useGsapScrollScaleAnimations() {
             {
               borderRadius: docStyle.getPropertyValue("--_radius-l"),
               transform: "scale3d(1, 1, 1)",
-            }
+            },
           );
       });
-
-      const addCardBatch = (
-        selector: string,
-        opts: { batchMax: number; gridCols: number; delay?: number }
-      ) => {
-        const hasAny = document.querySelector(selector);
-        if (!hasAny) return;
-
-        // initial state (your original gsap.set before batching)
-        gsap.set(selector, { y: 50, opacity: 0 });
-
-        ScrollTrigger.batch(selector, {
-          interval: 0.1,
-          batchMax: opts.batchMax,
-          start: "top 80%",
-          end: "bottom 20%",
-          ...(opts.delay ? { delay: opts.delay } : {}),
-          onEnter: (els) =>
-            gsap.to(els, {
-              opacity: 1,
-              y: 0,
-              ease: "sine",
-              stagger: { each: 0.15, grid: [1, opts.gridCols] },
-              overwrite: true,
-            }),
-          onLeave: (els) =>
-            gsap.set(els, { opacity: 1, y: 0, overwrite: true }),
-          onEnterBack: (els) =>
-            gsap.to(els, { opacity: 1, y: 0, stagger: 0.15, overwrite: true }),
-          onLeaveBack: (els) =>
-            gsap.set(els, { opacity: 0, y: 50, overwrite: true }),
-        });
-      };
-      // -------------------------------
-      // Batched cards (2/3/4/5)
-      // -------------------------------
-      addCardBatch(".animate-card-2", { batchMax: 2, gridCols: 2 });
-      addCardBatch(".animate-card-3", { batchMax: 3, gridCols: 3 });
-      addCardBatch(".animate-card-4", {
-        batchMax: 4,
-        gridCols: 4,
-        delay: 1000,
-      });
-      addCardBatch(".animate-card-5", {
-        batchMax: 5,
-        gridCols: 5,
-        delay: 1000,
-      });
-
-      // ✅ Loading animation
-      // Page-entry choreography: was way too slow (~2s before the hero text was fully visible).
-      // Trimmed to ~0.6s total: small initial delay + faster fade/slide.
-      const loadingWrap = document.querySelector(".loading-wrap");
-      if (loadingWrap) {
-        const loadingItems = loadingWrap.querySelectorAll(".loading__item");
-        const fadeInItems = document.querySelectorAll(".loading__fade");
-
-        const pageAppearance = () => {
-          gsap.set(loadingItems, { opacity: 0 });
-          gsap.to(loadingItems, {
-            duration: 0.55,
-            ease: "power2.out",
-            startAt: { y: 40 },
-            y: 0,
-            opacity: 1,
-            delay: 0.05,
-            stagger: 0.04,
-          });
-
-          gsap.set(fadeInItems, { opacity: 0 });
-          gsap.to(fadeInItems, {
-            duration: 0.4,
-            ease: "none",
-            opacity: 1,
-            delay: 0.1,
-          });
-        };
-
-        pageAppearance();
-      }
-    };
-
-    // Double-rAF: arranca la coreografía tras dos frames para no escribir
-    // estilos inline sobre nodos que React aún está hidratando (provocaba
-    // hydration mismatch en consola). Coste: ~32ms, imperceptible — los
-    // elementos siguen ocultos por CSS (html.has-js) durante la espera.
-    let raf2 = 0;
-    const raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => initAnim());
     });
 
-    // Safety fallback: if an element whose entry-trigger already passed is
-    // still invisible after 2.5s (failed init, killed trigger), force it
-    // visible. ONLY elements in or above the viewport — below-fold elements
-    // are legitimately waiting for their scroll trigger; forcing those made
-    // them pop in at 2.5s and snap back to 0 when their trigger fired while
-    // scrolling (visible flicker).
-    const safetyTimer = setTimeout(() => {
-      document
-        .querySelectorAll<HTMLElement>(
-          ".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .loading__item, .loading__fade, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5, .reveal-type"
-        )
-        .forEach((el) => {
-          const inOrAboveViewport =
-            el.getBoundingClientRect().top < window.innerHeight - 60;
-          if (
-            inOrAboveViewport &&
-            parseFloat(getComputedStyle(el).opacity) < 0.95
-          ) {
-            el.style.opacity = "1";
-            el.style.transform = "none";
-          }
+    // ── Page-entry choreography (above the fold, runs on mount) ────────────
+    const loadingWrap = document.querySelector(".loading-wrap");
+    if (loadingWrap) {
+      const loadingItems = loadingWrap.querySelectorAll(".loading__item");
+      const fadeInItems = document.querySelectorAll(".loading__fade");
+      if (loadingItems.length) {
+        gsap.set(loadingItems, { opacity: 0 });
+        gsap.to(loadingItems, {
+          duration: 0.55,
+          ease: "power2.out",
+          startAt: { y: 40 },
+          y: 0,
+          opacity: 1,
+          delay: 0.05,
+          stagger: 0.04,
         });
-    }, 2500);
+      }
+      if (fadeInItems.length) {
+        gsap.set(fadeInItems, { opacity: 0 });
+        gsap.to(fadeInItems, { duration: 0.4, ease: "none", opacity: 1, delay: 0.1 });
+      }
+    }
 
     return () => {
-      cancelAnimationFrame(raf1);
-      cancelAnimationFrame(raf2);
       clearTimeout(safetyTimer);
-      // Only kill our specific ScrollTriggers
-      ScrollTrigger.getAll()
-        .filter((st) => {
-          const trigger = st.vars.trigger;
-          if (!trigger || typeof trigger === "string" || Array.isArray(trigger))
-            return false;
-          const element = trigger as Element;
-          return (
-            element.classList &&
-            (element.classList.contains("anim-uni-in-up") ||
-              element.classList.contains("anim-uni-scale-in") ||
-              element.classList.contains("anim-uni-scale-in-right") ||
-              element.classList.contains("anim-uni-scale-in-left") ||
-              element.classList.contains("anim-top-to-bottom") ||
-              element.classList.contains("anim-zoom-in-container") ||
-              element.classList.contains("anim-zoom-out-container") ||
-              element.classList.contains("animate-card-2") ||
-              element.classList.contains("animate-card-3") ||
-              element.classList.contains("animate-card-4") ||
-              element.classList.contains("animate-card-5"))
-          );
-        })
-        .forEach((st) => st.kill());
-
-      ScrollTrigger.clearScrollMemory();
+      mo.disconnect();
+      io.disconnect();
+      ctx.revert();
     };
   }, [pathname]);
 }

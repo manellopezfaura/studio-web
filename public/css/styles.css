@@ -257,12 +257,13 @@ a.mxd-projects-stack__inner {
   opacity: 0;
 }
 
-/* GSAP entry-animation initial states.
-   Without these, SSR paints the elements fully visible and the GSAP init
-   (post-hydration) snaps them to opacity 0 before animating in — a visible
-   bright→hidden→reveal flash on every load. Gated to html.has-js (set by an
-   inline head script) so content stays visible when JS is unavailable; a
-   2.5s safety fallback in useGsapScrollScaleAnimations covers GSAP failures. */
+/* Scroll-reveal entry states.
+   Elements start hidden ONLY when JS is available (html.has-js, set by an
+   inline head script before paint, so no flash). An IntersectionObserver in
+   useGsapScrollScaleAnimations adds `.is-revealed` when each element enters
+   the viewport — reliable even under Lenis/fast-scroll, unlike the old GSAP
+   ScrollTriggers which could fail and leave content stuck blank. Without JS,
+   everything stays visible. The reveal itself is a CSS transition. */
 html.has-js .anim-uni-in-up,
 html.has-js .anim-uni-scale-in,
 html.has-js .anim-uni-scale-in-right,
@@ -272,13 +273,29 @@ html.has-js .animate-card-3,
 html.has-js .animate-card-4,
 html.has-js .animate-card-5 {
   opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+html.has-js .anim-uni-scale-in-right {
+  transform: translate(-40px, 24px);
+}
+html.has-js .anim-uni-scale-in-left {
+  transform: translate(40px, 24px);
+}
+html.has-js .is-revealed {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-/* RevealText titles rest at their pre-reveal char opacity instead of
-   flashing full-bright before the split runs. The component releases the
-   container back to opacity 1 once the per-char tween takes over. */
+/* RevealText titles: container hidden until its chars are split and animated
+   in by the component (one-shot, IntersectionObserver-driven). */
 html.has-js .reveal-type {
-  opacity: 0.2;
+  opacity: 0;
+}
+html.has-js .reveal-type.is-revealed {
+  opacity: 1;
 }
 
 .footer-contact-form {
