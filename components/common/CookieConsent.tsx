@@ -49,7 +49,11 @@ export function CookieConsent() {
     >
       <p className="cookie-banner__text">
         {t("message")}{" "}
-        <Link href="/cookies" className="cookie-banner__link">
+        <Link
+          href="/cookies"
+          className="cookie-banner__link"
+          style={{ color: "#ddf160" }}
+        >
           {t("more")}
         </Link>
       </p>
@@ -103,17 +107,25 @@ export function CookieConsent() {
             transform: translate(-50%, 0);
           }
         }
+        /* The card is always dark in both themes, so text is always light.
+           Set it explicitly — a global \`p\`/\`a\` color rule (theme-dependent,
+           dark in light mode) would otherwise win over inheritance and make
+           the text invisible on the dark card. */
         .cookie-banner__text {
           flex: 1 1 240px;
           margin: 0;
           font-size: 1.4rem;
           line-height: 1.5;
+          color: rgba(255, 255, 255, 0.92);
         }
         .cookie-banner__link {
           color: #ddf160;
           text-decoration: underline;
           text-underline-offset: 2px;
           white-space: nowrap;
+        }
+        .cookie-banner__link:hover {
+          color: #ddf160;
         }
         .cookie-banner__actions {
           display: flex;
