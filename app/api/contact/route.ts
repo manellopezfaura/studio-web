@@ -1,7 +1,8 @@
 // app/api/contact/route.ts
-// Endpoint único para los dos formularios de contacto (página /contact y
-// footer). Entrega vía Resend a hola@107studio.es — sin terceros.
-// Sustituye a Web3Forms (key ligada a un buzón inexistente) y Formspree.
+// Endpoint único para los formularios de contacto. Entrega vía Resend a
+// hola@107studio.es — sin terceros. Lo usan:
+//  - el sitio 107 (página /contact y footer) — mismo origen
+//  - el landing de Hera (saas-landing) — origen distinto, por eso hay CORS
 
 import { contactSchema } from "@/schemas/contact";
 
@@ -13,6 +14,29 @@ const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 5;
 
 const rateLimit = new Map<string, { count: number; resetAt: number }>();
+
+// Orígenes permitidos a enviar el formulario de forma cross-origin (el landing
+// de Hera). El mismo sitio 107 envía same-origin y no necesita esto.
+const ALLOWED_ORIGINS = new Set([
+  "https://saas-landing-eight-theta.vercel.app",
+  "https://107studio.es",
+  "https://www.107studio.es",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://localhost:3001",
+]);
+
+function corsHeaders(origin: string | null): Record<string, string> {
+  if (origin && (ALLOWED_ORIGINS.has(origin) || origin.endsWith(".vercel.app"))) {
+    return {
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      Vary: "Origin",
+    };
+  }
+  return { Vary: "Origin" };
+}
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
@@ -35,13 +59,21 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
+export async function OPTIONS(req: Request) {
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders(req.headers.get("origin")),
+  });
+}
+
 export async function POST(req: Request) {
+  const cors = corsHeaders(req.headers.get("origin"));
+  const json = (data: unknown, status = 200) =>
+    Response.json(data, { status, headers: cors });
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return Response.json(
-      { ok: false, error: "Email service not configured" },
-      { status: 500 },
-    );
+    return json({ ok: false, error: "Email service not configured" }, 500);
   }
 
   const ip =
@@ -50,17 +82,14 @@ export async function POST(req: Request) {
     "unknown";
 
   if (isRateLimited(ip)) {
-    return Response.json(
-      { ok: false, error: "Too many requests" },
-      { status: 429 },
-    );
+    return json({ ok: false, error: "Too many requests" }, 429);
   }
 
   let body: unknown;
   try {
     body = await req.json();
   } catch {
-    return Response.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
+    return json({ ok: false, error: "Invalid JSON" }, 400);
   }
 
   // Honeypot: campo oculto que los humanos dejan vacío. Si llega relleno es
@@ -71,20 +100,17 @@ export async function POST(req: Request) {
     "website" in body &&
     (body as Record<string, unknown>).website
   ) {
-    return Response.json({ ok: true });
+    return json({ ok: true });
   }
 
   const parsed = contactSchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json(
-      { ok: false, error: "Validation failed" },
-      { status: 400 },
-    );
+    return json({ ok: false, error: "Validation failed" }, 400);
   }
 
   const data = parsed.data;
   if (data.Message.length > 5000 || data.Name.length > 200) {
-    return Response.json({ ok: false, error: "Too long" }, { status: 400 });
+    return json({ ok: false, error: "Too long" }, 400);
   }
 
   const source =
@@ -101,7 +127,7 @@ export async function POST(req: Request) {
 
   const html = `
     <div style="font-family: sans-serif; max-width: 520px;">
-      <h2 style="margin: 0 0 16px; font-size: 18px;">Nuevo mensaje desde 107studio.es</h2>
+      <h2 style="margin: 0 0 16px; font-size: 18px;">Nuevo mensaje desde ${escapeHtml(source)}</h2>
       ${rows
         .map(
           ([label, value]) =>
@@ -126,23 +152,17 @@ export async function POST(req: Request) {
         from: FROM_EMAIL,
         to: [TO_EMAIL],
         reply_to: [data["E-mail"]],
-        subject: `Contacto web: ${data.Name}`,
+        subject: `Contacto web (${source}): ${data.Name}`,
         html,
       }),
     });
 
     if (!res.ok) {
-      return Response.json(
-        { ok: false, error: "Email delivery failed" },
-        { status: 502 },
-      );
+      return json({ ok: false, error: "Email delivery failed" }, 502);
     }
 
-    return Response.json({ ok: true });
+    return json({ ok: true });
   } catch {
-    return Response.json(
-      { ok: false, error: "Email delivery failed" },
-      { status: 502 },
-    );
+    return json({ ok: false, error: "Email delivery failed" }, 502);
   }
 }
