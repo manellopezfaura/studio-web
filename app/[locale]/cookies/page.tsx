@@ -47,10 +47,12 @@ export default async function CookiesPage({
                   (localStorage) y no se comparten con terceros.
                 </p>
 
-                <h3>Cookies analíticas (Google Analytics)</h3>
+                <h3>Cookies analíticas y de medición (Google Tag Manager)</h3>
                 <p>
-                  Utilizamos Google Analytics (Google Ireland Ltd.) para entender
-                  de forma agregada y anónima cómo se usa el sitio. Estas cookies{" "}
+                  Gestionamos nuestras etiquetas de medición con Google Tag
+                  Manager (Google Ireland Ltd.). Solo con tu consentimiento se
+                  cargan cookies de análisis (Google Analytics 4) y, en su caso,
+                  de medición publicitaria (Google Ads). Estas cookies{" "}
                   <strong>solo se activan si das tu consentimiento</strong> en el
                   banner. Las principales son:
                 </p>
@@ -66,6 +68,10 @@ export default async function CookiesPage({
                     <strong>_gid</strong> — distingue usuarios. Duración: 24
                     horas.
                   </li>
+                  <li>
+                    <strong>_gcl_au</strong> — medición de conversiones de Google
+                    Ads, solo si hay campañas activas. Duración: 90 días.
+                  </li>
                 </ul>
 
                 <h2>3. Gestión y retirada del consentimiento</h2>
@@ -73,9 +79,10 @@ export default async function CookiesPage({
                   Al acceder por primera vez al sitio te mostramos un banner
                   donde puedes <strong>aceptar</strong> o{" "}
                   <strong>rechazar</strong> las cookies analíticas. Si las
-                  rechazas, Google Analytics no se cargará. Puedes cambiar tu
-                  decisión en cualquier momento borrando los datos del sitio en
-                  tu navegador, lo que hará que el banner vuelva a aparecer.
+                  rechazas, no se cargará ninguna cookie de análisis ni de
+                  publicidad. Puedes cambiar tu decisión en cualquier momento
+                  borrando los datos del sitio en tu navegador, lo que hará que
+                  el banner vuelva a aparecer.
                 </p>
                 <p>
                   También puedes bloquear o eliminar las cookies desde la

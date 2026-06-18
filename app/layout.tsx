@@ -8,7 +8,7 @@ import { ReactNode } from "react";
 import { headers } from "next/headers";
 import { Funnel_Display, Funnel_Sans } from "next/font/google";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
-import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { GoogleTagManager } from "@/components/analytics/GoogleTagManager";
 import { routing } from "@/i18n/routing";
 
 const funnelDisplay = Funnel_Display({
@@ -54,6 +54,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       className={`no-touch ${funnelDisplay.variable} ${funnelSans.variable}`}
     >
       <head>
+        <GoogleTagManager />
         <script dangerouslySetInnerHTML={{ __html: setColorSchemeScript }} />
         <OrganizationSchema />
       </head>
@@ -61,7 +62,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <a href="#mxd-page-content" className="skip-to-content">
           Skip to content
         </a>
-        <GoogleAnalytics />
         {children}
       </body>
     </html>

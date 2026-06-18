@@ -7,11 +7,18 @@ import { Link } from "@/i18n/routing";
 export const COOKIE_CONSENT_KEY = "cookie-consent";
 export const COOKIE_CONSENT_EVENT = "cookie-consent-change";
 
+declare global {
+  interface Window {
+    // Definida por el script de inicio de GTM en <head> (Consent Mode v2).
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 /**
  * Cookie consent banner. Shown on first visit until the user accepts or
- * rejects. The choice is stored in localStorage and broadcast via a custom
- * event so GoogleAnalytics can load (or stay off) accordingly — analytics
- * cookies never fire before consent (RGPD/ePrivacy).
+ * rejects. The choice is stored in localStorage, pushed to Google Consent
+ * Mode v2 (GTM), and broadcast via a custom event for any other consent-aware
+ * code — analytics/ads cookies never fire before consent (RGPD/ePrivacy).
  */
 export function CookieConsent() {
   const t = useTranslations("CookieBanner");
@@ -55,6 +62,15 @@ export function CookieConsent() {
     } catch {
       /* storage unavailable — banner just won't persist */
     }
+    // Refleja la decisión en Google Consent Mode v2 (GTM). Si GTM no está
+    // cargado (sin contenedor configurado) es un no-op inofensivo.
+    const signal = value === "accepted" ? "granted" : "denied";
+    window.gtag?.("consent", "update", {
+      ad_storage: signal,
+      ad_user_data: signal,
+      ad_personalization: signal,
+      analytics_storage: signal,
+    });
     window.dispatchEvent(
       new CustomEvent(COOKIE_CONSENT_EVENT, { detail: value }),
     );
