@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm as useHookForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import AnimatedButton from "../animation/AnimatedButton";
+import { trackGenerateLead } from "@/lib/analytics";
 
 type FooterContactFields = {
   Name: string;
@@ -34,6 +35,7 @@ export default function FooterContactForm() {
       if (!res.ok) throw new Error("Submit failed");
       reset();
       setStatus("success");
+      trackGenerateLead("footer", { email: data["E-mail"] });
     } catch {
       setStatus("error");
     }

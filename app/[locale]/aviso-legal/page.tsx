@@ -1,4 +1,5 @@
 import Footer2 from "@/components/footers/Footer2";
+import { Link } from "@/i18n/routing";
 import { pageMetadata, legalEntity, seoConfig } from "@/data/seo-config";
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
@@ -93,8 +94,8 @@ export default async function AvisoLegalPage({
                 <p>
                   El tratamiento de los datos personales de los usuarios se rige
                   por lo establecido en la{" "}
-                  <a href="/privacy-policy">Política de Privacidad</a> y la{" "}
-                  <a href="/cookies">Política de Cookies</a>.
+                  <Link href="/privacy-policy">Política de Privacidad</Link> y la{" "}
+                  <Link href="/cookies">Política de Cookies</Link>.
                 </p>
 
                 <h2>7. Legislación aplicable y jurisdicción</h2>
