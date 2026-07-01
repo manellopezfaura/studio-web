@@ -1,4 +1,5 @@
 import Footer2 from "@/components/footers/Footer2";
+import { Link } from "@/i18n/routing";
 import { pageMetadata, legalEntity } from "@/data/seo-config";
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
@@ -50,7 +51,7 @@ export default async function PrivacyPolicyPage({
                   y, opcionalmente, empresa, teléfono y el contenido de tu
                   mensaje. Si aceptas las cookies analíticas, también tratamos
                   datos de navegación de forma agregada (ver{" "}
-                  <a href="/cookies">Política de Cookies</a>).
+                  <Link href="/cookies">Política de Cookies</Link>).
                 </p>
 
                 <h2>3. Finalidad del tratamiento</h2>
@@ -123,7 +124,7 @@ export default async function PrivacyPolicyPage({
                 <h2>8. Cookies</h2>
                 <p>
                   Este sitio utiliza cookies. Consulta nuestra{" "}
-                  <a href="/cookies">Política de Cookies</a> para conocer cuáles
+                  <Link href="/cookies">Política de Cookies</Link> para conocer cuáles
                   y cómo gestionarlas.
                 </p>
               </div>

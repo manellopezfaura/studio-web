@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AnimatedButton from "@/components/animation/AnimatedButton";
 import { useTranslations } from "next-intl";
+import { trackGenerateLead } from "@/lib/analytics";
 
 export default function ContactForm() {
   const t = useTranslations("ContactPage.Form");
@@ -29,6 +30,7 @@ export default function ContactForm() {
       if (!res.ok) throw new Error("Submit failed");
       reset();
       toast.success(t("toastSuccess"));
+      trackGenerateLead("contact-page", { email: data["E-mail"], phone: data.Phone });
     } catch {
       toast.error(t("toastError"));
     }

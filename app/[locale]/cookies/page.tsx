@@ -1,4 +1,5 @@
 import Footer2 from "@/components/footers/Footer2";
+import { Link } from "@/i18n/routing";
 import { pageMetadata, legalEntity } from "@/data/seo-config";
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
@@ -95,7 +96,7 @@ export default async function CookiesPage({
                   escribirnos a{" "}
                   <a href={`mailto:${legalEntity.email}`}>{legalEntity.email}</a>
                   . Consulta también nuestra{" "}
-                  <a href="/privacy-policy">Política de Privacidad</a>.
+                  <Link href="/privacy-policy">Política de Privacidad</Link>.
                 </p>
               </div>
             </div>

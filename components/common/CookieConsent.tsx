@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
@@ -14,6 +14,29 @@ declare global {
   }
 }
 
+// El consentimiento vive en localStorage y se refleja en un evento propio para
+// que el banner reaccione dentro de la misma pestaña (el evento nativo `storage`
+// solo salta entre pestañas). Leerlo con useSyncExternalStore mantiene el banner
+// oculto en SSR/hidratación —sin flash para quien ya decidió y sin mismatch—
+// evitando un setState dentro de un efecto.
+function subscribeConsent(onChange: () => void) {
+  window.addEventListener(COOKIE_CONSENT_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(COOKIE_CONSENT_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function shouldShowBanner() {
+  try {
+    const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
+    return stored !== "accepted" && stored !== "rejected";
+  } catch {
+    return true;
+  }
+}
+
 /**
  * Cookie consent banner. Shown on first visit until the user accepts or
  * rejects. The choice is stored in localStorage, pushed to Google Consent
@@ -22,17 +45,13 @@ declare global {
  */
 export function CookieConsent() {
   const t = useTranslations("CookieBanner");
-  const [visible, setVisible] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
-      if (stored !== "accepted" && stored !== "rejected") setVisible(true);
-    } catch {
-      setVisible(true);
-    }
-  }, []);
+  // SSR-safe: oculto en el servidor, valor real tras hidratar (ver helpers).
+  const visible = useSyncExternalStore(
+    subscribeConsent,
+    shouldShowBanner,
+    () => false,
+  );
 
   // While the banner is visible on narrow viewports it spans the bottom of the
   // screen and would overlap the Hera chat trigger (bottom-right). Expose its
@@ -74,7 +93,6 @@ export function CookieConsent() {
     window.dispatchEvent(
       new CustomEvent(COOKIE_CONSENT_EVENT, { detail: value }),
     );
-    setVisible(false);
   };
 
   if (!visible) return null;
