@@ -67,12 +67,12 @@ const BRANDS: Record<string, BrandConfig> = {
     studioName: "086 Studio",
     webhookUrl:
       "https://hpnmcveyzjoxwlqbofye.supabase.co/functions/v1/hera-webhook",
-    notificationEmail: "hola@107studio.es", // TODO: cambiar al email de 086
+    notificationEmail: "manellopezfaura@gmail.com",
     emailFrom: "Hera <hera@107studio.es>", // TODO: cambiar cuando 086 tenga dominio verificado en Resend
     accentColor: "#ddf160",
     theme: { base: "#ffffff", baseOpp: "#1a1a1a", accent: "#ddf160" },
     allowedOrigins: [
-      "https://complex-course-181291.framer.app",
+      "https://086studio.vercel.app",
       "http://localhost:3000",
     ],
   },
