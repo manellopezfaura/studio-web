@@ -16,6 +16,13 @@ gsap.registerPlugin(ScrollTrigger);
 const REVEAL_SELECTOR =
   ".anim-uni-in-up, .anim-uni-scale-in, .anim-uni-scale-in-right, .anim-uni-scale-in-left, .animate-card-2, .animate-card-3, .animate-card-4, .animate-card-5";
 
+// `.loading__fade` carriers (e.g. the nav hamburger) fade in once and then
+// persist across client-side navigations — the hamburger lives in the layout
+// and never unmounts. Remembering revealed elements at module scope keeps them
+// from re-fading (a flicker) on every route change, while still catching
+// first-time mounts. Keyed by element, so remounted nodes reveal again.
+const revealedFades = new WeakSet<Element>();
+
 export default function useGsapScrollScaleAnimations() {
   const pathname = usePathname();
   useEffect(() => {
@@ -23,12 +30,19 @@ export default function useGsapScrollScaleAnimations() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    // Reduced motion: reveal everything immediately, no animation.
+    // Reduced motion: reveal everything immediately, no animation. Re-run on
+    // DOM mutations so late-mounting carriers (e.g. the dynamically-imported nav
+    // hamburger, a `.loading__fade`) are revealed too instead of staying stuck
+    // at their CSS opacity:0.
     if (prefersReducedMotion) {
-      document
-        .querySelectorAll(`${REVEAL_SELECTOR}, .loading__item, .loading__fade, .reveal-type`)
-        .forEach((el) => el.classList.add("is-revealed"));
-      return;
+      const revealStatic = () =>
+        document
+          .querySelectorAll(`${REVEAL_SELECTOR}, .loading__item, .loading__fade, .reveal-type`)
+          .forEach((el) => el.classList.add("is-revealed"));
+      revealStatic();
+      const moReduced = new MutationObserver(() => revealStatic());
+      moReduced.observe(document.body, { childList: true, subtree: true });
+      return () => moReduced.disconnect();
     }
 
     // ── Entry reveals via IntersectionObserver (reliable) ──────────────────
@@ -67,6 +81,52 @@ export default function useGsapScrollScaleAnimations() {
     };
     observeAll();
 
+    // `.loading__fade` carriers start hidden via CSS and fade in on entry. The
+    // hamburger is inside a dynamically-imported client component, so it can
+    // mount AFTER this effect's first pass — the old one-shot query missed it,
+    // leaving it invisible-but-clickable. Reveal every `.loading__fade` present
+    // now; the MutationObserver below re-runs this for late arrivals and the
+    // safety timer backstops it. `revealedFades` (module scope) prevents a
+    // re-fade on client-side navigation.
+    const revealFades = () => {
+      document.querySelectorAll<HTMLElement>(".loading__fade").forEach((el) => {
+        if (revealedFades.has(el)) return;
+        revealedFades.add(el);
+        gsap.fromTo(
+          el,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4, ease: "none", delay: 0.1 },
+        );
+      });
+    };
+    revealFades();
+
+    // `.loading__item` is the hero's staggered entrance. On a hard load the hero
+    // is in the DOM when this runs; on client-side navigation it (with its
+    // `.loading-wrap`) mounts AFTER — a one-shot query misses it, leaving the
+    // hero stuck at CSS opacity:0 (blank page below the header). Reveal whatever
+    // is present now with the stagger; the MutationObserver re-runs this for the
+    // late hero and the safety timer backstops it.
+    const revealedItems = new WeakSet<Element>();
+    const revealLoadingItems = () => {
+      const items = [
+        ...document.querySelectorAll<HTMLElement>(".loading__item"),
+      ].filter((el) => !revealedItems.has(el));
+      if (!items.length) return;
+      items.forEach((el) => revealedItems.add(el));
+      gsap.set(items, { opacity: 0 });
+      gsap.to(items, {
+        duration: 0.55,
+        ease: "power2.out",
+        startAt: { y: 40 },
+        y: 0,
+        opacity: 1,
+        delay: 0.05,
+        stagger: 0.04,
+      });
+    };
+    revealLoadingItems();
+
     // Catch late-mounting elements. MutationObserver only fires on node
     // add/remove (not on marquee transform changes), so it's cheap; debounced
     // to one rAF.
@@ -77,6 +137,8 @@ export default function useGsapScrollScaleAnimations() {
       requestAnimationFrame(() => {
         scheduled = false;
         observeAll();
+        revealFades();
+        revealLoadingItems();
       });
     });
     mo.observe(document.body, { childList: true, subtree: true });
@@ -94,6 +156,15 @@ export default function useGsapScrollScaleAnimations() {
             el.classList.add("is-revealed");
             io.unobserve(el);
           }
+        });
+      // Backstop: force any entry element still hidden to visible, and mark it
+      // handled so a later mutation won't re-animate it.
+      document
+        .querySelectorAll<HTMLElement>(".loading__fade, .loading__item")
+        .forEach((el) => {
+          revealedFades.add(el);
+          revealedItems.add(el);
+          if (Number(getComputedStyle(el).opacity) < 1) gsap.set(el, { opacity: 1 });
         });
     }, 2500);
 
@@ -148,29 +219,6 @@ export default function useGsapScrollScaleAnimations() {
           );
       });
     });
-
-    // ── Page-entry choreography (above the fold, runs on mount) ────────────
-    const loadingWrap = document.querySelector(".loading-wrap");
-    if (loadingWrap) {
-      const loadingItems = loadingWrap.querySelectorAll(".loading__item");
-      const fadeInItems = document.querySelectorAll(".loading__fade");
-      if (loadingItems.length) {
-        gsap.set(loadingItems, { opacity: 0 });
-        gsap.to(loadingItems, {
-          duration: 0.55,
-          ease: "power2.out",
-          startAt: { y: 40 },
-          y: 0,
-          opacity: 1,
-          delay: 0.05,
-          stagger: 0.04,
-        });
-      }
-      if (fadeInItems.length) {
-        gsap.set(fadeInItems, { opacity: 0 });
-        gsap.to(fadeInItems, { duration: 0.4, ease: "none", opacity: 1, delay: 0.1 });
-      }
-    }
 
     return () => {
       clearTimeout(safetyTimer);
