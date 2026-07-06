@@ -1,20 +1,15 @@
 [
   {
-    "id": 1,
-    "name": "Manel López",
-    "position": "Co-founder & Developer",
+    "id": 4,
+    "name": "Lino",
+    "position": "Co-founder & Business Strategist",
     "image": {
-      "src": "/img/team/800x920_team-01.webp",
-      "alt": "Manel López",
+      "src": "/img/team/800x920_team-04.webp",
+      "alt": "Lino",
       "width": 800,
       "height": 920
     },
-    "socials": [
-      {
-        "name": "Linkedin",
-        "url": "https://www.linkedin.com/"
-      }
-    ],
+    "socials": [],
     "layout": {
       "classes": "col-12 col-md-4 mxd-team-cards__item mxd-grid-item no-margin-desktop padding-bottom-desktop animate-card-3"
     }
@@ -44,27 +39,12 @@
     }
   },
   {
-    "id": 4,
-    "name": "Lino",
-    "position": "Co-founder & Business Strategist",
+    "id": 1,
+    "name": "Manel López",
+    "position": "Co-founder & Developer",
     "image": {
-      "src": "/img/team/800x920_team-04.webp",
-      "alt": "Lino",
-      "width": 800,
-      "height": 920
-    },
-    "socials": [],
-    "layout": {
-      "classes": "col-12 col-md-4 mxd-team-cards__item mxd-grid-item no-margin-desktop padding-bottom-desktop animate-card-3"
-    }
-  },
-  {
-    "id": 3,
-    "name": "Paula Abarca",
-    "position": "Marketing Director",
-    "image": {
-      "src": "/img/team/800x920_team-03.webp",
-      "alt": "Paula Abarca",
+      "src": "/img/team/800x920_team-01.webp",
+      "alt": "Manel López",
       "width": 800,
       "height": 920
     },
@@ -75,7 +55,7 @@
       }
     ],
     "layout": {
-      "classes": "col-12 col-md-4 mxd-team-cards__item mxd-grid-item animate-card-3"
+      "classes": "col-12 col-md-4 mxd-team-cards__item mxd-grid-item no-margin-desktop padding-bottom-desktop animate-card-3"
     }
   }
 ]
